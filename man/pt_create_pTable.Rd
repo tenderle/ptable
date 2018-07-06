@@ -7,15 +7,15 @@
 pt_create_pTable(params, type, monitoring = FALSE)
 }
 \arguments{
-\item{params}{an object of class \code{\link{class-ptable_params}}
-generated with \code{\link{pt_create_pert_params}}}
+\item{params}{an object of class \code{\linkS4class{ptable_params}}
+generated with \code{\link{pt_create_pParams}}}
 
 \item{type}{(character) type of pTable (either 'abs' or 'destatis')}
 
 \item{monitoring}{(logical) debug monitoring on/off}
 }
 \value{
-an object of \code{\link{class-ptable}}
+an object of \code{\linkS4class{ptable}}
 }
 \description{
 produces perturbation table that is needed to add noise to statistical frequency tables. The perturbation probabilities are constructed given the following constraints:
@@ -29,8 +29,9 @@ produces perturbation table that is needed to add noise to statistical frequency
 }
 \examples{
 (params <- pt_create_pParams(D=5, V=2, js=2, label="test"))
+\dontrun{
 pt_create_pTable(params=params, type="destatis")
-
+}
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}

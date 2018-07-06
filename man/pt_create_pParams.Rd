@@ -26,13 +26,13 @@ Target frequencies are defined by ...}
 \item{label}{(character) label of the Output}
 }
 \value{
-an object of \code{\link{class-ptable_params}}
+an object of \code{\linkS4class{ptable_params}}
 }
 \description{
-creates the required input for \code{\link{pt_classes}}.
+creates the required input for \code{\linkS4class{ptable}}.
 }
 \examples{
-pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=1)
+pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
 
 }
 \author{

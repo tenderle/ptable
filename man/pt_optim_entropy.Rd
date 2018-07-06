@@ -21,8 +21,6 @@ pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
 \item{ub}{(integer) vector with upper bounds of the controls}
 
 \item{x0}{(integer) vector with starting values for the optimization}
-
-\item{epsilon}{(double)}
 }
 \value{
 The return value contains a list with two elements:

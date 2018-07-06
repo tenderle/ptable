@@ -6,12 +6,10 @@ Version: 0.1.0
 Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", role = c("aut", "cre")),
           person("Sarah", "Giessing", email = "sarah.giessing@destatis.de", role = c("ctb")))
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
-Description: This package computes perturbation tables with probabilities or pre-drawn perturbation values
+Description: This package computes perturbation tables with probabilities or pre-drawn perturbation values.
 License: EUPL v1.2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: data.table,
-    nloptr
-Suggests: cellKey,
-    sdcTable
+Imports: data.table,nloptr,RColorBrewer,flexdashboard,lattice,methods,rlang,rmarkdown
+Suggests: cellKey, sdcTable

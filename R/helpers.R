@@ -89,7 +89,7 @@ fifi_devMat <- function(D=D, ncat=ncat){
 
 
 fifi_df <- function(probMat,D, szenario, blocking, ncat) {
-
+  "-<-" <- p_int_lb <- p_int_ub <- i_info <- NULL
   devMat <- fifi_devMat(D=D, ncat=ncat)
 
   ncol <- ncol(probMat)
@@ -131,7 +131,7 @@ fifi_df <- function(probMat,D, szenario, blocking, ncat) {
 
 
 fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format(Sys.time(), "%Y%m%d")
-
+  v <- i <- j <- p_int_lb <- p_int_ub <- NULL
   neu <- DF[v %in% c(-D : D),c('i','j','p','v','p_int_lb','p_int_ub'),]
   neu <- neu[!(i==0 & j!=0),,]
   neu[,i:=as.integer(as.character(i))]
