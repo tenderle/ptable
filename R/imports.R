@@ -7,4 +7,5 @@
 #' @importFrom graphics par plot
 #' @importFrom utils write.table
 #' @importFrom rmarkdown run
+#' @importFrom grDevices dev.off pdf
 NULL
