@@ -1,6 +1,6 @@
 #' pt_create_pParams
 #'
-#' creates the required input for \code{\link{pt_classes}}.
+#' creates the required input for \code{\linkS4class{ptable}}.
 #'
 #' @param D perturbation parameter for maximum perturbation (scalar or vector)
 #' @param V perturbation parameter for variance (scalar)
@@ -12,13 +12,13 @@
 #' @param epsilon (double)
 #' @param label (character) label of the Output
 #'
-#' @return an object of \code{\link{class-ptable_params}}
+#' @return an object of \code{\linkS4class{ptable_params}}
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @keywords data
 #'
 #' @examples
-#' pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=1)
+#' pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
 #'
 #' @rdname pt_create_pParams
 #' @export

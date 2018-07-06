@@ -89,7 +89,7 @@ fifi_devMat <- function(D=D, ncat=ncat){
 
 
 fifi_df <- function(probMat,D, szenario, blocking, ncat) {
-
+  "-<-" <- p_int_lb <- p_int_ub <- i_info <- NULL
   devMat <- fifi_devMat(D=D, ncat=ncat)
 
   ncol <- ncol(probMat)
@@ -131,7 +131,7 @@ fifi_df <- function(probMat,D, szenario, blocking, ncat) {
 
 
 fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format(Sys.time(), "%Y%m%d")
-
+  v <- i <- j <- p_int_lb <- p_int_ub <- NULL
   neu <- DF[v %in% c(-D : D),c('i','j','p','v','p_int_lb','p_int_ub'),]
   neu <- neu[!(i==0 & j!=0),,]
   neu[,i:=as.integer(as.character(i))]
@@ -151,16 +151,3 @@ fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format
 
 }
 
-pt_export <- function(input, file){
-
-  stopifnot(isS4(input))
-  stopifnot(class(input)=="ptable")
-
-  params <- slot(input, "pParams")
-  type <- slot(params, "type")
-  stopifnot(type=="destatis")
-
-  pTable <- slot(input, "pTable")[,c('i','v','p_int_ub'),]
-
-  write.table(pTable, file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE)
-}

@@ -6,7 +6,6 @@
 #' @param mono (logical) monotony parameter
 #' @param v (integer) vector with perturbation values (i.e. deviations to the original frequency)
 #' @param variance (numeric) variance parameter
-#' @param epsilon (double)
 #' @param lb (integer) vector with lower bounds of the controls
 #' @param ub (integer) vector with upper bounds of the controls
 #' @param x0 (integer) vector with starting values for the optimization
@@ -30,11 +29,15 @@ pt_optim_entropy <- function(optim=optim, mono=mono,
                      variance=variance,
                      #epsilon=epsilon,
                      lb=p_lb,
-                     ub=p_ub,
-                     x0=rep(1, length(v))){
+                     ub=p_ub){
+  
+                     #x0=rep(1, length(v))){
 
+  p <- p_lb <- p_ub <- NULL
   options(digits=7,scipen=7)
 
+  x0=rep(1, length(v))
+  
   # Fixed parameters
   local_opts <- list( "algorithm" = "NLOPT_LD_MMA",
                       "xtol_rel"  = 1.0e-7 )

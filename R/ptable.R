@@ -17,5 +17,6 @@
 #' @import flexdashboard
 #'
 ptable <-function(){
-  rmarkdown::run(file = "inst/pt_dashboard.Rmd")
+  filepath_windows <- paste(.libPaths(),"/ptable/pt_dashboard.Rmd",sep="")
+  rmarkdown::run(file = filepath_windows)
 }

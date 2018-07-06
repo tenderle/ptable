@@ -5,7 +5,7 @@
 \title{pt_optim_entropy}
 \usage{
 pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
-  lb = p_lb, ub = p_ub, x0 = rep(1, length(v)))
+  lb = p_lb, ub = p_ub)
 }
 \arguments{
 \item{optim}{optimization paramter (1=standard, 2-4=further test implementations)}
@@ -21,8 +21,6 @@ pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
 \item{ub}{(integer) vector with upper bounds of the controls}
 
 \item{x0}{(integer) vector with starting values for the optimization}
-
-\item{epsilon}{(double)}
 }
 \value{
 The return value contains a list with two elements:
