@@ -160,7 +160,7 @@ pt_export <- function(input, file){
   type <- slot(params, "type")
   stopifnot(type=="destatis")
 
-  pTable <- slot(input, "pTable")[,c('i','v','p_int_ub'),]
+  pTable <- slot(input, "pTable")[,c('i','j','p','v','p_int_ub'),]
 
   write.table(pTable, file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE)
 }

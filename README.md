@@ -79,10 +79,10 @@ However, a pre-set probability does neither hold for blocked frequencies (small 
 
 ``` r
 ## plot the ptable
-fifi_plot(ptable_destatis)
+pt_plot(ptable_destatis)
 ## ... and save the plot as pdf
 pdf(paste("graph.pdf", sep=""))
-   print(fifi_plot(ptable_destatis))
+   print(pt_plot(ptable_destatis))
 dev.off()
 ```
 
