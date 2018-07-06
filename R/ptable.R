@@ -17,5 +17,5 @@
 #' @import flexdashboard
 #'
 ptable <-function(){
-  rmarkdown::run(file = "inst/pt_dashboard.Rmd")
+  rmarkdown::run(file = "pt_dashboard.Rmd")
 }
