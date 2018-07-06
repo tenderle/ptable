@@ -130,7 +130,7 @@ Column
 
 ```{r}
 renderPlot({
-  pt_plot(res())
+  fifi_plot(res())
 })
 ```
 

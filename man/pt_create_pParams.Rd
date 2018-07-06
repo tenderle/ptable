@@ -5,7 +5,7 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
-  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""))
+  epsilon = 1e-07, label = paste("D", D, "V", V * 100, sep = ""))
 }
 \arguments{
 \item{D}{perturbation parameter for maximum perturbation (scalar or vector)}
@@ -26,13 +26,13 @@ Target frequencies are defined by ...}
 \item{label}{(character) label of the Output}
 }
 \value{
-an object of \code{\link{class-ptable_params}}
+an object of \code{\linkS4class{ptable_params}}
 }
 \description{
-creates the required input for \code{\link{pt_classes}}.
+creates the required input for \code{\linkS4class{ptable}}.
 }
 \examples{
-pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=1)
+pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
 
 }
 \author{

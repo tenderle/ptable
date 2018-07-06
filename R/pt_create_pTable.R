@@ -8,25 +8,26 @@
 #' 5. probabilities sum up to 1
 #' @md
 #'
-#' @param params an object of class \code{\link{class-ptable_params}}
-#' generated with \code{\link{pt_create_pert_params}}
+#' @param params an object of class \code{\linkS4class{ptable_params}}
+#' generated with \code{\link{pt_create_pParams}}
 #' @param type (character) type of pTable (either 'abs' or 'destatis')
 #' @param monitoring (logical) debug monitoring on/off
 #'
-#' @return an object of \code{\link{class-ptable}}
+#' @return an object of \code{\linkS4class{ptable}}
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @keywords perturbation table, sdc
 #'
 #' @examples
 #' (params <- pt_create_pParams(D=5, V=2, js=2, label="test"))
+#' \dontrun{
 #' pt_create_pTable(params=params, type="destatis")
-#'
+#' }
 #' @rdname pt_create_pTable
 #' @export
 #'
 pt_create_pTable <-function(params, type, monitoring=FALSE){
-
+  . <- v <- p <- NULL
   pert_params <- params
 
   stopifnot(isS4(params))

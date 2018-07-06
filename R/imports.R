@@ -4,5 +4,7 @@
 #' @importFrom rlang is_scalar_logical is_bare_numeric is_bare_logical is_scalar_vector is_empty
 #' @importFrom methods new validObject is slot slot<-
 #' @importFrom stats addmargins formula weights xtabs runif
-
+#' @importFrom graphics par plot
+#' @importFrom utils write.table
+#' @importFrom rmarkdown run
 NULL

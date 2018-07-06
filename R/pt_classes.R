@@ -8,8 +8,8 @@
 #' @slot optim (integer) specifying optimization parameter for optimization function
 #' @slot mono (logical) vector specifying optimization parameter for monotony condition
 #' @slot label (character) label for output
-#' @name class-ptable_params
-#' @rdname class-ptable_params
+#' @name ptable_params-class
+#' @rdname ptable_params-class
 #' @export
 setClass("ptable_params",
          representation=list(
@@ -64,9 +64,12 @@ NULL
 #' @slot pClasses (numeric) numeric classes
 #' @slot pTable (data.table) perturbation table with probabilities
 #' @slot dFrame (data.frame) for visualizing issues (to be done in upcoming releases)
+#' @slot empResults (data.table) ...
+#' @slot pParams a \code{\linkS4class{ptable_params}} object
+#' @slot tStamp (character) ...
 #' @slot type (character) specifying the type of pTable (either 'abs' or 'destatis')
-#' @name class-ptable
-#' @rdname class-ptable
+#' @name ptable-class
+#' @rdname ptable-class
 #' @export
 setClass("ptable",
          representation=list(

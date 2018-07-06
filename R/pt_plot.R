@@ -21,13 +21,14 @@
 #' dev.off()
 #'
 #' @rdname pt_plot
+#' @export
 #' @import lattice
 #' @import RColorBrewer
 #'
 
 
 
-pt_plot <- function(pert_table, ylimit=c(-0.05,0.95)){
+fifi_plot <- function(pert_table, ylimit=c(-0.05,0.95)){
 
   params <- slot(pert_table, "pParams")
   timestamp <- slot(pert_table, "tStamp")
