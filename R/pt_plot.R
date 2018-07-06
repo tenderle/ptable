@@ -2,7 +2,7 @@
 #'
 #' Function to plot the perturbation table using the R-package \code{\link{lattice}}.
 #'
-#' @param pert_table an object of class \code{\link{pert-table}}
+#' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param ylimit (numeric) vector with limits of y-axis (for probabilities)
 #'
 #'
@@ -16,10 +16,11 @@
 #' fifi_plot(ptable_destatis)
 #'
 #' # Export result
+#' \dontrun{
 #' pdf(paste("graph.pdf", sep=""))
 #'   print(fifi_plot(ptable_destatis))
 #' dev.off()
-#'
+#' }
 #' @rdname pt_plot
 #' @export
 #' @import lattice
@@ -29,7 +30,7 @@
 
 
 fifi_plot <- function(pert_table, ylimit=c(-0.05,0.95)){
-
+  v <- check <- i_info <- NULL
   params <- slot(pert_table, "pParams")
   timestamp <- slot(pert_table, "tStamp")
 

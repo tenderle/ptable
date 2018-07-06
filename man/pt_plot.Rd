@@ -7,7 +7,7 @@
 fifi_plot(pert_table, ylimit = c(-0.05, 0.95))
 }
 \arguments{
-\item{pert_table}{an object of class \code{\link{pert-table}}}
+\item{pert_table}{an object of class \code{\linkS4class{ptable}}}
 
 \item{ylimit}{(numeric) vector with limits of y-axis (for probabilities)}
 }
@@ -21,10 +21,11 @@ ptable_destatis <- pt_create_pTable(params=params, type="destatis")
 fifi_plot(ptable_destatis)
 
 # Export result
+\dontrun{
 pdf(paste("graph.pdf", sep=""))
   print(fifi_plot(ptable_destatis))
 dev.off()
-
+}
 }
 \author{
 Tobias Enderle

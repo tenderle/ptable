@@ -9,7 +9,9 @@
 #' @keywords perturbation table, visualisation, dashboard, flexdashboard, shiny
 #'
 #' @examples
+#' \dontrun{
 #' ptable()
+#' }
 #'
 #' @rdname ptable
 #' @export
@@ -17,6 +19,6 @@
 #' @import flexdashboard
 #'
 ptable <-function(){
-  filepath_windows <- paste(.libPaths(),"/ptable/pt_dashboard.Rmd",sep="")
-  rmarkdown::run(file = filepath_windows)
+  filepath_windows <- system.file(package="ptable", "pt_dashboard.Rmd")
+  run(file = filepath_windows)
 }
