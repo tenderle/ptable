@@ -28,7 +28,7 @@ produces perturbation table that is needed to add noise to statistical frequency
 }
 }
 \examples{
-(params <- pt_create_pParams(D=5, V=2, js=2, label="test"))
+(params <- pt_create_pParams(D=5, V=3, js=2, label="test"))
 \dontrun{
 pt_create_pTable(params=params, type="destatis")
 }
