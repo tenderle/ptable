@@ -10,7 +10,9 @@ ptable()
 Perturbation Table Visualizer
 }
 \examples{
+\dontrun{
 ptable()
+}
 
 }
 \author{
