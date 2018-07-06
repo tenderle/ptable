@@ -3,6 +3,7 @@
 export(fifi_plot)
 export(pt_create_pParams)
 export(pt_create_pTable)
+export(pt_export)
 export(ptable)
 exportClasses(ptable)
 exportClasses(ptable_params)

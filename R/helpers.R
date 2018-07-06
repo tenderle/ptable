@@ -151,16 +151,3 @@ fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format
 
 }
 
-pt_export <- function(input, file){
-
-  stopifnot(isS4(input))
-  stopifnot(class(input)=="ptable")
-
-  params <- slot(input, "pParams")
-  type <- slot(params, "type")
-  stopifnot(type=="destatis")
-
-  pTable <- slot(input, "pTable")[,c('i','v','p_int_ub'),]
-
-  write.table(pTable, file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE)
-}
