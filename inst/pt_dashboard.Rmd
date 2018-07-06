@@ -1,0 +1,137 @@
+---
+title: "Perturbation Table Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+### Parameter Input
+
+```{r}
+
+
+textInput("label", "Parturbation Label", paste("CKM_D",5,"_V",3*100,sep=""))
+
+sliderInput("D", label = "Maximum Perturbation (=D)",
+            min = 1, max = 10, value = 5, step = 1)
+numericInput(inputId="V", label="Variance (=V)", 
+             value=3, min = 0.1, max = 5, step = 0.1, width="100px")
+sliderInput("js", label = "Treshold (=js)",
+            min = 0, max = 5, value = 2, step = 1)
+sliderInput("pstay", label = "Probability of frequencies not to be perturbed (=pstay)",
+            min = 0, max = 1, value = 0, step = 0.05)
+
+checkboxInput("mono", "Set Monotony", value = TRUE, width = NULL)
+radioButtons("optim", "Set of objective functions (=optim)",
+               c("Standard" = 1,
+                 "Alternative" = 4))
+
+params <- reactive({
+  pt_create_pParams(D=input$D, V=input$V, js=input$js, pstay=input$pstay, label=input$label, mono=input$mono, optim=as.integer(input$optim))
+})
+res <- reactive( {
+  pt_create_pTable(params = params(), type="destatis")
+})
+```
+
+
+
+**Save the Output**
+
+```{r}
+downloadHandler(
+    filename = function() {
+      paste("data-", Sys.Date(), ".pdf", sep="")
+    },
+    contentType = "image/pdf",
+    outputArgs = "Graph",
+    content = function(file) {
+      pdf(file)
+        print(fifi_plot(res()))
+      dev.off()
+    }
+  )
+cat("\n")
+downloadHandler(
+    filename = function() {
+      paste("data-", Sys.Date(), ".csv", sep="")
+    },
+    contentType = "text/csv",
+    outputArgs = "pTable",
+    content = function(file) {
+      out <- res()
+      out@pTable[i>0,c("i","p","pert"),]
+      write.csv(out@pTable[i>0,c("i","p","v"),] ,file, row.names = FALSE)
+    }
+  )
+```
+
+
+Column 
+-----------------------------------------------------------------------
+
+
+
+### Input Object {data-width=175}
+
+```{r}
+renderPrint({
+  params()
+})
+```
+
+### Perturbation Table {data-width=60}
+
+```{r}
+renderTable({
+  out <- res()
+  out@pTable[i>0,c("i","p","v","p_int_ub"),]
+}, digits=10)
+```
+
+### Constraints Check {data-width=100}
+
+```{r}
+renderTable({
+  res()@empResults[i>0,,]
+}, digits=3)
+```
+
+
+
+### Legend {data-width=75}
+
+parameter     | description
+---------------- | ------------------------
+i  | original frequency
+j | target frequency
+p | perturbation probability
+v | perturbation value / noise
+p_int_ub | upper bound of p (within each frequency i)
+p_mean   | mean of probabilities for given original frequency
+p_var | variance of probabilities for given original frequency
+p_sum | sum of probabilities for given original frequency
+p_stay | probability for a given original frequency not to be perturbed
+
+
+Column 
+-----------------------------------------------------------------------
+
+### Visualization of the Perturbation Table
+
+```{r}
+renderPlot({
+  fifi_plot(res())
+})
+```
+
+
