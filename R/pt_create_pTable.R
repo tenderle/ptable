@@ -19,7 +19,7 @@
 #' @keywords perturbation table, sdc
 #'
 #' @examples
-#' (params <- pt_create_pParams(D=5, V=2, js=2, label="test"))
+#' (params <- pt_create_pParams(D=5, V=3, js=2, label="test"))
 #' \dontrun{
 #' pt_create_pTable(params=params, type="destatis")
 #' }
@@ -137,8 +137,8 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
 
       }
 
-      if (i > ncat) plot(v_current,p_new,type="b",main=paste("i>=",i-1," (symmetry)",sep=""), ylab="p", xlab="v")
-      else plot(v_current,p_new,type="b",main=paste("i=",i-1,sep=""), ylab="p", xlab="v")
+      #if (i > ncat) plot(v_current,p_new,type="b",main=paste("i>=",i-1," (symmetry)",sep=""), ylab="p", xlab="v")
+      #else plot(v_current,p_new,type="b",main=paste("i=",i-1,sep=""), ylab="p", xlab="v")
     }
 
     Matrix[i,i+v_current] <- p_new
