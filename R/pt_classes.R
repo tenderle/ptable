@@ -93,7 +93,7 @@ setClass("ptable",
            empResults=data.table(),
            pParams=NULL,
            tStamp=character(),
-           type="destatis"
+           type=character()
          ),
          validity=function(object) {
 
