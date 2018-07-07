@@ -17,7 +17,9 @@ Function to export ptable (csv).
 \examples{
 params <- pt_create_pParams(D=5, V=3, js=2, label="test")
 ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+\dontrun{
 pt_export(ptable_destatis,file="Test")
+}
 
 }
 \author{
