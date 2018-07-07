@@ -5,7 +5,7 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
-  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""),
+  epsilon = 1e-07, label = paste("D", D, "V", V * 100, sep = ""),
   pTableSize = 70)
 }
 \arguments{
