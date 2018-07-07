@@ -4,12 +4,14 @@
 \alias{fifi_plot}
 \title{pt_plot}
 \usage{
-fifi_plot(pert_table, ylimit = c(-0.05, 0.95))
+fifi_plot(pert_table, ylimit = c(-0.05, 0.95), file = NULL)
 }
 \arguments{
 \item{pert_table}{an object of class \code{\linkS4class{ptable}}}
 
 \item{ylimit}{(numeric) vector with limits of y-axis (for probabilities)}
+
+\item{file}{if not \code{NULL}, a path to a file where the graph is saved to as pdf}
 }
 \description{
 Function to plot the perturbation table using the R-package \code{\link{lattice}}.
@@ -20,11 +22,9 @@ params <- pt_create_pParams(D=5, V=2, label="Example")
 ptable_destatis <- pt_create_pTable(params=params, type="destatis")
 fifi_plot(ptable_destatis)
 
-# Export result
 \dontrun{
-pdf(paste("graph.pdf", sep=""))
-  print(fifi_plot(ptable_destatis))
-dev.off()
+## Export result
+fifi_plot(ptable_destatis, file="graph.pdf")
 }
 }
 \author{

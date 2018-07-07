@@ -4,7 +4,7 @@
 #'
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param ylimit (numeric) vector with limits of y-axis (for probabilities)
-#'
+#' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
 #'
 #' @author Tobias Enderle
 #' @keywords plot
@@ -15,22 +15,21 @@
 #' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
 #' fifi_plot(ptable_destatis)
 #'
-#' # Export result
 #' \dontrun{
-#' pdf(paste("graph.pdf", sep=""))
-#'   print(fifi_plot(ptable_destatis))
-#' dev.off()
+#' ## Export result
+#' fifi_plot(ptable_destatis, file="graph.pdf")
 #' }
 #' @rdname pt_plot
 #' @export
 #' @import lattice
 #' @import RColorBrewer
 #'
-
-
-
-fifi_plot <- function(pert_table, ylimit=c(-0.05,0.95)){
+fifi_plot <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   v <- check <- i_info <- NULL
+  if (!is.null(file)) {
+    stopifnot(is_scalar_character(file))
+  }
+
   params <- slot(pert_table, "pParams")
   timestamp <- slot(pert_table, "tStamp")
 
@@ -105,7 +104,11 @@ fifi_plot <- function(pert_table, ylimit=c(-0.05,0.95)){
               sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.1.0)",  sep=""))
 
   #update(p, par.settings = list(par.sub.text = list(lineheight = 5)))
-
-    return(p)
-
+  if (!is.null(file)) {
+    pdf(file=file)
+    print(p)
+    dev.off()
+    cat("graph saved to",shQuote(file),"\n")
+  }
+  return(p)
 }
