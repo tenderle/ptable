@@ -24,7 +24,7 @@
 #' @rdname pt_create_pParams
 #' @export
 #'
-pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=1.0e-7, label=paste("D",D,"V",V*100,sep=""), pTableSize=70){
+pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=0.0000001, label=paste("D",D,"V",V*100,sep=""), pTableSize=70){
 
   out <- new("ptable_params")
 

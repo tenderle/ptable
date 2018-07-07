@@ -50,31 +50,33 @@ res <- reactive( {
 **Save the Output**
 
 ```{r}
-downloadHandler(
-    filename = function() {
-      paste("data-", Sys.Date(), ".pdf", sep="")
-    },
-    contentType = "image/pdf",
-    outputArgs = "Graph",
-    content = function(file) {
-      pdf(file)
-        print(fifi_plot(res()))
-      dev.off()
-    }
-  )
-cat("\n")
-downloadHandler(
-    filename = function() {
-      paste("data-", Sys.Date(), ".csv", sep="")
-    },
-    contentType = "text/csv",
-    outputArgs = "pTable",
-    content = function(file) {
-      out <- res()
-      out@pTable[i>0,c("i","p","pert"),]
-      write.csv(out@pTable[i>0,c("i","p","v"),] ,file, row.names = FALSE)
-    }
-  )
+#downloadHandler(
+#    filename = function() {
+#      paste("data-", Sys.Date(), ".pdf", sep="")
+#    },
+#    contentType = "image/pdf",
+#    outputArgs = "Graph",
+#    content = function(file) {
+#      pdf(file)
+#        print(fifi_plot(res()))
+#      dev.off()
+#      # TODO: replace by new argument 'file'
+#    }
+#  )
+#cat("\n")
+#downloadHandler(
+#    filename = function() {
+#      paste("data-", Sys.Date(), ".csv", sep="")
+#    },
+#    contentType = "text/csv",
+#    outputArgs = "pTable",
+#    content = function(file) {
+#      out <- res()
+#      #out@pTable[i>0,c("i","p","pert"),]
+#      write.csv(out@pTable[i>0,c("i","j","p","v"),] ,file, row.names = FALSE)
+#      # TODO:replace by pt_export
+#    }
+#  )
 ```
 
 
