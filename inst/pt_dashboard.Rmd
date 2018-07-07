@@ -35,6 +35,8 @@ radioButtons("optim", "Set of objective functions (=optim)",
                c("Standard" = 1,
                  "Alternative" = 4))
 
+# TODO: input for pTableSize with respect to ncat.
+
 params <- reactive({
   pt_create_pParams(D=input$D, V=input$V, js=input$js, pstay=input$pstay, label=input$label, mono=input$mono, optim=as.integer(input$optim))
 })

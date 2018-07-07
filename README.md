@@ -81,9 +81,7 @@ However, a pre-set probability does neither hold for blocked frequencies (small 
 ## plot the ptable
 fifi_plot(ptable_destatis)
 ## ... and save the plot as pdf
-pdf(paste("graph.pdf", sep=""))
-   print(fifi_plot(ptable_destatis))
-dev.off()
+fifi_plot(ptable_destatis, file="graph.pdf")
 ```
 
 #### Export the perturbation table (e.g. for importing the file in tauargus)

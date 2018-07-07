@@ -11,6 +11,7 @@
 #' @param mono (logical) vector specifying optimization parameter for monotony condition
 #' @param epsilon (double)
 #' @param label (character) label of the Output
+#' @param pTableSize (number) defining the number of required columns if abs-formatted ptable is chosen as argument in \code{\link{pt_create_pTable}}
 #'
 #' @return an object of \code{\linkS4class{ptable_params}}
 #'
@@ -23,7 +24,7 @@
 #' @rdname pt_create_pParams
 #' @export
 #'
-pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=1.0e-7, label=paste("D",D,"V",V*100,sep="")){
+pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=1.0e-7, label=paste("D",D,"V",V*100,sep=""), pTableSize=70){
 
   out <- new("ptable_params")
 
@@ -33,6 +34,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   stopifnot(is_bare_integerish(js))
   stopifnot(is_bare_integerish(optim))
   stopifnot(is_bare_logical(mono))
+  stopifnot(is_bare_integerish(pTableSize))
 
   if (is.null(pstay)) pstay <- 0
   stopifnot(is_bare_numeric(pstay))
@@ -42,6 +44,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   else ncat <- D+js+1
   slot(out, "ncat") <- as.integer(ncat)
 
+  stopifnot(pTableSize >= ncat)
 
   label <- gsub(" ","_",label)
 
@@ -72,6 +75,8 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   slot(out, "epsilon") <- as.double(epsilon)
   slot(out, "label") <- as.character(label)
 
+  slot(out, "pTableSize") <- as.integer(pTableSize)
+  
   validObject(out)
   out
 }
