@@ -212,7 +212,8 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
   slot(out, "empResults") <- check
 
   slot(out, "tStamp") <- format(Sys.time(), "%Y%m%d%H%M%S")
-
+  slot(out, "type") <- type
+  
   validObject(out)
   out
 }
