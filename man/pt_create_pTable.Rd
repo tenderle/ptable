@@ -28,10 +28,12 @@ produces perturbation table that is needed to add noise to statistical frequency
 }
 }
 \examples{
-(params <- pt_create_pParams(D=5, V=3, js=2, label="test"))
-\dontrun{
-pt_create_pTable(params=params, type="destatis")
-}
+params_destatis <- pt_create_pParams(D=5, V=3, js=2, label="test")
+pt_create_pTable(params=params_destatis, type="destatis")
+
+params_abs <- pt_create_pParams(D=5, V=3, js=2, label="test", pTableSize=75)
+pt_create_pTable(params=params_abs, type="abs")
+
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}

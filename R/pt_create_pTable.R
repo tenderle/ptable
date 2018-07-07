@@ -19,10 +19,12 @@
 #' @keywords perturbation table, sdc
 #'
 #' @examples
-#' (params <- pt_create_pParams(D=5, V=3, js=2, label="test"))
-#' \dontrun{
-#' pt_create_pTable(params=params, type="destatis")
-#' }
+#' params_destatis <- pt_create_pParams(D=5, V=3, js=2, label="test")
+#' pt_create_pTable(params=params_destatis, type="destatis")
+#' 
+#' params_abs <- pt_create_pParams(D=5, V=3, js=2, label="test", pTableSize=75)
+#' pt_create_pTable(params=params_abs, type="abs")
+#' 
 #' @rdname pt_create_pTable
 #' @export
 #'
@@ -44,6 +46,8 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
   optim <- slot(pert_params, "optim")
   ncat <- slot(pert_params, "ncat")
   label <- slot(pert_params, "label")
+  
+  pTableSize <- slot(pert_params, "pTableSize")
 
   # Blocking: target frequencies that are not allowed
   if (js == 0) blocking <- NULL
@@ -187,7 +191,7 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
   if (type=="abs"){
 
     # Perturbation Table for cellKey(): type="abs"
-    pTableSize <- 75
+    #pTableSize <- 75
     nrows <- 256
 
     dt <- as.data.table(DF2)
@@ -195,11 +199,12 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
     p_values_symmetry <- dt[i==ncat, .(sample(v, nrows*(pTableSize-ncat), prob=p, replace=TRUE)), i]$V1
     dt <- as.data.table(matrix(c(p_values_small, p_values_symmetry), nrow=nrows))
 
-    attr(dt, "type") <- type
+    setattr(dt, "type", type)
     slot(out, "pTable") <- dt
 
   }
   if (type=="destatis"){
+    setattr(DF2, "type", type)
     slot(out, "pTable") <- as.data.table(DF2)
   }
 

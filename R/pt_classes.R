@@ -21,6 +21,7 @@ setClass("ptable_params",
            pstay="numeric",
            optim="integer",
            mono="logical",
+           pTableSize="integer",
            label="character"
          ),
          prototype=list(
@@ -32,6 +33,7 @@ setClass("ptable_params",
            pstay=numeric(),
            optim=integer(),
            mono=logical(),
+           pTableSize=integer(),
            label=character(),
            type=character()
          ),
@@ -43,6 +45,7 @@ setClass("ptable_params",
            stopifnot(is_double(object@pstay))
            stopifnot(is_integerish(object@optim))
            stopifnot(is_logical(object@mono))
+           
 
            #stopifnot(all(object@mTable>0))
 

@@ -5,7 +5,8 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
-  epsilon = 1e-07, label = paste("D", D, "V", V * 100, sep = ""))
+  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""),
+  pTableSize = 70)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum perturbation (scalar or vector)}
@@ -24,6 +25,8 @@ Target frequencies are defined by ...}
 \item{epsilon}{(double)}
 
 \item{label}{(character) label of the Output}
+
+\item{pTableSize}{(number) defining the number of required columns if abs-formatted ptable is chosen as argument in \code{\link{pt_create_pTable}}}
 }
 \value{
 an object of \code{\linkS4class{ptable_params}}
