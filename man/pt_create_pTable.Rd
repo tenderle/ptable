@@ -14,7 +14,7 @@ generated with \code{\link{pt_create_pParams}}}
 
 \item{monitoring}{(logical) output monitoring on/off}
 
-\item{debug}{(logical) debug monitoring on/off}
+\item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
 an object of \code{\linkS4class{ptable}}
