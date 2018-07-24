@@ -7,6 +7,7 @@
 #' @slot pstay numeric vector specifying parameter for non-perturbation
 #' @slot optim (integer) specifying optimization parameter for optimization function
 #' @slot mono (logical) vector specifying optimization parameter for monotony condition
+#' @slot pTableSize (integer) number of columns in pTable (abs-format)
 #' @slot label (character) label for output
 #' @name ptable_params-class
 #' @rdname ptable_params-class

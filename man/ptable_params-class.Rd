@@ -26,6 +26,8 @@ An S4 class to represent perturbation parameters
 
 \item{\code{mono}}{(logical) vector specifying optimization parameter for monotony condition}
 
+\item{\code{pTableSize}}{(integer) number of columns in pTable (abs-format)}
+
 \item{\code{label}}{(character) label for output}
 }}
 
