@@ -12,7 +12,7 @@
 #' generated with \code{\link{pt_create_pParams}}
 #' @param type (character) type of pTable (either 'abs' or 'destatis')
 #' @param monitoring (logical) output monitoring on/off
-#' @param debug (logical) debug monitoring on/off
+#' @param debugging (logical) debug monitoring on/off
 #'
 #' @return an object of \code{\linkS4class{ptable}}
 #'
