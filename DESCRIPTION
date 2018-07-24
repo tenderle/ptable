@@ -1,8 +1,8 @@
 Package: ptable
 Type: Package
-Date: 2018-07-07
+Date: 2018-07-24
 Title: Generation of perturbation tables
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", role = c("aut", "cre")),
           person("Sarah", "Giessing", email = "sarah.giessing@destatis.de", role = c("ctb")))
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>

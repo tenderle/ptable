@@ -3,6 +3,8 @@
 # fifi_matrix is used in ptable()
 fifi_matrix <- function(ncat, D, pstay=NULL, blocking=blocking){
 
+  pstay <- c(1,pstay)
+  
   nrows <- ncat + 1
   ncols <- nrows+D
 
