@@ -15,6 +15,10 @@ We have a first rough version with which interested users may play around. Feedb
 
 ### News
 
+#### Version 0.1.9
+
+-   Some updates of the dashboard (e.g. now diretly opens in webbrowser, download buttons)
+
 #### Version 0.1.8
 
 -   Updated live output of the main function `pt_create_pTable(..., monitoring=FALSE, debugging=FALSE)` (i.e., monitoring is for users, debugging for own purposes and will be removed in a stable version)
@@ -26,7 +30,7 @@ We have a first rough version with which interested users may play around. Feedb
 
 #### Version 0.1.6
 
--   feature: new function `pt_export()` to export ptable (csv format for tauargus)
+-   feature: new function `pt_export()` to export ptable (csv format used by [**tauargus**](https://github.com/sdcTools/tauargus))
 -   feature: new argument of function `fifi_plot()` in order to save graphical pdf output
 
 #### Version 0.1.5
@@ -127,11 +131,13 @@ fifi_plot(ptable_destatis, file="graph.pdf")
 pt_export(ptable_destatis,file="Test")
 ```
 
-### Dashboard
+### Dashboard (experimental status)
 
-To use the dashboard call
+To try the dashboard just call
 
 ``` r
 ## start the dashbaord
 ptable()
 ```
+
+The download buttons (for downloading the ptable and the graphics) only works within a browser.
