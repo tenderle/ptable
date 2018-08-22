@@ -4,7 +4,7 @@
 \alias{pt_create_pTable}
 \title{pt_create_pTable}
 \usage{
-pt_create_pTable(params, type, monitoring = FALSE)
+pt_create_pTable(params, type, monitoring = FALSE, debugging = FALSE)
 }
 \arguments{
 \item{params}{an object of class \code{\linkS4class{ptable_params}}
@@ -12,7 +12,9 @@ generated with \code{\link{pt_create_pParams}}}
 
 \item{type}{(character) type of pTable (either 'abs' or 'destatis')}
 
-\item{monitoring}{(logical) debug monitoring on/off}
+\item{monitoring}{(logical) output monitoring on/off}
+
+\item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
 an object of \code{\linkS4class{ptable}}

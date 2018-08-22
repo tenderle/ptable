@@ -13,6 +13,47 @@ This package is developed within the SGA `Open source tools for perturbative con
 
 We have a first rough version with which interested users may play around. Feedback (via issues) with regards to bugs or features requests are very welcome as well as pull-requests.
 
+### News
+
+#### Version 0.1.9
+
+-   Some updates of the dashboard (e.g. now diretly opens in webbrowser, download buttons)
+
+#### Version 0.1.8
+
+-   Updated live output of the main function `pt_create_pTable(..., monitoring=FALSE, debugging=FALSE)` (i.e., monitoring is for users, debugging for own purposes and will be removed in a stable version)
+-   Some first minor fixes of extended parameter setting (i.e. argument `pstay`)
+
+#### Version 0.1.7
+
+-   compatibility with R-package [**cellKey**](https://github.com/sdcTools/cellKey) (type of ptable: 'abs'/'destatis' formatted ptable)
+
+#### Version 0.1.6
+
+-   feature: new function `pt_export()` to export ptable (csv format used by [**tauargus**](https://github.com/sdcTools/tauargus))
+-   feature: new argument of function `fifi_plot()` in order to save graphical pdf output
+
+#### Version 0.1.5
+
+-   bugfixing: dashboard
+
+#### Version 0.1.1 - 0.1.4
+
+-   bugfixing: CRAN compatibility and minor fixes (e.g. depends)
+
+#### Version 0.1.0
+
+-   first uploaded version
+
+#### ToDo's
+
+-   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
+-   Add theoretical short description
+-   Add vignettes
+-   Improved `fifi_...`-functions
+-   Add test environment
+-   Improve accuracy of ptable by means of digits-functionality
+
 ### Installation
 
 The package can directly be installed from `github`
@@ -90,11 +131,13 @@ fifi_plot(ptable_destatis, file="graph.pdf")
 pt_export(ptable_destatis,file="Test")
 ```
 
-### Dashboard
+### Dashboard (experimental status)
 
-To use the dashboard call
+To try the dashboard just call
 
 ``` r
 ## start the dashbaord
 ptable()
 ```
+
+The download buttons (for downloading the ptable and the graphics) only works within a browser.

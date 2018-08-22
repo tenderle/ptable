@@ -11,7 +11,8 @@
 #' @param params an object of class \code{\linkS4class{ptable_params}}
 #' generated with \code{\link{pt_create_pParams}}
 #' @param type (character) type of pTable (either 'abs' or 'destatis')
-#' @param monitoring (logical) debug monitoring on/off
+#' @param monitoring (logical) output monitoring on/off
+#' @param debugging (logical) debug monitoring on/off
 #'
 #' @return an object of \code{\linkS4class{ptable}}
 #'
@@ -28,7 +29,7 @@
 #' @rdname pt_create_pTable
 #' @export
 #'
-pt_create_pTable <-function(params, type, monitoring=FALSE){
+pt_create_pTable <-function(params, type, monitoring=FALSE, debugging=FALSE){
   . <- v <- p <- NULL
   pert_params <- params
 
@@ -75,20 +76,21 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
 
   {
 
+    if (monitoring)
     cat("\nRow", i, ": original frequency i =",i-1,"\n------------------------------- \n")
 
     # Define Vector with possible target frequencies
     j<-seq(max(i-1-D,0),i-1+D,by=1)
 
-    if (monitoring==TRUE) cat("j1 ",j,"\n")
+    if (debugging) cat("j1 ",j,"\n")
 
     # Remove blocked target frequencies
     j<-j[ !(j %in% blocking) ]
-    if (monitoring==TRUE) cat("j2 ",j,"\n")
+    if (debugging) cat("j2 ",j,"\n")
 
     # Derive current vector with deviations
     v_current<-j-(i-1)
-    if (monitoring==TRUE) cat("v  ",v_current,"\n")
+    if (debugging) cat("v  ",v_current,"\n")
 
     # Initializing perturbation probabilities
     p_init <- Pinit[i,j+1]
@@ -105,6 +107,12 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
 
       while(check_pstay & check_var & (iter < 20) ) {
 
+        if (iter > 0) {
+          # If check_var='FALSE' then prevent a further WHILE-loop, otherwise reduce p_lb by 0.05 to allow smaller p_stay in order to fullfill the variance contraint
+          p_lb[which(v_current==0)] <- p_lb[which(v_current==0)]-0.05
+          p_lb <- ifelse(p_lb < epsilon[i-1] , epsilon[i-1], p_lb) # prevents negative values
+        }
+        
         iter <- iter + 1
         optout <- pt_optim_entropy(optim=optim[i-1],
                                  mono=mono[i-1],
@@ -119,7 +127,7 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
         check_var <- fifi_check_p(p=p_new,v=v_current)$p_var != V
         #check_pstay <- !(is.null(pstay))
 
-        if (monitoring==TRUE) {
+        if (debugging) {
           cat(paste("Variable ",i," - Iter ",iter,"\n",sep=""))
           cat(paste("check_var: ",check_var,"\n",sep=""))
           cat(paste("check_pstay: ",check_pstay,"\n",sep=""))
@@ -129,13 +137,10 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
 
         if ((i-1) %in% blocking) check_var <- FALSE # if blocking, then prevent a further WHILE-loop
 
-
-        # If check_var='FALSE' then prevent a further WHILE-loop, otherwise reduce p_lb by 0.05 to allow smaller p_stay in order to fullfill the variance contraint
-        p_lb[which(v_current==0)] <- p_lb[which(v_current==0)]-0.05
-        p_lb <- ifelse(p_lb < epsilon[i-1] , epsilon[i-1], p_lb) # prevents negative values
-
+        
+        
         chp <- fifi_check_p(p=p_new,v=v_current)$p_sum
-        if (monitoring==TRUE) cat("Sum of p: ",chp%%1,"\n")
+        if (debugging) cat("Sum of p: ",chp%%1,"\n")
         if (chp != 1)
           stop("\nThe variance parameter you set is too small!")
 
@@ -151,8 +156,10 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
 
     test <- rbind(v=v_current, p_init=p_init, p_lb=p_lb, p_new=p_new)
     colnames(test) <- j
-    print(test)
-    cat("\n")
+    if (monitoring){
+      print(test)
+      cat("\n")
+    }
 
   }
 
@@ -162,12 +169,14 @@ pt_create_pTable <-function(params, type, monitoring=FALSE){
   # Output Check: Constraints (1) Mean, (2) Variance and (5) sum of probabilities
   check <- cbind(fifi_check(P=Matrix, D=D, ncat=ncat), iter=as.integer(ITER))
 
-  cat("\nPerturbation probabilities: \n---------------------------\n\n")
-  print(round(Matrix,3))
-  cat("\n")
-  cat("Check of constraints (1), (2) and (5) plus further checks: \n----------------------------------------------------------\n\n")
-  print(check)
-  cat("\n")
+  if (monitoring==TRUE){
+    cat("\nPerturbation probabilities: \n---------------------------\n\n")
+    print(round(Matrix,3))
+    cat("\n")
+    cat("Check of constraints (1), (2) and (5) plus further checks: \n----------------------------------------------------------\n\n")
+    print(check)
+    cat("\n")
+  }
 
 
   Matrix[Matrix < 1.0e-7] <- 0

@@ -20,5 +20,5 @@
 #'
 ptable <-function(){
   filepath_windows <- system.file(package="ptable", "pt_dashboard.Rmd")
-  run(file = filepath_windows)
+  run(file = filepath_windows, shiny_args = list(launch.browser = TRUE))
 }
