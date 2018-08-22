@@ -15,6 +15,11 @@ We have a first rough version with which interested users may play around. Feedb
 
 ### News
 
+#### Version 0.1.10
+
+-   feature: graphic output of transition matrix (first version)
+-   feature: graphic output of perturbation panel (first version)
+
 #### Version 0.1.9
 
 -   Some updates of the dashboard (e.g. now diretly opens in webbrowser, download buttons)
