@@ -4,27 +4,27 @@
 \alias{fifi_plot}
 \title{pt_plot}
 \usage{
-fifi_plot(pert_table, ylimit = c(-0.05, 0.95), file = NULL)
+fifi_plot(obj, type = "d", file = NULL)
 }
 \arguments{
-\item{pert_table}{an object of class \code{\linkS4class{ptable}}}
+\item{obj}{an object of class \code{\linkS4class{ptable}}}
 
-\item{ylimit}{(numeric) vector with limits of y-axis (for probabilities)}
+\item{type}{(character) type of graph: distribution "d" (standard), perturbation panel ("p"), transition matrix "t"}
 
 \item{file}{if not \code{NULL}, a path to a file where the graph is saved to as pdf}
 }
 \description{
-Function to plot the perturbation table using the R-package \code{\link{lattice}}.
+Function to visualize the perturbation table.
 }
 \examples{
 # Simple Example
 params <- pt_create_pParams(D=5, V=2, label="Example")
 ptable_destatis <- pt_create_pTable(params=params, type="destatis")
-fifi_plot(ptable_destatis)
+fifi_plot(ptable_destatis, type="d")
 
 \dontrun{
 ## Export result
-fifi_plot(ptable_destatis, file="graph.pdf")
+fifi_plot(ptable_destatis, type="d", file="graph.pdf")
 }
 }
 \author{

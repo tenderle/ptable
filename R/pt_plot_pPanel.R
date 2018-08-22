@@ -12,14 +12,13 @@
 #' # Simple Example
 #' params <- pt_create_pParams(D=5, V=2, label="Example")
 #' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
-#' pt_plot_pPanel(ptable_destatis)
+#' fifi_plot(ptable_destatis, type="p")
 #'
 #' \dontrun{
 #' ## Export result
-#' pt_plot_pPanel(ptable_destatis, file="example_pPanel.pdf")
+#' fifi_plot(ptable_destatis, type="p", file="example_pPanel.png")
 #' }
 #' @rdname pt_plot_pPanel
-#' @export
 #' @import ggplot2
 #'
 pt_plot_pPanel <- function(pert_table, file=NULL){
@@ -74,7 +73,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
   if (!is.null(file)) {
     ggsave(filename=file, width=8, height=5)
-    cat("graph of transition matrix saved to",shQuote(file),"\n")
+    cat("graph of perturbation panel saved to",shQuote(file),"\n")
   }
   return(output)
   

@@ -17,8 +17,8 @@ We have a first rough version with which interested users may play around. Feedb
 
 #### Version 0.1.10
 
--   feature: graphic output of transition matrix (first version)
--   feature: graphic output of perturbation panel (first version)
+-   feature: graphic output of transition matrix `fifi_plot(..., type="t")` (first version)
+-   feature: graphic output of perturbation panel `fifi_plot(..., type="p")` (first version)
 
 #### Version 0.1.9
 
@@ -58,6 +58,7 @@ We have a first rough version with which interested users may play around. Feedb
 -   Improved `fifi_...`-functions
 -   Add test environment
 -   Improve accuracy of ptable by means of digits-functionality
+-   Add generic functions in pt\_methods.R, e.g. plot(...)
 
 ### Installation
 
@@ -128,6 +129,11 @@ However, a pre-set probability does neither hold for blocked frequencies (small 
 fifi_plot(ptable_destatis)
 ## ... and save the plot as pdf
 fifi_plot(ptable_destatis, file="graph.pdf")
+
+## Perturbation Panel
+fifi_plot(ptable_destatis, type="p")
+## Transition Matrix
+fifi_plot(ptable_destatis, type="t")
 ```
 
 #### Export the perturbation table (e.g. for importing the file in tauargus)

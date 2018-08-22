@@ -12,14 +12,13 @@
 #' # Simple Example
 #' params <- pt_create_pParams(D=5, V=2, label="Example")
 #' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
-#' pt_plot_tMatrix(ptable_destatis)
+#' fifi_plot(ptable_destatis, type="t")
 #'
 #' \dontrun{
 #' ## Export result
-#' pt_plot_tMatrix(ptable_destatis, file="example_tMatrix.pdf")
+#' fifi_plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
 #' }
 #' @rdname pt_plot_tMatrix
-#' @export
 #' @import ggplot2
 #' @import RColorBrewer
 #'
@@ -61,7 +60,7 @@ pt_plot_tMatrix <- function(pert_table, file=NULL){
   
   if (!is.null(file)) {
     ggsave(filename=file, width=8, height=5)
-    cat("graph of perturbation panel saved to",shQuote(file),"\n")
+    cat("graph of transition matrix saved to",shQuote(file),"\n")
   }
   return(output)
 }
