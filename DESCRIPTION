@@ -1,12 +1,12 @@
 Package: ptable
 Type: Package
-Date: 2018-07-27
+Date: 2018-09-29
 Title: Generation of perturbation tables
-Version: 0.1.9
+Version: 0.1.11
 Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", role = c("aut", "cre")),
           person("Sarah", "Giessing", email = "sarah.giessing@destatis.de", role = c("ctb")))
 Description: This package computes perturbation tables with probabilities or pre-drawn perturbation values.
-Imports: data.table,nloptr,RColorBrewer,flexdashboard,lattice,methods,rlang,rmarkdown
+Imports: data.table,nloptr,RColorBrewer,flexdashboard,lattice,methods,rlang,rmarkdown,ggplot2
 Suggests: cellKey, sdcTable
 License: EUPL
 Encoding: UTF-8
