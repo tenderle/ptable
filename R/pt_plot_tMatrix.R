@@ -43,12 +43,16 @@ pt_plot_tMatrix <- function(pert_table, file=NULL){
     labs(title="Transition Matrix", y="i (original frequency)", x="j (target frequency)") +
     theme(legend.position="bottom") +
     scale_fill_gradient(low = "white", high = "red", name="probability") +
-    geom_text(aes(label = round(p, 4)),  size=3) +
+    geom_text(aes(label = round(p, 4)),  size=4) +
     scale_x_discrete(position="top") +
     #scale_y_discrete(limits=rev(levels(i))) +
     #geom_rect(data=..., size=1, fill=NA, colour="black",
     #          aes(xmin=j - 0.5, xmax=j + 0.5, ymin=i - 0.5, ymax=i + 0.5)) +
-    theme(legend.position = "right",
+    theme(axis.text =element_text(size = 16),
+          axis.title = element_text(size = 18),
+          legend.title = element_text(size = 16),
+          legend.text = element_text(size = 16),
+      legend.position = "right",
           legend.background = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.major.x = element_blank(),

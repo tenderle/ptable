@@ -195,7 +195,7 @@ pt_create_pTable <-function(params, type, monitoring=FALSE, debugging=FALSE){
 
   #type <- slot(pert_params, "type")
   type <- tolower(type)
-  stopifnot(type %in% c("abs","destatis"))
+  stopifnot(type %in% c("abs","destatis", "abs2"))
 
   if (type=="abs"){
 
@@ -211,6 +211,23 @@ pt_create_pTable <-function(params, type, monitoring=FALSE, debugging=FALSE){
     setattr(dt, "type", type)
     slot(out, "pTable") <- dt
 
+  }
+  if (type=="abs2"){
+    
+    # TODO: add optimization
+    # Perturbation Table for cellKey(): type="abs2"
+    #pTableSize <- 75
+    nrows <- 256
+    
+    dt <- as.data.table(DF2)
+    p_values_small <- dt[i > 0,.(fifi_allocate(v=v, p=p, nrows = nrows) ),i]$V1
+    p_values_symmetry <- dt[i == ncat,.(fifi_allocate(v=v, p=p, nrows = nrows ) ),i]$V1
+    # TODO: in cae of symmetry: sampling must be repeated instead of replicating the vector
+    dt <- as.data.table(matrix(c(p_values_small, rep(p_values_symmetry, (pTableSize-ncat) )), nrow=nrows))
+    
+    setattr(dt, "type", type)
+    slot(out, "pTable") <- dt
+    
   }
   if (type=="destatis"){
     setattr(DF2, "type", type)

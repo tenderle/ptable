@@ -59,10 +59,14 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
   output <- s + geom_bar(stat="identity", position = "fill") + 
     coord_flip() + 
-    guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE))+
+    guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
     scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
     labs(title="Perturbation Panel", y="p (probability)", x="i (original frequency)") +
-    theme(legend.position = "bottom", 
+    theme(axis.text =element_text(size = 16),
+          axis.title = element_text(size = 18),
+          legend.title = element_text(size = 16),
+          legend.text = element_text(size = 16),
+          legend.position = "bottom", 
           legend.box.background = element_rect(colour = "grey"),
           legend.background = element_blank(),
           panel.grid.major.x = element_line(colour = "lightgrey"),
@@ -72,7 +76,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
     ylim(0,1)
   
   if (!is.null(file)) {
-    ggsave(filename=file, width=8, height=5)
+    ggsave(filename=file, width=6, height=5)
     cat("graph of perturbation panel saved to",shQuote(file),"\n")
   }
   return(output)

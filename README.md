@@ -15,6 +15,11 @@ We have a first rough version with which interested users may play around. Feedb
 
 ### News
 
+#### Version 0.1.11
+
+-   Some minor updates of graphic outputs (e.g. font sizes)
+-   Alternative allocation for abs implementation (argument `type="abs2"`) (intended to replace actual argument `type="abs"` and will be removed afterwards)
+
 #### Version 0.1.10
 
 -   feature: graphic output of transition matrix `fifi_plot(..., type="t")` (first version)
@@ -59,6 +64,7 @@ We have a first rough version with which interested users may play around. Feedb
 -   Add test environment
 -   Improve accuracy of ptable by means of digits-functionality
 -   Add generic functions in pt\_methods.R, e.g. plot(...)
+-   Add optimization for predrawn allocation if `type="abs"`
 
 ### Installation
 

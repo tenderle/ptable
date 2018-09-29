@@ -153,3 +153,46 @@ fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format
 
 }
 
+
+# Allocation function for ABS approach (i.e. if type="abs")
+# TODO: replace heuristic allocation function by optimization procedure
+
+fifi_allocate <- function(v, p, nrows=256){
+  
+  
+  
+  # empirical allocation frequencies and frequency sum
+  predrawn_freq <- round(p*nrows)
+  predrawn_freqsum <- sum(predrawn_freq)
+  
+  # probabilities of empirical frequency distribution
+  predrawn_p <- predrawn_freq/nrows
+  
+  
+  # difference between sample size (N=256) and empirical sum
+  diff <- nrows - predrawn_freqsum
+  
+  predrawn_freq_adj <- predrawn_freq
+  
+  # probabilities to be adjusted and indicator
+  adj <- sort(predrawn_p, decreasing = TRUE)[1:abs(diff)]
+  adj_ind <- predrawn_p %in% adj
+  
+  # adjustment to allocation
+  if (diff > 0) predrawn_freq_adj[ adj_ind ] <- predrawn_freq_adj[ adj_ind ] + 1
+  if (diff < 0) predrawn_freq_adj[ adj_ind ] <- predrawn_freq_adj[ adj_ind ] - 1
+  
+  # adjusted frequency distribution
+  adj_p <- predrawn_freq_adj/nrows
+  MW <- mean(adj_p%*%v)
+  V <- mean((adj_p)%*%(v^2))
+  
+  predrawn_values <- sample(rep(v, predrawn_freq_adj))
+  
+  
+  out <- list(predrawn_values= predrawn_values, adj_p=adj_p, predrawn_freq_adj=predrawn_freq_adj, N=sum(predrawn_freq_adj), MW=MW, VAR=V)
+  
+  return(predrawn_values)
+}
+
+

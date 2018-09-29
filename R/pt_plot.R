@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # Simple Example
-#' params <- pt_create_pParams(D=5, V=2, label="Example")
+#' params <- pt_create_pParams(D=2, V=1.08,js=1, mono=FALSE, label="Example")
 #' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
 #' fifi_plot(ptable_destatis, type="d")
 #'
