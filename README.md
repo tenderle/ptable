@@ -17,7 +17,7 @@ We have a first rough version with which interested users may play around. Feedb
 
 #### ToDo's
 
--   Merge the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
+-   Merge/Melt the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
 -   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
 -   Add theoretical short description
 -   Add vignettes (documentation)
