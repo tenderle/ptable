@@ -17,7 +17,7 @@ We have a first rough version with which interested users may play around. Feedb
 
 #### ToDo's
 
--   Merge/Melt the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
+-   Merge the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
 -   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
 -   Add theoretical short description
 -   Add vignettes (documentation)
@@ -28,7 +28,7 @@ We have a first rough version with which interested users may play around. Feedb
 -   Add generic functions in pt\_methods.R, e.g. plot(...)
 -   Update optimization for predrawn allocation if `type="abs"`
 
-#### Version 0.1.12
+#### Version 0.1.12/13
 
 -   Prepared for prototype testing
 
