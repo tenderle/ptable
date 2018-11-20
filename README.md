@@ -15,6 +15,23 @@ We have a first rough version with which interested users may play around. Feedb
 
 ### News
 
+#### ToDo's
+
+-   Merge the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
+-   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
+-   Add theoretical short description
+-   Add vignettes (documentation)
+-   Add error codes
+-   Improved `fifi_...`-functions
+-   Add test environment
+-   Improve accuracy of ptable by means of digits-functionality
+-   Add generic functions in pt\_methods.R, e.g. plot(...)
+-   Update optimization for predrawn allocation if `type="abs"`
+
+#### Version 0.1.12
+
+-   Prepared for prototype testing
+
 #### Version 0.1.11
 
 -   Some minor updates of graphic outputs (e.g. font sizes)
@@ -54,17 +71,6 @@ We have a first rough version with which interested users may play around. Feedb
 #### Version 0.1.0
 
 -   first uploaded version
-
-#### ToDo's
-
--   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
--   Add theoretical short description
--   Add vignettes
--   Improved `fifi_...`-functions
--   Add test environment
--   Improve accuracy of ptable by means of digits-functionality
--   Add generic functions in pt\_methods.R, e.g. plot(...)
--   Add optimization for predrawn allocation if `type="abs"`
 
 ### Installation
 
