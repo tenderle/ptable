@@ -1,0 +1,369 @@
+---
+title: "Introduction to the ptable-Package"
+author: "Tobias Enderle"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the ptable-Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: bibtex.bib
+---
+```{r, echo=FALSE}
+library(rmarkdown)
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+The cell-key method (CKM) based random noise approach is a post-tabular Statistical Disclosure Control (SDC) technique. Random noise will be added to each table cell, according to some noise probability distribution - also referred to as **perturbation table** - and a mechanism to draw from that noise distribution in the so-called lookup step. The perturbation table consists of transition probabilitites that describe the probabilities of transitioning from one state (e.g. a given original frequency count) to another (e.g. target frequency count). In other words, they are referred to as the probabilities of the random noises.
+
+The goal of this package is to produce perturbation tables that can be used for applying random noise to statistical tables (also described as "to perturb statistical tables") by SDC tools like the R-package [**cellKey**](https://github.com/sdcTools/cellKey) or the software [**Tau-Argus**](https://github.com/sdcTools/tauargus). 
+
+
+## Features of the package
+
+We now briefly mention the features of the **ptable** package before we actually show how to create perturbation tables in the following sections.
+
+
+### Main features
+
+As suggested in *@marley2011* and illustrated in *@giessing2016*  the package implements a maximum entropy approach to compute transition probabilities that guarantee certain characteristics for the random noise:
+
+- One of the main characteristics is the *unbiasedness* of the noise in the sense that the expected bias of each separate original frequency is 0. This important characteristic guarantees unbiasedness of the method independent of the distribution of original frequencies in a hypercube or set of hypercubes.
+
+- The perturbations have a *fixed noise variance* $\sigma^2$ that determines the spread of the possible noise values.
+
+- The perturbations will not produce negative cell values or positive cell values equal to or smaller than a specified threshold value js.
+
+- The absolute value of any perturbation is less than a specified integer value D.
+
+
+
+Up to now the main functionality of the package is separated into two steps:
+
+1. **Setting the parameters** using the function `pt_create_pParams()`: Users of the package are requested to define a noise variance `V=...`, a maximum perturbation value `D=...` and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. Further arguments of the function are presented in the following sections.
+
+2. **Computing the transition probabilities** using the function `pt_create_pTable()` given the result of step one (i.e. the parameter object). There are two approaches to perturb tables. They differ in the way record keys have to be specified, the format of the perturbation tables and the way, the actual lookup is done. Therefore, users are also requested to specify the format of the perturbation table by the argument `type`. The preferred and, hence, standard approach directly relies on the transition probabilities and is supported by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey) Therefore, the default type and format is set to the standard approach by `type="destatis"`. The output of the function `pt_create_pTable()` can directly be used as input argument by the function `perturbTable()` of the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+
+**Important Note:** In a future release after the prototype testing phase, these two functions may be merged into one function and, hence, one step.
+
+
+### Graphical User interface (GUI)
+In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a vizualisation mode using the function `ptable()` and allows users to experiment with different paramter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
+
+
+### Auxiliary features
+The ptable package provides auxiliary functions that allow to process the results of the function `pt_create_pTable()`.
+
+Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `fifi_plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 
+
+Further, `pt_export()` allows users to write the perturbation table into an external file. The format of the file can be specified such that it can be made available to [**Tau-Argus**](https://github.com/sdcTools/tauargus), the software SAS or, in a future release, to the commercial tabulation package **SuperSTAR**.
+
+
+
+
+
+## Examples of the main features
+
+### Load the Package
+```{r}
+library(ptable)
+packageVersion("ptable")
+```
+
+
+### E1. Minimal Parameter Setting and Computation of the Transition Probabilities
+
+#### E1.1 Minimal Parameter Setting
+```{r}
+# note:  all parameters except for maximum noise D and variance V have default values 
+params <- pt_create_pParams(D=2, V=1)
+```
+
+
+The minimum set of parameters that have to be specified are:
+
+- `D`: the maximum noise/perturbation (a positive integer) and
+- `V`: the noise or perturbation variance (a positive integer).
+
+The result of the above function is an object of class "ptable_params", that contains all information necessary for the computation of the perturbation probabilities.
+
+#### E1.2 Computation of the Transition Probabilities
+
+Once the parameters are set, the probabilities can be computed running:
+```{r}
+# note: the default approach is of type="destatis" (in a separate section we will show the difference when setting type="abs")
+ptable_destatis <- pt_create_pTable(params = params, type = "destatis")
+```
+
+The resulting object of class "ptable" contains the following slots:
+
+```{r}
+str(ptable_destatis)
+```
+
+The most relevant and important slots of the object are:
+
+- `pMatrix`: A matrix with the transition probabilities.
+- `pTable` & `dFrame`: Data frames needed for the lookup step of a SDC tool that can apply random noise to statistical tables (e.g. the [**cellKey**](https://github.com/sdcTools/cellKey) package or the software [**Tau-Argus**](https://github.com/sdcTools/tauargus)). However, in the following sections there will be explained, how the tables can be used or exported by auxiliary functions.
+- `pParams`: The input parameters that result from the preceding function `pt_create_pParams()`.
+- `empResults`: A data frame for output checking of the constraints.
+
+#### E1.2.1. The Transition Matrix
+Let's have a look at the transition matrix (i.e. at the slot `@pMatrix`) of the object `ptable_destatis`:
+
+```{r}
+# note: to look at a specific slot, just name the object and add the corresponding slot with a leading "@"
+ptable_destatis@pMatrix
+```
+Each row of the transition matrix represents the noise distribution for an original frequency count. The probability that an original frequency count of 1 becomes a 3 (i.e. the 1 is perturbed with a noise value of +2) is `r ptable_destatis@pMatrix[2,4]`.
+
+```{r}
+diag(ptable_destatis@pMatrix)
+```
+The main diagonal shows the preservation probabilities. These are the probabilities that the original frequencies remain unchanged. In this instance, the probability that an original frequency 2 remains unchanged is `r diag(ptable_destatis@pMatrix)[2+1]`. 
+
+#### E1.2.2. Symmetry - and what does it mean in the context of perturbation tables?
+
+As you may have recognized, the transition matrix has a finite number of rows (that represent original frequency counts) and columns (that represent the target frequency counts). 
+
+```{r}
+# let's have a look at the number of different original positive frequency counts that will be treated
+params@ncat
+# if this number is added by +1 (for the zero count) we get
+params@ncat + 1
+```
+The number depends on both, the maximum perturbation `D` and the threshold value `js`. The last row of the transition matrix delivers a symmetric distribution. This distribution will be applied to each original frequency larger than this frequency. 
+
+
+```{r} 
+# the object @pClasses shows all original frequencies that have their own distribution
+ptable_destatis@pClasses
+
+# symmetry is achieved for the original frequency count i=...
+max(ptable_destatis@pClasses)
+# or
+ptable_destatis@pClasses[params@ncat+1]
+```
+
+In the given example, each frequency count larger than `r max(ptable_destatis@pClasses)` will be perturbed according to the distribution
+for i=`r max(ptable_destatis@pClasses)`. For example, in case of i=3 the distribution reads as follows
+```{r, echo=FALSE} 
+a <- ptable_destatis@pMatrix[max(ptable_destatis@pClasses)+1,]
+names(a) <- as.character(c(1:5))
+a
+```
+or in case of i=12326
+```{r, echo=FALSE} 
+b <- ptable_destatis@pMatrix[max(ptable_destatis@pClasses)+1,]
+names(b) <- as.character(12326+c(-2:2))
+b
+```
+
+Given this symmetry, the transition matrix can be displayed in the reduced form. There is no need to define more rows than up to the case of symmetry. The number of columns is then defined by: *number of rows + maximum noise D + `js`*.
+
+#### E1.2.3. Output Checking and Troubleshooting
+Next, we will check the empirical results that can be used for troubleshooting:
+
+```{r}
+ptable_destatis@empResults
+```
+
+The matrix has the following columns:
+
+- `i`: indicates the original frequency to which the remeinaing columns are referred to
+- `p_mean`: shows the bias of the perturbation of an original frequency (should be zero: unbiasedness)
+- `p_var`: shows the noise variance of an original frequency (**Note:** If p_var differs from the chosen input parameter `V` - as it does in the example above - we have a violation of the fixed variance condition. In that case, we have to set a different variance parameter or to change other parameters!)
+- `p_sum`: the sum of the transition probabilities for an original frequency count must equal to 1
+- `p_stay`: corresponds to the diagonal of the transition matrix
+- `iter`: any value other than 1 points out discrepancies (e.g. violation of the fixed variance parameter)^[In case of extended parameter settings, i.e. setting the argument `pstay=...` the algorithm tries to reduce the pre-set pstay-value iteratively in order to fullfill the fixed variance condition.] 
+
+As can be seen in the example, the preset variance of `V=1` does not hold for the original frequency `i=1`. To fulfill the condition of a fixed variance, we re-run the computation with a different variance parameter. Let's try a variance parameter `V=0.9`:
+
+```{r}
+params_new <- pt_create_pParams(D=2, V=0.9)
+ptable_destatis_new <- pt_create_pTable(params = params_new, type = "destatis")
+ptable_destatis_new@empResults
+```
+
+The new computation with the updated variance parameter results in a perturbation table that fullfills all conditions. Of course, the resulting transition matrix now differs from the first one:
+
+```{r}
+ptable_destatis_new@pMatrix
+```
+
+***
+
+The goal of the following subsections is to create perturbation tables with extended and afterwards with advanced parameter settings of the function `pt_create_pParams()`.
+
+
+### E2. Extended Parameter Setting
+
+The remaining parameters (among others `js` and `pstay`), are set to default if not specified:
+
+- `js`:  the perturbations will not produce target frequencies equal to or below this threshold value (a non-negative integer; default: `js=0`)
+- `pstay`: the probability of an original frequency to remain unperturbed (a positive value; default: `pstay=NA` no preset probability; this default produces the maximum entropy solution) 
+- `mono`: monotony condition (logical; default: `mono=TRUE` to force monotony). The idea is to produce distributions where transition probabilities decrease monotonously when the distance of the target frequency to the original frequency increases.
+
+However, let's change and modify them with respect to our needs:
+
+#### E2.1 Setting the probability of an original frequency to remain unperturbed
+
+```{r}
+# note:  once again, check the diagonal entries
+params <- pt_create_pParams(D=4, V=1, pstay=0.5)
+ptable_e21 <- pt_create_pTable(params = params, type = "destatis")
+# note:  once again, check the empirical results or the diagonal entries
+ptable_e21@empResults
+diag(ptable_e21@pMatrix)
+```
+
+The probability of an original frequency to remain unperturbed (i.e. that the target frequency equals the original frequency) is set to `r diag(ptable_e21@pMatrix)[2]*100`%. In the advanced parameter settings we will learn how we can assign a specific parameter to each original frequency count.
+
+**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/tree/master/TargetedRecordSwapping] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonised protection of census data in the ESS".]
+
+#### E2.2 Do not allow for positive cell values equal to or below a specified threshold value
+
+```{r}
+# note:  ptable::pt_create_pTable(...) could also be used as input for argument "pTable"
+params <- pt_create_pParams(D=5, V=3, js=2)
+ptable_e22 <- pt_create_pTable(params = params, type = "destatis")
+ptable_e22@pMatrix
+```
+
+Since the threshold value `js` is set to 2, we do not allow target frequencies 1 and 2. Hence, the corresonding columns contain zero probabilities.
+
+**Important note regarding "*false zeroes*":** Since the possibility of false zeroes is an important strength of a perturbative SDC method, zeroes are always allowed and cannot be excluded from the set of target frequencies.
+
+Further parameters of the function `pt_create_pParams()` are explained in the help page that can be accessed by calling `?pt_create_pParams()`.
+
+
+### E3. Advanced Parameter Setting
+
+Several parameters of the function `pt_create_pParams()` that we have learned so far, can also be assigned to each original positive frequency count separately using the vector notation in R.
+
+First, we recommend to check how many different entries do we need. Therefore, let's begin with the simple parameter setting
+
+```{r}
+params <- pt_create_pParams(D=4, V=1)
+# and let's check the number of different positive original frequencies
+params@ncat 
+```
+
+Let's assume we want to assign different probabilities for `pstay`, one for each positive original count, we have to specify a vector of length `r params@ncat`:
+```{r}
+# note: so far we have used a scalar for "pstay"", but now we use a vector
+params <- pt_create_pParams(D=4, V=1, pstay=c(0.5,0.5,0.7,0.8))
+result <- pt_create_pTable(params=params, type="destatis")
+# let's check the results
+result@empResults
+```
+
+The perturbation table we just created is arranged such that 50% of ones and twoes, 70% of i=3 and 80% of all frequencies i>3 retain unperturbed.
+
+The same holds for the argument `mono`.
+
+## Examples of the auxiliary features
+
+### Analyzing and plotting the results
+
+
+```{r}
+# note:  in the example we are working with the result of the following parameter setting
+params <- pt_create_pParams(D=2, V=1.08, js=1, mono=c(TRUE,TRUE,FALSE,TRUE))
+result <- pt_create_pTable(params=params, type="destatis")
+```
+
+The resulting object `result` can now be plotted using the function `fifi_plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
+
+#### Plotting the Transition Probabilities in a Matrix
+
+```{r, fig.height=5, fig.width = 7}
+# note:  we have to use the argument type for specifying the plot
+fifi_plot(result, type = "t")
+```
+
+The transition matrix plot is a heatmap plot indicating the probability (the darker the background of a transition probability, the higher the probability). Since the threshold value is set to `js=1`, we don't allow for ones. That means, the target frequencies 1 are not allowed and, hence, the corresponding column in the transition matrix only consits of zero probabilities.
+
+#### Plotting the Perturbation Panel
+
+The perturbation table can be graphically represented as a perturbation panel:
+```{r, fig.height=5, fig.width = 7}
+fifi_plot(result, type="p")
+```
+Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored subbars corresponds to the respective transition probability.
+
+An original frequency count i=1 changes with probability 0.5133 to j = 0. The adjustment equals -1. Accordingly a light blue bar of length 0.5133 is drawn in the panel. With a probability of 0.46 the original i = 1 becomes j = 2, so the modification equals +1. A light green bar of length 0.46 is attached. Finally, with a probability of 0.0267 the original i = 1 becomes j = 3, so the modification equals +2. Accordingly a dark green bar of length 0.0267 is attached. This way, all probabilities for the row i = 1 of the perturbation table are shown in the panel. The probabilities for i = 2, 3 and 4 are shown in the panel in a similar way.
+
+It can be seen from the perturbation panel where the x-axis shown at the bottom with probability between 0 und 1 corresponds to a cumulative probability distribution.
+
+#### Plotting the Distribution of the Perturbation Values/Noise
+```{r, fig.height=5, fig.width = 7}
+fifi_plot(result, type="d")
+```
+
+The distribution plot of the perturbation/noise values is very helpful for designing the noise and troubleshooting. Each panel of the plot represents an original frequency count. The most important information of the empirical results (see section above) are also given within each panel: `M` shows the bias, `V` is the achieved variance (and not the preset variance parameter!). Further, violations are reported in red (e.g. in case of a not fullfilled fixed variance).
+
+#### Save the plot to a file
+
+The plots shown above can also be saved to a file (e.g. png, pdf):
+```{r, eval=FALSE }
+fifi_plot(result, type="d", file="graph.pdf")
+```
+
+
+### Exporting the results
+
+To use the perturbation table in SDC tools like **Tau-Argus** or **SAS**, users can export the result:
+```{r, eval=FALSE}
+# for Tau-Argus
+pt_export(result, file="ptable.csv", SDCtool="tauargus")
+# or for SAS
+pt_export(result, file="ptable.csv", SDCtool="SAS")
+```
+
+**IMPORTANT NOTE:** You can only export the file this way if the perturbation file was created by `pt_create_pTable()` using the default argument `type="destatis"`.
+
+
+
+
+## Troubleshooting Example: Violation of the fixed variance condition
+
+Let's assume we want to assign different probabilities for `pstay` as done in an example above, but with very large values:
+```{r}
+params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9))
+result <- pt_create_pTable(params=params, type="destatis")
+# let's check the results
+result@empResults
+```
+Since the values for `pstay` are too large to fullfill the fixed variance condition, the algorithm reduces the values of `pstay` iteratively. We then receive valid results for i=2,3 and 4. However, in case of i=1 it did not work. The variance differs and we violate the fixed variance condition. 
+
+By the way: The same conclusions can be drawn from the distribution plot in a more comfortable way
+```{r, fig.height=5, fig.width = 7}
+fifi_plot(result, type="d")
+```
+
+
+Consequently, we would now have to adjust the variance to `V=1.225` and re-run the computation:
+```{r, fig.height=5, fig.width = 7}
+params <- pt_create_pParams(D=4, V=1.225, pstay=c(0.8,0.9,0.9,0.9))
+result <- pt_create_pTable(params=params, type="destatis")
+fifi_plot(result, type="d")
+```
+
+
+Alternatively, we would can change the monotony condition for i=1:
+```{r, fig.height=5, fig.width = 7}
+params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
+result <- pt_create_pTable(params=params, type="destatis")
+fifi_plot(result, type="d")
+```
+
+
+# References

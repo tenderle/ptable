@@ -9,14 +9,13 @@ pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
   pTableSize = 70)
 }
 \arguments{
-\item{D}{perturbation parameter for maximum perturbation (scalar or vector)}
+\item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
 
 \item{V}{perturbation parameter for variance (scalar)}
 
-\item{js}{treshold value for blocking of small frequencies (i.e. there won't occur positive target frequencies below the treshold value)
-Target frequencies are defined by ...}
+\item{js}{treshold value for blocking of small frequencies (i.e. the perturbation will not produce positive cell values that are equal to or smaller than the treshold value).}
 
-\item{pstay}{optional parameter to set}
+\item{pstay}{optional parameter to set the probability (0 < p < 1) of an original frequency to remain unperturbed: NA (default) no preset probability (i.e. produces the maximum entropy solution)}
 
 \item{optim}{optimization parameter: \code{1} standard approach (default)}
 

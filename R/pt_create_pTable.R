@@ -1,16 +1,18 @@
 #' pt_create_pTable
 #'
 #' produces perturbation table that is needed to add noise to statistical frequency tables. The perturbation probabilities are constructed given the following constraints:
-#' 1. Zero mean
-#' 2. Constant variance
-#' 3. Probabilities are between zero and one
-#' 4.
-#' 5. probabilities sum up to 1
+#' - Unbiasedness of the noise
+#' - Fixed noise variance
+#' - Transition probabilities are between zero and one and the sum up to 1
+#' - Perturbations will not produce negaive cell values or positive cell values equal to or less than a specific threshold value 
+#' - The absolute value of any perturbation is less than a specific integer value (i.e. the maxiumum noise)
+#' 
+#' For more information, see the vignette using \code{pt_vignette()}.
 #' @md
 #'
 #' @param params an object of class \code{\linkS4class{ptable_params}}
 #' generated with \code{\link{pt_create_pParams}}
-#' @param type (character) type of pTable (either 'abs' or 'destatis')
+#' @param type (character) type of pTable, either 'destatis' (default) or 'abs' or 'abs2'
 #' @param monitoring (logical) output monitoring on/off
 #' @param debugging (logical) debug monitoring on/off
 #'
@@ -29,7 +31,7 @@
 #' @rdname pt_create_pTable
 #' @export
 #'
-pt_create_pTable <-function(params, type, monitoring=FALSE, debugging=FALSE){
+pt_create_pTable <-function(params, type="destatis", monitoring=FALSE, debugging=FALSE){
   . <- v <- p <- NULL
   pert_params <- params
 
@@ -41,6 +43,8 @@ pt_create_pTable <-function(params, type, monitoring=FALSE, debugging=FALSE){
   V <- slot(pert_params, "V")
   js <- slot(pert_params, "js")
   pstay <- slot(pert_params, "pstay")
+  pstay[is.na(pstay)] <- 0
+  
   mono <- slot(pert_params, "mono")
   epsilon <- slot(pert_params, "epsilon")
 
