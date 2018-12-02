@@ -4,13 +4,14 @@
 \alias{pt_create_pTable}
 \title{pt_create_pTable}
 \usage{
-pt_create_pTable(params, type, monitoring = FALSE, debugging = FALSE)
+pt_create_pTable(params, type = "destatis", monitoring = FALSE,
+  debugging = FALSE)
 }
 \arguments{
 \item{params}{an object of class \code{\linkS4class{ptable_params}}
 generated with \code{\link{pt_create_pParams}}}
 
-\item{type}{(character) type of pTable (either 'abs' or 'destatis')}
+\item{type}{(character) type of pTable, either 'destatis' (default) or 'abs' or 'abs2'}
 
 \item{monitoring}{(logical) output monitoring on/off}
 
@@ -21,13 +22,16 @@ an object of \code{\linkS4class{ptable}}
 }
 \description{
 produces perturbation table that is needed to add noise to statistical frequency tables. The perturbation probabilities are constructed given the following constraints:
-\enumerate{
-\item Zero mean
-\item Constant variance
-\item Probabilities are between zero and one
-\item 
-\item probabilities sum up to 1
+\itemize{
+\item Unbiasedness of the noise
+\item Fixed noise variance
+\item Transition probabilities are between zero and one and the sum up to 1
+\item Perturbations will not produce negaive cell values or positive cell values equal to or less than a specific threshold value
+\item The absolute value of any perturbation is less than a specific integer value (i.e. the maxiumum noise)
 }
+}
+\details{
+For more information, see the vignette using \code{pt_vignette()}.
 }
 \examples{
 params_destatis <- pt_create_pParams(D=5, V=3, js=2, label="test")

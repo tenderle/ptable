@@ -2,11 +2,10 @@
 #'
 #' creates the required input for \code{\linkS4class{ptable}}.
 #'
-#' @param D perturbation parameter for maximum perturbation (scalar or vector)
+#' @param D perturbation parameter for maximum noise/perturbation (scalar or vector)
 #' @param V perturbation parameter for variance (scalar)
-#' @param js treshold value for blocking of small frequencies (i.e. there won't occur positive target frequencies below the treshold value)
-#' Target frequencies are defined by ...
-#' @param pstay optional parameter to set
+#' @param js treshold value for blocking of small frequencies (i.e. the perturbation will not produce positive cell values that are equal to or smaller than the treshold value).
+#' @param pstay optional parameter to set the probability (0 < p < 1) of an original frequency to remain unperturbed: NA (default) no preset probability (i.e. produces the maximum entropy solution)
 #' @param optim optimization parameter: \code{1} standard approach (default)
 #' @param mono (logical) vector specifying optimization parameter for monotony condition
 #' @param epsilon (double)
@@ -36,8 +35,10 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   stopifnot(is_bare_logical(mono))
   stopifnot(is_bare_integerish(pTableSize))
 
-  if (is.null(pstay)) pstay <- 0
-  stopifnot(is_bare_numeric(pstay))
+  if (is.null(pstay)) pstay <- NA
+  #stopifnot(is_bare_numeric(pstay))
+  if(sum(c(0,1) %in% pstay) > 0)
+    stop(paste("Parameter 'pstay' must be larger than zero and smaller than one (i.e. 0 < pstay < 1)."))
 
 
   if (js==0) ncat <- D

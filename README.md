@@ -19,14 +19,23 @@ We have a first rough version with which interested users may play around. Feedb
 
 -   Merge the two main functions `pt_create_pParams(...)` and `pt_create_pTable(...)` into one function
 -   Allow for special cases: extended parameter setting, i.e. improved row-wise parameter settings
--   Add theoretical short description
--   Add vignettes (documentation)
 -   Add error codes
 -   Improved `fifi_...`-functions
 -   Add test environment
 -   Improve accuracy of ptable by means of digits-functionality
 -   Add generic functions in pt\_methods.R, e.g. plot(...)
 -   Update optimization for predrawn allocation if `type="abs"`
+
+#### Version 0.2.0
+
+-   Prototype Version for Testing (Census)
+
+#### Version 0.1.14
+
+-   feature: new argument `SDCtool` of function `pt_export()`: either "TauArgus" or "SAS"
+-   feature: vignette and new function `pt_vignette()` to show it
+-   updated default for argument `pstay` in function `pt_create_pParams()`
+-   updated default for argument `type` in function `pt_create_pTable()`
 
 #### Version 0.1.12/13
 
@@ -72,13 +81,12 @@ We have a first rough version with which interested users may play around. Feedb
 
 -   first uploaded version
 
-
 ### Installation
 
 The package can directly be installed from `github`
 
 ``` r
-devtools::install_github("sdcTools/ptable", build_vignette=FALSE)
+devtools::install_github("sdcTools/ptable", build_vignette=TRUE)
 ```
 
 ### Usage
