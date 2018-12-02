@@ -78,9 +78,9 @@ packageVersion("ptable")
 ```
 
 
-### E1. Minimal Parameter Setting and Computation of the Transition Probabilities
+### Minimal Parameter Setting and Computation of the Transition Probabilities
 
-#### E1.1 Minimal Parameter Setting
+#### Minimal Parameter Setting
 ```{r}
 # note:  all parameters except for maximum noise D and variance V have default values 
 params <- pt_create_pParams(D=2, V=1)
@@ -94,7 +94,7 @@ The minimum set of parameters that have to be specified are:
 
 The result of the above function is an object of class "ptable_params", that contains all information necessary for the computation of the perturbation probabilities.
 
-#### E1.2 Computation of the Transition Probabilities
+#### Computation of the Transition Probabilities
 
 Once the parameters are set, the probabilities can be computed running:
 ```{r}
@@ -115,7 +115,7 @@ The most relevant and important slots of the object are:
 - `pParams`: The input parameters that result from the preceding function `pt_create_pParams()`.
 - `empResults`: A data frame for output checking of the constraints.
 
-#### E1.2.1. The Transition Matrix
+#### The Transition Matrix
 Let's have a look at the transition matrix (i.e. at the slot `@pMatrix`) of the object `ptable_destatis`:
 
 ```{r}
@@ -129,7 +129,7 @@ diag(ptable_destatis@pMatrix)
 ```
 The main diagonal shows the preservation probabilities. These are the probabilities that the original frequencies remain unchanged. In this instance, the probability that an original frequency 2 remains unchanged is `r diag(ptable_destatis@pMatrix)[2+1]`. 
 
-#### E1.2.2. Symmetry - and what does it mean in the context of perturbation tables?
+#### Symmetry - and what does it mean in the context of perturbation tables?
 
 As you may have recognized, the transition matrix has a finite number of rows (that represent original frequency counts) and columns (that represent the target frequency counts). 
 
@@ -166,9 +166,9 @@ names(b) <- as.character(12326+c(-2:2))
 b
 ```
 
-Given this symmetry, the transition matrix can be displayed in the reduced form. There is no need to define more rows than up to the case of symmetry. The number of columns is then defined by: *number of rows + maximum noise D + `js`*.
+Given this symmetry, the transition matrix can be displayed in the reduced form. There is no need to define more rows than up to the case of symmetry.
 
-#### E1.2.3. Output Checking and Troubleshooting
+#### Output Checking and Troubleshooting
 Next, we will check the empirical results that can be used for troubleshooting:
 
 ```{r}
@@ -203,7 +203,7 @@ ptable_destatis_new@pMatrix
 The goal of the following subsections is to create perturbation tables with extended and afterwards with advanced parameter settings of the function `pt_create_pParams()`.
 
 
-### E2. Extended Parameter Setting
+### Extended Parameter Setting
 
 The remaining parameters (among others `js` and `pstay`), are set to default if not specified:
 
@@ -213,7 +213,7 @@ The remaining parameters (among others `js` and `pstay`), are set to default if 
 
 However, let's change and modify them with respect to our needs:
 
-#### E2.1 Setting the probability of an original frequency to remain unperturbed
+#### Setting the probability of an original frequency to remain unperturbed
 
 ```{r}
 # note:  once again, check the diagonal entries
@@ -228,7 +228,7 @@ The probability of an original frequency to remain unperturbed (i.e. that the ta
 
 **Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/tree/master/TargetedRecordSwapping] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonised protection of census data in the ESS".]
 
-#### E2.2 Do not allow for positive cell values equal to or below a specified threshold value
+#### Do not allow for positive cell values equal to or below a specified threshold value
 
 ```{r}
 # note:  ptable::pt_create_pTable(...) could also be used as input for argument "pTable"
@@ -244,7 +244,7 @@ Since the threshold value `js` is set to 2, we do not allow target frequencies 1
 Further parameters of the function `pt_create_pParams()` are explained in the help page that can be accessed by calling `?pt_create_pParams()`.
 
 
-### E3. Advanced Parameter Setting
+### Advanced Parameter Setting
 
 Several parameters of the function `pt_create_pParams()` that we have learned so far, can also be assigned to each original positive frequency count separately using the vector notation in R.
 
@@ -358,7 +358,7 @@ fifi_plot(result, type="d")
 ```
 
 
-Alternatively, we would can change the monotony condition for i=1:
+Alternatively, we can change the monotony condition for i=1:
 ```{r, fig.height=5, fig.width = 7}
 params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
 result <- pt_create_pTable(params=params, type="destatis")

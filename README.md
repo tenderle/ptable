@@ -26,7 +26,11 @@ We have a first rough version with which interested users may play around. Feedb
 -   Add generic functions in pt\_methods.R, e.g. plot(...)
 -   Update optimization for predrawn allocation if `type="abs"`
 
-### Version 0.1.14
+#### Version 0.2.0
+
+-   Prototype Version for Testing (Census)
+
+#### Version 0.1.14
 
 -   feature: new argument `SDCtool` of function `pt_export()`: either "TauArgus" or "SAS"
 -   feature: vignette and new function `pt_vignette()` to show it
@@ -76,7 +80,6 @@ We have a first rough version with which interested users may play around. Feedb
 #### Version 0.1.0
 
 -   first uploaded version
-
 
 ### Installation
 
