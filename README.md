@@ -13,6 +13,66 @@ This package is developed within the SGA `Open source tools for perturbative con
 
 We have a first rough version with which interested users may play around. Feedback (via issues) with regards to bugs or features requests are very welcome as well as pull-requests.
 
+### Installation
+
+The package can directly be installed from `github` using the `devtools` package which must be installed on your system
+
+``` r
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+
+# update all packages
+update.packages(ask=FALSE)
+
+# finally install the ptable package directly from github
+devtools::install_github("sdcTools/ptable", dependencies=c("Depends","Imports"), force=TRUE, build_opts="--build-vignettes")
+```
+
+If you experience a timeout due to a proxy server while downloading, one can work around this issue by specifying the proxy-server using the `hhtr` package:
+
+``` r
+httr::set_config(use_proxy(url="xxx.xxx.xxx.xxx, port=yy))
+```
+
+### Usage
+
+#### Load the package
+
+To load the package `ptable` you have to call
+
+``` r
+## load the package
+library(ptable)
+```
+
+#### Help
+
+``` r
+## help for specifying the perturbation parameters
+?pt_create_pParams
+
+## help for producing the perturbation table
+?pt_create_pTable
+```
+
+#### Documentation
+
+Once finished, the package will also contain a package **vignette**. The unfinished introduction vignette can be looked at using the following command:
+
+``` r
+pt_vignette()
+```
+
+#### Graphical User Interface (GUI)
+
+For first time users and visual learners there is a GUI. The unfinished dashboard can be started using the following command:
+
+``` r
+ptable()
+```
+
+The download buttons (for downloading the ptable and the graphics) only works within a browser.
+
 ### News
 
 #### ToDo's
@@ -80,63 +140,3 @@ We have a first rough version with which interested users may play around. Feedb
 #### Version 0.1.0
 
 -   first uploaded version
-
-### Installation
-
-The package can directly be installed from `github` using the `devtools` package which must be installed on your system
-
-``` r
-if (!require("devtools")) install.packages("devtools")
-library(devtools)
-
-# update all packages
-update.packages(ask=FALSE)
-
-# finally install the ptable package directly from github
-devtools::install_github("sdcTools/ptable", dependencies=c("Depends","Imports"), force=TRUE, build_opts="--build-vignettes")
-```
-
-If you experience a timeout due to a proxy server while downloading, one can work around this issue by specifying the proxy-server using the `hhtr` package:
-
-``` r
-httr::set_config(use_proxy(url="xxx.xxx.xxx.xxx, port=yy))
-```
-
-### Usage
-
-#### Load the package
-
-To load the package `ptable` you have to call
-
-``` r
-## load the package
-library(ptable)
-```
-
-#### Help
-
-``` r
-## help for specifying the perturbation parameters
-?pt_create_pParams
-
-## help for producing the perturbation table
-?pt_create_pTable
-```
-
-#### Documentation
-
-Once finished, the package will also contain a package **vignette**. The unfinished introduction vignette can be looked at using the following command:
-
-``` r
-pt_vignette()
-```
-
-### Graphical User Interface (GUI)
-
-For first time users and visual learners there is a GUI. The unfinished dashboard can be started using the following command:
-
-``` r
-ptable()
-```
-
-The download buttons (for downloading the ptable and the graphics) only works within a browser.
