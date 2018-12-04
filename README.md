@@ -83,10 +83,23 @@ We have a first rough version with which interested users may play around. Feedb
 
 ### Installation
 
-The package can directly be installed from `github`
+The package can directly be installed from `github` using the `devtools` package which must be installed on your system
 
 ``` r
-devtools::install_github("sdcTools/ptable", build_vignette=TRUE)
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+
+# update all packages
+update.packages(ask=FALSE)
+
+# finally install the ptable package directly from github
+devtools::install_github("sdcTools/ptable", dependencies=c("Depends","Imports"), force=TRUE, build_opts="--build-vignettes")
+```
+
+If you experience a timeout due to a proxy server while downloading, one can work around this issue by specifying the proxy-server using the `hhtr` package:
+
+``` r
+httr::set_config(use_proxy(url="xxx.xxx.xxx.xxx, port=yy))
 ```
 
 ### Usage
@@ -110,65 +123,19 @@ library(ptable)
 ?pt_create_pTable
 ```
 
-#### Basic Example
+#### Documentation
 
-This is a basic example which shows you how to solve a common problem with `D=3` (maximum deviation) and `V=0.7` (perturbation variance):
+Once finished, the package will also contain a package **vignette**. The unfinished introduction vignette can be looked at using the following command:
 
 ``` r
-## basic example code
-params <- pt_create_pParams(D=3, V=0.7)
-ptable_destatis <- pt_create_pTable(params = params, type="destatis")
-ptable_abs <- pt_create_pTable(params = params, type="abs")
+pt_vignette()
 ```
 
-#### Extended Example (prevent small frequencies)
+### Graphical User Interface (GUI)
 
-To prevent small frequencies (e.g. 1s and 2s) in perurbed frequency tables, you can set the treshold parameter `js=...` when specifying the perturbation table (i.e. all positive integers less equal `js` are no target frequencies for the perturbation and, hence, blocked):
-
-``` r
-## extended example code
-params <- pt_create_pParams(D=5, V=3, js=2)
-ptable_destatis <- pt_create_pTable(params = params, type="destatis")
-```
-
-#### Extended Example (prevent small frequencies and pre-setting of probabilities)
-
-Additionally, you can pre-set the probability that original frequencies won't be perturbed using the parameter `pstay=...`. In the following example the probability that values shouldn't be perturbed is pre-set to 50%:
+For first time users and visual learners there is a GUI. The unfinished dashboard can be started using the following command:
 
 ``` r
-## extended example code
-params <- pt_create_pParams(D=5, V=3, js=2, pstay=0.5)
-ptable_destatis <- pt_create_pTable(params = params, type="destatis")
-```
-
-However, a pre-set probability does neither hold for blocked frequencies (small frequencies such as 1s and 2s) nor for original zeroes. The probabilites for blocked frequencies are always `0` (i.e. they must be perturbed) and for original zeroes the probability is always `1` (i.e. zeroes won't be perturbed).
-
-#### Plot the perturbation table and save the plot
-
-``` r
-## plot the ptable
-fifi_plot(ptable_destatis)
-## ... and save the plot as pdf
-fifi_plot(ptable_destatis, file="graph.pdf")
-
-## Perturbation Panel
-fifi_plot(ptable_destatis, type="p")
-## Transition Matrix
-fifi_plot(ptable_destatis, type="t")
-```
-
-#### Export the perturbation table (e.g. for importing the file in tauargus)
-
-``` r
-pt_export(ptable_destatis,file="Test")
-```
-
-### Dashboard (experimental status)
-
-To try the dashboard just call
-
-``` r
-## start the dashbaord
 ptable()
 ```
 
