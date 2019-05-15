@@ -35,8 +35,7 @@ setClass("ptable_params",
            optim=integer(),
            mono=logical(),
            pTableSize=integer(),
-           label=character(),
-           type=character()
+           label=character()
          ),
          validity=function(object) {
            stopifnot(is_integerish(object@D))
@@ -46,7 +45,7 @@ setClass("ptable_params",
            stopifnot(is_double(object@pstay))
            stopifnot(is_integerish(object@optim))
            stopifnot(is_logical(object@mono))
-           
+
 
            #stopifnot(all(object@mTable>0))
 
