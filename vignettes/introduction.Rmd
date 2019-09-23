@@ -323,7 +323,7 @@ fifi_plot(result, type="d", file="graph.pdf")
 To use the perturbation table in SDC tools like **Tau-Argus** or **SAS**, users can export the result:
 ```{r, eval=FALSE}
 # for Tau-Argus
-pt_export(result, file="ptable.csv", SDCtool="tauargus")
+pt_export(result, file="ptable.csv", SDCtool="TauArgus")
 # or for SAS
 pt_export(result, file="ptable.csv", SDCtool="SAS")
 ```

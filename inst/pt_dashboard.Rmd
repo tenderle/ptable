@@ -75,7 +75,7 @@ downloadHandler(
     outputArgs = "pTable",
     content = function(file) {
       out <- res()
-      write.csv(out@pTable[i>0,c('i','j','p','v','p_int_ub'),] ,file, row.names = FALSE)
+      write.csv(out@pTable[i>=0,c('i','j','p','v','p_int_ub'),] ,file, row.names = FALSE)
       # TODO: replace by pt_export
       # pt_export(input = out, file = file)
     }
