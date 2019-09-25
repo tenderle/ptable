@@ -26,8 +26,14 @@ An S4 class to represent perturbation parameters
 
 \item{\code{mono}}{(logical) vector specifying optimization parameter for monotony condition}
 
-\item{\code{pTableSize}}{(integer) number of columns in pTable (abs-format)}
-
 \item{\code{label}}{(character) label for output}
+
+\item{\code{icat}}{(integer) categorized original frequencies i}
+
+\item{\code{table}}{(character) type of table: frequency counts (cnts) or magnitude (nums)}
+
+\item{\code{step}}{(numeric) step width between 0 and 1}
+
+\item{\code{type}}{(character) type of}
 }}
 

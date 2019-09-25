@@ -19,7 +19,7 @@ Function to plot the ditribution of the perturbation values using the R-package 
 \examples{
 # Simple Example
 params <- pt_create_pParams(D=5, V=2, label="Example")
-ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+ptable_destatis <- pt_create_pTable(params=params)
 fifi_plot(ptable_destatis, type="d")
 
 \dontrun{

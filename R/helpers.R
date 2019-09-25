@@ -7,6 +7,7 @@ fifi_matrix <- function(ncat, D, pstay=NULL, blocking=blocking){
   
   nrows <- ncat + 1
   ncols <- nrows+D
+  
 
   # probabilities for no perturbation
   Matrix<-diag(pstay,nrows,ncols)
@@ -20,6 +21,32 @@ fifi_matrix <- function(ncat, D, pstay=NULL, blocking=blocking){
   colnames(Matrix) <-  0:(ncols-1)
   rownames(Matrix) <- 0:ncat
 
+  return(Matrix)
+}
+
+fifi_matrix_nums <- function(ncat, D, pstay=NULL, blocking=blocking, step, I){
+  
+  pstay <- c(1,pstay)
+  
+  nrows <- ncat + 1
+
+  #J <- seq(from=max(min(I)-D,0), to=max(I)+D, by=step)
+  J <- seq(from=0, to=max(I)+D, by=step)
+  ncols <- length(J)
+  
+  # probabilities for no perturbation
+  Matrix<-matrix(0,nrows,ncols)
+  colnames(Matrix) <- J
+  rownames(Matrix) <- I
+  
+  diag(Matrix[ , which( colnames(Matrix) %in% rownames(Matrix) ) ]) <- pstay
+  
+  # blocked target frequencies
+  Matrix[,blocking+1] <- 0
+  
+  # Zero retains zero
+  Matrix[1,1]<-1
+  
   return(Matrix)
 }
 
@@ -88,11 +115,66 @@ fifi_devMat <- function(D=D, ncat=ncat){
 
 }
 
+fifi_devMat_nums <- function(Matrix){
+  rnames <- as.numeric(rownames(Matrix))
+  cnames <- as.numeric(colnames(Matrix))
+  out <- t(sapply(1:3, function(x) cnames - rnames[x]))
+  colnames(out) <- colnames(Matrix)
+  rownames(out) <- rownames(Matrix)
+  return(out)
+}
+
+fifi_check_nums <- function(P, D=D, ncat=ncat, Matrix){
+  
+  devMat <- fifi_devMat_nums(P)
+  
+  nrow <- nrow(P)
+  ncol <- nrow+D
+  
+  cat.i <- rownames(P)
+  
+  constr1 <- sapply(1:nrow, function(row) P[row,] %*%  devMat[row,] )
+  constr2 <- sapply(1:nrow, function(row) P[row,] %*%  (devMat[row,])^2 )
+  constr5 <- rowSums(P)
+  
+  p_stay <- diag(P[ , which( colnames(P) %in% rownames(P) ) ])
+  
+  out <- data.table(i=cat.i, p_mean=round(constr1,3), p_var=round(constr2,3), p_sum=round(constr5,10), p_stay=p_stay)
+  #rownames(out) <- c(0:cat.i)
+  
+  return(out)
+  
+}
+
+
+fifi_check_new <- function(DT){
+  
+  . <- i <- j <- p_mean <- p_var <- p_sum <- p <- NULL
+  
+  constr1 <- aggregate((p*v)~i, data=DT, sum)
+  constr2 <- aggregate((p*v^2)~i, data=DT,sum)
+  constr5 <- aggregate(p~i, data=DT,sum) 
+  pstay <- round(DT[i==j, c("i","p")],4)
+  
+  out <- data.table(i=constr1[,1], 
+                    p_mean=round(constr1[,2],5), 
+                    p_var=round(constr2[,2],5), 
+                    p_sum=round(constr5[,2],5))
+  
+  out <- merge(out, pstay, by="i", all = TRUE)
+  out$p[is.na(out$p)] <- 0
+  out <- out[,.(i, p_mean, p_var, p_sum, p_stay=p)]
+  
+  
+  return(out)
+  
+}
 
 
 fifi_df <- function(probMat,D, szenario, blocking, ncat) {
   "-<-" <- p_int_lb <- p_int_ub <- i_info <- NULL
-  devMat <- fifi_devMat(D=D, ncat=ncat)
+  #devMat <- fifi_devMat(D=D, ncat=ncat)
+  devMat <- fifi_devMat_nums(probMat)
 
   ncol <- ncol(probMat)
   nrow <- nrow(probMat)

@@ -6,3 +6,5 @@
 *.html
 Readme.Rmd
 inst/doc
+doc
+Meta

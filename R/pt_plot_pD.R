@@ -12,7 +12,7 @@
 #' @examples
 #' # Simple Example
 #' params <- pt_create_pParams(D=5, V=2, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+#' ptable_destatis <- pt_create_pTable(params=params)
 #' fifi_plot(ptable_destatis, type="d")
 #'
 #' \dontrun{
@@ -42,6 +42,7 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
 
   D <- slot(params, "D")
   VARIANZ <- slot(params, "V")
+  step <- slot(params, "step")
 
 
   mypanel_zwo<-function(x,y,...){
@@ -89,18 +90,16 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   dFrame <- slot(pert_table,"dFrame")
   type <- slot(pert_table,"type")
 
-  if(!type %in% c("destatis")) {
-    stop("type must be 'destatis'\n")
-  }
-
-  subFrame <- dFrame[v %in% seq(-5,5,by=1) & check == TRUE & i_info!="i=0",,]
+  subFrame <- copy(dFrame)
+  subFrame <- subFrame[v %in% seq(-5,5,by=step) & check == TRUE & i_info!="i=0",,]
+  
   p <- xyplot(p ~ v | i_info, data=subFrame, ylim=ylimit,
               xlab="v (=perturbation value)", ylab="p (=perturbation probability)",
               par.settings = my.settings,
               par.strip.text=list(col="white", font=1.5),
               panel=mypanel_zwo,
               main=attr(dFrame,"label"),
-              sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.1.0)",  sep=""))
+              sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.2.0)",  sep=""))
 
   #update(p, par.settings = list(par.sub.text = list(lineheight = 5)))
   if (!is.null(file)) {

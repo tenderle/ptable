@@ -99,7 +99,7 @@ The result of the above function is an object of class "ptable_params", that con
 Once the parameters are set, the probabilities can be computed running:
 ```{r}
 # note: the default approach is of type="destatis" (in a separate section we will show the difference when setting type="abs")
-ptable_destatis <- pt_create_pTable(params = params, type = "destatis")
+ptable_destatis <- pt_create_pTable(params = params)
 ```
 
 The resulting object of class "ptable" contains the following slots:
@@ -188,7 +188,7 @@ As can be seen in the example, the preset variance of `V=1` does not hold for th
 
 ```{r}
 params_new <- pt_create_pParams(D=2, V=0.9)
-ptable_destatis_new <- pt_create_pTable(params = params_new, type = "destatis")
+ptable_destatis_new <- pt_create_pTable(params = params_new)
 ptable_destatis_new@empResults
 ```
 
@@ -218,7 +218,7 @@ However, let's change and modify them with respect to our needs:
 ```{r}
 # note:  once again, check the diagonal entries
 params <- pt_create_pParams(D=4, V=1, pstay=0.5)
-ptable_e21 <- pt_create_pTable(params = params, type = "destatis")
+ptable_e21 <- pt_create_pTable(params = params)
 # note:  once again, check the empirical results or the diagonal entries
 ptable_e21@empResults
 diag(ptable_e21@pMatrix)
@@ -233,7 +233,7 @@ The probability of an original frequency to remain unperturbed (i.e. that the ta
 ```{r}
 # note:  ptable::pt_create_pTable(...) could also be used as input for argument "pTable"
 params <- pt_create_pParams(D=5, V=3, js=2)
-ptable_e22 <- pt_create_pTable(params = params, type = "destatis")
+ptable_e22 <- pt_create_pTable(params = params)
 ptable_e22@pMatrix
 ```
 
@@ -260,7 +260,7 @@ Let's assume we want to assign different probabilities for `pstay`, one for each
 ```{r}
 # note: so far we have used a scalar for "pstay"", but now we use a vector
 params <- pt_create_pParams(D=4, V=1, pstay=c(0.5,0.5,0.7,0.8))
-result <- pt_create_pTable(params=params, type="destatis")
+result <- pt_create_pTable(params=params)
 # let's check the results
 result@empResults
 ```
@@ -277,7 +277,7 @@ The same holds for the argument `mono`.
 ```{r}
 # note:  in the example we are working with the result of the following parameter setting
 params <- pt_create_pParams(D=2, V=1.08, js=1, mono=c(TRUE,TRUE,FALSE,TRUE))
-result <- pt_create_pTable(params=params, type="destatis")
+result <- pt_create_pTable(params=params)
 ```
 
 The resulting object `result` can now be plotted using the function `fifi_plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
@@ -338,7 +338,7 @@ pt_export(result, file="ptable.csv", SDCtool="SAS")
 Let's assume we want to assign different probabilities for `pstay` as done in an example above, but with very large values:
 ```{r}
 params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9))
-result <- pt_create_pTable(params=params, type="destatis")
+result <- pt_create_pTable(params=params)
 # let's check the results
 result@empResults
 ```
@@ -353,7 +353,7 @@ fifi_plot(result, type="d")
 Consequently, we would now have to adjust the variance to `V=1.225` and re-run the computation:
 ```{r, fig.height=5, fig.width = 7}
 params <- pt_create_pParams(D=4, V=1.225, pstay=c(0.8,0.9,0.9,0.9))
-result <- pt_create_pTable(params=params, type="destatis")
+result <- pt_create_pTable(params=params)
 fifi_plot(result, type="d")
 ```
 
@@ -361,7 +361,7 @@ fifi_plot(result, type="d")
 Alternatively, we can change the monotony condition for i=1:
 ```{r, fig.height=5, fig.width = 7}
 params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
-result <- pt_create_pTable(params=params, type="destatis")
+result <- pt_create_pTable(params=params)
 fifi_plot(result, type="d")
 ```
 

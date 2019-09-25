@@ -46,7 +46,7 @@ params <- reactive({
   pt_create_pParams(D=input$D, V=input$V, js=input$js, pstay=input$pstay, label=input$label, mono=input$mono, optim=as.integer(input$optim))
 })
 res <- reactive( {
-  pt_create_pTable(params = params(), type="destatis")
+  pt_create_pTable(params = params())
 })
 ```
 

@@ -10,7 +10,10 @@
 #' @param mono (logical) vector specifying optimization parameter for monotony condition
 #' @param epsilon (double)
 #' @param label (character) label of the Output
-#' @param pTableSize (number) defining the number of required columns if abs-formatted ptable is chosen as argument in \code{\link{pt_create_pTable}}
+#' @param step (numeric) step width
+#' @param icat (integer) categorized original frequencies i
+#' @param table (character) type of the table: frequency or magnitude table
+#' @param type (character) indicator for the extra column 'type' used for magnitude tables: 'even', 'odd' or 'all' (default)
 #'
 #' @return an object of \code{\linkS4class{ptable_params}}
 #'
@@ -23,7 +26,7 @@
 #' @rdname pt_create_pParams
 #' @export
 #'
-pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=0.0000001, label=paste("D",D,"V",V*100,sep=""), pTableSize=70){
+pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=0.00000001, label=paste("D",D,"V",V*100,sep=""), step=0.5, icat=NULL, table="cnts", type="all"){
 
   out <- new("ptable_params")
 
@@ -33,20 +36,39 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   stopifnot(is_bare_integerish(js))
   stopifnot(is_bare_integerish(optim))
   stopifnot(is_bare_logical(mono))
-  stopifnot(is_bare_integerish(pTableSize))
+  stopifnot(is_bare_numeric(step))
+  
 
   if (is.null(pstay)) pstay <- NA
   #stopifnot(is_bare_numeric(pstay))
   if(sum(c(0,1) %in% pstay) > 0)
     stop(paste("Parameter 'pstay' must be larger than zero and smaller than one (i.e. 0 < pstay < 1)."))
 
-
-  if (js==0) ncat <- D
-  else ncat <- D+js+1
+  if (table=="cnts"){
+    if (js==0) ncat <- D
+    else ncat <- D+js+1
+  }
+  if (table=="nums"){
+    ncat <- length(icat)
+    
+  }
+  
   slot(out, "ncat") <- as.integer(ncat)
+  
+  if (table=="cnts") {
+    cat(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'I' will be ignored."))
+    step <- 1
+    icat <- c(1:ncat)
+  }
 
-  stopifnot(pTableSize >= ncat)
-
+  if (table=="nums"){
+    icat <- c(icat)
+    
+    if ( (D/step) >= 50 )
+      stop(paste("Pleas reduce either 'D' or 'step' or both of them. 'D/step' isn't allowed to be larger than 50.\n"))
+  }
+  
+  
   label <- gsub(" ","_",label)
 
   if( (!is_scalar_vector(pstay)) && (length(pstay) != ncat) )
@@ -67,17 +89,20 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   slot(out, "D") <- as.integer(D)
   slot(out, "V") <- as.double(V)
   slot(out, "js") <- as.integer(js)
+  
+  slot(out, "icat") <- as.integer(icat)
 
   slot(out, "pstay") <- as.double(pstay)
   slot(out, "optim") <- as.integer(optim)
   slot(out, "mono") <- as.logical(mono)
-  #slot(out, "type") <- "destatis"
+  slot(out, "type") <- as.character(type)
 
   slot(out, "epsilon") <- as.double(epsilon)
-  slot(out, "label") <- as.character(label)
-
-  slot(out, "pTableSize") <- as.integer(pTableSize)
   
+  slot(out, "table") <- as.character(table)
+  slot(out, "step") <- as.double(step)
+  
+  slot(out, "label") <- as.character(label)
   validObject(out)
   out
 }
