@@ -47,8 +47,6 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   ttype <-  slot(pert_params, "type")
   
   mono <- slot(pert_params, "mono")
-  epsilon <- slot(pert_params, "epsilon")
-  
   optim <- slot(pert_params, "optim")
   ncat <- slot(pert_params, "ncat")
   label <- slot(pert_params, "label")
@@ -72,6 +70,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   RESULT[[1]]$dt <- data.table(i=0, j=0, v=0, p_init=1, p_lb=1,p_ub=1, p=1, p_int_ub=1, p_int_lb=0)
   
   ndigits <- 8
+  epsilon <- 1/10^ndigits
   options(digits=ndigits,scipen=ndigits)
   
   for (r in 2:nrows)     # looping through all frequencies categories (i.e. icat's)
@@ -107,7 +106,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
     # Initializing perturbation probabilities
     p_init <- rep(0,length(j))
     p_init[which(i==j)] <- pstay[r-1]
-    p_lb <- ifelse(p_init < epsilon[r-1] , epsilon[r-1], p_init) # lower bound: either initialized value or epsilon
+    p_lb <- ifelse(p_init < epsilon , epsilon, p_init) # lower bound: either initialized value or epsilon
     p_ub <- rep(1, length(v_current))
     if (debugging) {
       cat("i ",i,"\n")
@@ -132,7 +131,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
         if (iter > 0) {
           # If check_var=='FALSE' then prevent a further WHILE-loop, otherwise reduce p_lb by 0.05 to allow smaller p_stay in order to fullfill the variance contraint
           p_lb[which(v_current==0)] <- p_lb[which(v_current==0)]-0.05
-          p_lb <- ifelse(p_lb < epsilon[r-1] , epsilon[r-1], p_lb) # prevents negative values
+          p_lb <- ifelse(p_lb < epsilon , epsilon, p_lb) # prevents negative values
         }
         
         iter <- iter + 1
@@ -140,7 +139,6 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
                                    mono=mono[r-1],
                                    v=v_current,
                                    variance=V,
-                                   #epsilon=epsilon[i-1],
                                    lb=p_lb,
                                    ub=p_ub,
                                    ndigits=7)
@@ -206,10 +204,20 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
     
   }
   
+  
+  pSymmetry <- (2*(D/step))+1
+  
+  
+  
   # Perturbation Matrix
   erg_dt <- do.call(rbind, sapply(RESULT, '[', 'dt'))
   erg_dt[,i_info:=paste("i=",i,sep=""),]
-  erg_dt[i==max(as.integer(as.character(i))),i_info:=paste("i>=",i," (symmtery)",sep="")]
+  if (table=="cnts")
+    erg_dt[i==max(as.integer(as.character(i))),i_info:=paste("i>=",i," (symmtery)",sep="")]
+  
+  erg_dt[, symmetry:=.N, by = .(i)]
+  if (table=="nums")
+    erg_dt[symmetry==pSymmetry,i_info:=paste("i=",i," (symmtery)",sep="")]
   if (debugging) print(erg_dt)
   
   
@@ -255,7 +263,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   pTable[,p_int_ub:=round(p_int_ub, ndigits)]
   # IMPORTANT step: Due to rounding errors, 'p' is replaced by the differences of the rounded intervals
   pTable[, p := p_int_ub-p_int_lb ]
-  pTable <- pTable[,.(i,j,v,p,p_int_lb,p_int_ub, type)]
+  pTable <- pTable[,.(i,j,p,v,p_int_lb,p_int_ub, type)]
   
   
   # Ouput
@@ -264,11 +272,9 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   
   slot(out,"dFrame") <- DF
   slot(out, "pTable") <- pTable
-  slot(out, "RESULT") <- RESULT
-  
   slot(out, "pMatrix") <- as.matrix(Matrix)
-  slot(out, "pClasses") <- icat_
   
+  slot(out, "pClasses") <- icat_
   slot(out, "pParams") <- pert_params
   slot(out, "empResults") <- check
   

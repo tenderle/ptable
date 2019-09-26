@@ -18,8 +18,6 @@ An S4 class to represent perturbation parameters
 
 \item{\code{ncat}}{(integer) number of perturbation classes}
 
-\item{\code{epsilon}}{(numeric) optimization parameter}
-
 \item{\code{pstay}}{numeric vector specifying parameter for non-perturbation}
 
 \item{\code{optim}}{(integer) specifying optimization parameter for optimization function}

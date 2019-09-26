@@ -8,7 +8,6 @@
 #' @param pstay optional parameter to set the probability (0 < p < 1) of an original frequency to remain unperturbed: NA (default) no preset probability (i.e. produces the maximum entropy solution)
 #' @param optim optimization parameter: \code{1} standard approach (default)
 #' @param mono (logical) vector specifying optimization parameter for monotony condition
-#' @param epsilon (double)
 #' @param label (character) label of the Output
 #' @param step (numeric) step width
 #' @param icat (integer) categorized original frequencies i
@@ -26,7 +25,7 @@
 #' @rdname pt_create_pParams
 #' @export
 #'
-pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon=0.00000001, label=paste("D",D,"V",V*100,sep=""), step=0.5, icat=NULL, table="cnts", type="all"){
+pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="cnts", step=0.5, icat=NULL, type="all", label=paste("D",D,"V",V*100,sep="")){
 
   out <- new("ptable_params")
 
@@ -56,7 +55,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   slot(out, "ncat") <- as.integer(ncat)
   
   if (table=="cnts") {
-    cat(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'I' will be ignored."))
+    cat(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
     step <- 1
     icat <- c(1:ncat)
   }
@@ -83,7 +82,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   if(is_scalar_vector(pstay)) pstay <- rep(pstay, ncat)
   if(is_scalar_vector(optim)) optim <- rep(optim, ncat)
   if(is_scalar_vector(mono)) mono <- rep(mono, ncat)
-  if(is_scalar_vector(epsilon)) epsilon <- rep(epsilon, ncat)
+  
 
 
   slot(out, "D") <- as.integer(D)
@@ -97,8 +96,6 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, epsilon
   slot(out, "mono") <- as.logical(mono)
   slot(out, "type") <- as.character(type)
 
-  slot(out, "epsilon") <- as.double(epsilon)
-  
   slot(out, "table") <- as.character(table)
   slot(out, "step") <- as.double(step)
   

@@ -3,7 +3,6 @@
 #' @slot V (numeric) parameter for perturbation variance
 #' @slot js (integer) parameter for original counts not to be perturbed
 #' @slot ncat (integer) number of perturbation classes
-#' @slot epsilon (numeric) optimization parameter
 #' @slot pstay numeric vector specifying parameter for non-perturbation
 #' @slot optim (integer) specifying optimization parameter for optimization function
 #' @slot mono (logical) vector specifying optimization parameter for monotony condition
@@ -21,7 +20,6 @@ setClass("ptable_params",
            V="numeric",
            js="integer",
            ncat="integer",
-           epsilon="numeric",
            pstay="numeric",
            optim="integer",
            mono="logical",
@@ -36,7 +34,6 @@ setClass("ptable_params",
            V=numeric(),
            js=c(),
            ncat=integer(),
-           epsilon=double(),
            pstay=numeric(),
            optim=integer(),
            mono=logical(),
@@ -50,7 +47,6 @@ setClass("ptable_params",
            stopifnot(is_integerish(object@D))
            stopifnot(is_double(object@V))
            stopifnot(is_integerish(object@js))
-           stopifnot(is_double(object@epsilon))
            stopifnot(is_double(object@pstay))
            stopifnot(is_integerish(object@optim))
            stopifnot(is_logical(object@mono))
@@ -78,6 +74,9 @@ setClass("ptable_params",
            
            if( (object@step <= 0 | object@step > 1) )
              stop("Parameter 'step': must be a postivie value and less then 1.", call. = FALSE)
+           
+           if ((object@table=="nums") & is_empty(object@icat))
+             stop("You specified a freuency table (table='nums'). So, please define the argument 'icat' !")
            
            return(TRUE)
          })
@@ -107,8 +106,7 @@ setClass("ptable",
            pParams="ptable_params",
            tStamp="character",
            type="character",
-           table="character",
-           RESULT="list"
+           table="character"
          ),
          prototype=list(
            pMatrix=matrix(),
@@ -119,8 +117,7 @@ setClass("ptable",
            pParams=NULL,
            tStamp=character(),
            type=character(),
-           table=character(),
-           RESULT=list()
+           table=character()
          ),
          validity=function(object) {
 

@@ -5,9 +5,8 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, epsilon = 0.00000001, label = paste("D", D, "V", V *
-  100, sep = ""), step = 0.5, icat = NULL, table = "cnts",
-  type = "all")
+  mono = TRUE, table = "cnts", step = 0.5, icat = NULL,
+  type = "all", label = paste("D", D, "V", V * 100, sep = ""))
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -22,17 +21,15 @@ pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
 
 \item{mono}{(logical) vector specifying optimization parameter for monotony condition}
 
-\item{epsilon}{(double)}
-
-\item{label}{(character) label of the Output}
+\item{table}{(character) type of the table: frequency or magnitude table}
 
 \item{step}{(numeric) step width}
 
 \item{icat}{(integer) categorized original frequencies i}
 
-\item{table}{(character) type of the table: frequency or magnitude table}
-
 \item{type}{(character) indicator for the extra column 'type' used for magnitude tables: 'even', 'odd' or 'all' (default)}
+
+\item{label}{(character) label of the Output}
 }
 \value{
 an object of \code{\linkS4class{ptable_params}}
