@@ -29,7 +29,7 @@
 #'
 pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   . <- v <- p <- NULL
-  p_int_ub <- p_int_lb <- i_info <- type <- NULL
+  p_int_ub <- p_int_lb <- i_info <- type <- symmetry <- NULL
   pert_params <- params
   
   stopifnot(isS4(params))
@@ -229,7 +229,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   
   
   # Output Check: Constraints (1) Mean, (2) Variance and (5) sum of probabilities
-  check <- cbind(fifi_check_new(DT=erg_dt), 
+  check <- cbind(fifi_check_pTable(DT=erg_dt), 
                  iter=as.integer(do.call(rbind, sapply(RESULT, '[', 'iter'))) )
   
   if (monitoring==TRUE){

@@ -286,7 +286,7 @@ The resulting object `result` can now be plotted using the function `fifi_plot()
 
 ```{r, fig.height=5, fig.width = 7}
 # note:  we have to use the argument type for specifying the plot
-fifi_plot(result, type = "t")
+plot(result, type = "t")
 ```
 
 The transition matrix plot is a heatmap plot indicating the probability (the darker the background of a transition probability, the higher the probability). Since the threshold value is set to `js=1`, we don't allow for ones. That means, the target frequencies 1 are not allowed and, hence, the corresponding column in the transition matrix only consits of zero probabilities.
@@ -295,7 +295,7 @@ The transition matrix plot is a heatmap plot indicating the probability (the dar
 
 The perturbation table can be graphically represented as a perturbation panel:
 ```{r, fig.height=5, fig.width = 7}
-fifi_plot(result, type="p")
+plot(result, type="p")
 ```
 Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored subbars corresponds to the respective transition probability.
 
@@ -305,7 +305,7 @@ It can be seen from the perturbation panel where the x-axis shown at the bottom 
 
 #### Plotting the Distribution of the Perturbation Values/Noise
 ```{r, fig.height=5, fig.width = 7}
-fifi_plot(result, type="d")
+plot(result, type="d")
 ```
 
 The distribution plot of the perturbation/noise values is very helpful for designing the noise and troubleshooting. Each panel of the plot represents an original frequency count. The most important information of the empirical results (see section above) are also given within each panel: `M` shows the bias, `V` is the achieved variance (and not the preset variance parameter!). Further, violations are reported in red (e.g. in case of a not fullfilled fixed variance).
@@ -314,7 +314,7 @@ The distribution plot of the perturbation/noise values is very helpful for desig
 
 The plots shown above can also be saved to a file (e.g. png, pdf):
 ```{r, eval=FALSE }
-fifi_plot(result, type="d", file="graph.pdf")
+plot(result, type="d", file="graph.pdf")
 ```
 
 
@@ -346,7 +346,7 @@ Since the values for `pstay` are too large to fullfill the fixed variance condit
 
 By the way: The same conclusions can be drawn from the distribution plot in a more comfortable way
 ```{r, fig.height=5, fig.width = 7}
-fifi_plot(result, type="d")
+plot(result, type="d")
 ```
 
 
@@ -354,7 +354,7 @@ Consequently, we would now have to adjust the variance to `V=1.225` and re-run t
 ```{r, fig.height=5, fig.width = 7}
 params <- pt_create_pParams(D=4, V=1.225, pstay=c(0.8,0.9,0.9,0.9))
 result <- pt_create_pTable(params=params)
-fifi_plot(result, type="d")
+plot(result, type="d")
 ```
 
 
@@ -362,7 +362,7 @@ Alternatively, we can change the monotony condition for i=1:
 ```{r, fig.height=5, fig.width = 7}
 params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
 result <- pt_create_pTable(params=params)
-fifi_plot(result, type="d")
+plot(result, type="d")
 ```
 
 

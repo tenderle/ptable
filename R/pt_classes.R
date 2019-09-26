@@ -91,7 +91,6 @@ NULL
 #' @slot pParams a \code{\linkS4class{ptable_params}} object
 #' @slot tStamp (character) ...
 #' @slot type (character) 
-#' @slot RESULT (list) monitoring object
 #' @slot table (character) type of table: frequency counts (cnts) or magnitude (nums)
 #' @name ptable-class
 #' @rdname ptable-class

@@ -18,11 +18,11 @@ Function to plot the transition matrix using the R-package \code{\link{ggplot}}.
 # Simple Example
 params <- pt_create_pParams(D=5, V=2, label="Example")
 ptable_destatis <- pt_create_pTable(params=params)
-fifi_plot(ptable_destatis, type="t")
+plot(ptable_destatis, type="t")
 
 \dontrun{
 ## Export result
-fifi_plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
+plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
 }
 }
 \author{

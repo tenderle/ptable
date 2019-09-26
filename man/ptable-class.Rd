@@ -26,8 +26,6 @@ An S4 class to represent perturbation table
 
 \item{\code{type}}{(character)}
 
-\item{\code{RESULT}}{(list) monitoring object}
-
 \item{\code{table}}{(character) type of table: frequency counts (cnts) or magnitude (nums)}
 }}
 

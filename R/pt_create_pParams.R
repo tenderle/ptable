@@ -49,19 +49,24 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
   }
   if (table=="nums"){
     ncat <- length(icat)
-    
   }
   
   slot(out, "ncat") <- as.integer(ncat)
   
   if (table=="cnts") {
-    cat(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
+    message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
     step <- 1
     icat <- c(1:ncat)
   }
 
   if (table=="nums"){
     icat <- c(icat)
+    
+    if (!any(icat == 1))
+      stop(paste("There must be a 1 in 'icat'.\n"))
+    
+    if (!(length(icat) > 1))
+      stop(paste("Argument 'icat' must be of length 2.\n"))
     
     if ( (D/step) >= 50 )
       stop(paste("Pleas reduce either 'D' or 'step' or both of them. 'D/step' isn't allowed to be larger than 50.\n"))
