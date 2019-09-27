@@ -43,6 +43,7 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   pstay[is.na(pstay)] <- 0
   
   step <- slot(pert_params, "step")
+  stepwidth <- 1/step
   table <- slot(pert_params, "table")
   ttype <-  slot(pert_params, "type")
   
@@ -85,7 +86,8 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
     }
     
     # Define Vector with possible target frequencies
-    j<-seq(max(i-D,0),i+D,by=step)
+    j<-seq(max(i-D,0),i+D,by=stepwidth)
+    if (step!=1) j<- round(j,4)
     
     if (debugging) cat("j1 ",j,"\n")
     
@@ -93,9 +95,10 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
     j<-j[ !(j %in% blocking) ]
     if (debugging) cat("j2 ",j,"\n")
     
+    
     # Derive current vector with deviations
     v_current<-j-i
-    if (step!=1) v_current<- round(v_current,2)
+    if (step!=1) v_current<- round(v_current,4)
     if (debugging) {
       cat("v  ",v_current,"\n")
       cat("i_char  ",as.character(i),"\n")
@@ -205,8 +208,8 @@ pt_create_pTable <-function(params, monitoring=FALSE, debugging=FALSE){
   }
   
   
-  pSymmetry <- (2*(D/step))+1
-  
+  #pSymmetry <- (2*(D/step))+1
+  pSymmetry <- (2*(D*step))+1
   
   
   # Perturbation Matrix

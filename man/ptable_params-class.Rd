@@ -30,7 +30,7 @@ An S4 class to represent perturbation parameters
 
 \item{\code{table}}{(character) type of table: frequency counts (cnts) or magnitude (nums)}
 
-\item{\code{step}}{(numeric) step width between 0 and 1}
+\item{\code{step}}{(integer) step width between 0 and 1}
 
 \item{\code{type}}{(character) type of}
 }}

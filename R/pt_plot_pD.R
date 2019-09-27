@@ -91,7 +91,8 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   type <- slot(pert_table,"type")
 
   subFrame <- copy(dFrame)
-  subFrame <- subFrame[v %in% seq(-5,5,by=step) & check == TRUE & i_info!="i=0",,]
+  #subFrame <- subFrame[v %in% seq(-5,5,by=step) & check == TRUE & i_info!="i=0",,]
+  subFrame <- subFrame[v %in% round(seq(-5,5,by=1/step),4) & check == TRUE & i_info!="i=0",,]
   
   p <- xyplot(p ~ v | i_info, data=subFrame, ylim=ylimit,
               xlab="v (=perturbation value)", ylab="p (=perturbation probability)",

@@ -49,7 +49,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
   D <- slot(params, "D")
   step <- slot(params, "step")
-  D0 <- (D/step)+1
+  D0 <- (D*step)+1
   
   # Colors for perturbation values
   if (D0 <= 9){
@@ -90,7 +90,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
       coord_flip() + 
       guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
       #scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
-      scale_fill_manual(values=getPalette((2*D/step)+1)) +
+      scale_fill_manual(values=getPalette((2*D*step)+1)) +
       labs(title="Perturbation Panel", y="p (probability)", x="i (original frequency)") +
       theme(axis.text =element_text(size = 16),
             axis.title = element_text(size = 18),

@@ -9,7 +9,7 @@
 #' @param optim optimization parameter: \code{1} standard approach (default)
 #' @param mono (logical) vector specifying optimization parameter for monotony condition
 #' @param label (character) label of the Output
-#' @param step (numeric) step width
+#' @param step (integer) step width
 #' @param icat (integer) categorized original frequencies i
 #' @param table (character) type of the table: frequency or magnitude table
 #' @param type (character) indicator for the extra column 'type' used for magnitude tables: 'even', 'odd' or 'all' (default)
@@ -25,7 +25,7 @@
 #' @rdname pt_create_pParams
 #' @export
 #'
-pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="cnts", step=0.5, icat=NULL, type="all", label=paste("D",D,"V",V*100,sep="")){
+pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="cnts", step=2, icat=NULL, type="all", label=paste("D",D,"V",V*100,sep="")){
 
   out <- new("ptable_params")
 
@@ -35,7 +35,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
   stopifnot(is_bare_integerish(js))
   stopifnot(is_bare_integerish(optim))
   stopifnot(is_bare_logical(mono))
-  stopifnot(is_bare_numeric(step))
+  stopifnot(is_bare_integerish(step))
   
 
   if (is.null(pstay)) pstay <- NA
@@ -48,39 +48,48 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
     else ncat <- D+js+1
   }
   if (table=="nums"){
+    icat <- sort(unique(icat))
     ncat <- length(icat)
   }
   
   slot(out, "ncat") <- as.integer(ncat)
   
   if (table=="cnts") {
-    message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
+    message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored. Also, 'pstay' will be ignored in the current version."))
     step <- 1
     icat <- c(1:ncat)
   }
 
   if (table=="nums"){
-    icat <- c(icat)
     
-    if (!any(icat == 1))
-      stop(paste("There must be a 1 in 'icat'.\n"))
+    if (!all(is.na(pstay)) | js > 0)
+        message(paste("Since type of table is magnitude table (argument table is set to 'nums'), the input parameters 'js' and 'pstay' will be ignored in the current version."))
     
-    if (!(length(icat) > 1))
-      stop(paste("Argument 'icat' must be of length 2.\n"))
+    js <- 0
+    pstay <- NA
     
-    if ( (D/step) >= 50 )
-      stop(paste("Pleas reduce either 'D' or 'step' or both of them. 'D/step' isn't allowed to be larger than 50.\n"))
+    if (!all(c(1,D) %in% icat))
+      stop(paste("There must be 1 and 'D' in 'icat', e.g. 'icat=c(1,D)'.\n"), call. = FALSE)
+    
+    if (max(icat) > D)
+      stop(paste("The largest entry of 'icat' can be 'D'.\n"), call. = FALSE)
+    
+    #if (!(length(icat) > 1))
+    #  stop(paste("Argument 'icat' must be of length 2.\n"))
+    
+    if ( (D*step) >= 50 )
+      stop(paste("Pleas reduce either 'D' or 'step' or both of them. 'D/step' isn't allowed to be larger than 50.\n"), call. = FALSE)
   }
   
   
   label <- gsub(" ","_",label)
 
   if( (!is_scalar_vector(pstay)) && (length(pstay) != ncat) )
-    stop(paste("The length of parameter vector 'pstay' is ",length(pstay)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"))
+    stop(paste("The length of parameter vector 'pstay' is ",length(pstay)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"), call. = FALSE)
   if( (!is_scalar_vector(optim)) && (length(optim) != ncat) )
-    stop(paste("The length of parameter vector 'optim' is ",length(optim)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"))
+    stop(paste("The length of parameter vector 'optim' is ",length(optim)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"), call. = FALSE)
   if( (!is_scalar_vector(mono)) && (length(mono) != ncat) )
-    stop(paste("The length of parameter vector 'mono' is ",length(mono)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"))
+    stop(paste("The length of parameter vector 'mono' is ",length(mono)," but must be of length ",ncat," (Alternatively the parameter can be set as a scalar.)\n"), call. = FALSE)
 
 
   # replicate parameters if scalar
@@ -102,7 +111,7 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
   slot(out, "type") <- as.character(type)
 
   slot(out, "table") <- as.character(table)
-  slot(out, "step") <- as.double(step)
+  slot(out, "step") <- as.integer(step)
   
   slot(out, "label") <- as.character(label)
   validObject(out)

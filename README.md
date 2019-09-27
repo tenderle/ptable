@@ -101,6 +101,10 @@ works within a browser.
 -   Improve accuracy of ptable by means of digits-functionality
 -   Add generic functions in pt\_methods.R, e.g. plot(…)
 
+#### Version 0.3.1/2.
+
+-   minor updates (e.g. updated argument `step`)
+
 #### Version 0.3.0
 
 -   feature: ptables for magnitude tables

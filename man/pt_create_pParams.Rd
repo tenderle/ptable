@@ -5,7 +5,7 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, table = "cnts", step = 0.5, icat = NULL,
+  mono = TRUE, table = "cnts", step = 2, icat = NULL,
   type = "all", label = paste("D", D, "V", V * 100, sep = ""))
 }
 \arguments{
@@ -23,7 +23,7 @@ pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
 
 \item{table}{(character) type of the table: frequency or magnitude table}
 
-\item{step}{(numeric) step width}
+\item{step}{(integer) step width}
 
 \item{icat}{(integer) categorized original frequencies i}
 
