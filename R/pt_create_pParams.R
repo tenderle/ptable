@@ -20,8 +20,12 @@
 #' @keywords data
 #'
 #' @examples
+#' # parameter setting for frequency tables
 #' pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
 #'
+#' # parameter setting for magnitude tables
+#' pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
+#' 
 #' @rdname pt_create_pParams
 #' @export
 #'

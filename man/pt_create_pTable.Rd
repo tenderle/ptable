@@ -18,7 +18,7 @@ generated with \code{\link{pt_create_pParams}}}
 an object of \code{\linkS4class{ptable}}
 }
 \description{
-produces perturbation table that is needed to add noise to statistical frequency tables. The perturbation probabilities are constructed given the following constraints:
+produces perturbation table that is needed to add noise to statistical frequency or magnitude tables. The perturbation probabilities are constructed given the following constraints:
 \itemize{
 \item Unbiasedness of the noise
 \item Fixed noise variance
@@ -31,8 +31,13 @@ produces perturbation table that is needed to add noise to statistical frequency
 For more information, see the vignette using \code{pt_vignette()}.
 }
 \examples{
-params_destatis <- pt_create_pParams(D=5, V=3, js=2, label="test")
-pt_create_pTable(params=params_destatis)
+# ptable for frequency tables
+params_cnts <- pt_create_pParams(D=5, V=3, js=2, label="test")
+pt_create_pTable(params=params_cnts)
+
+# ptable for magnitude tables
+params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
+pt_create_pTable(params=params_nums)
 
 }
 \author{

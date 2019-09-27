@@ -1,6 +1,6 @@
 #' pt_create_pTable
 #'
-#' produces perturbation table that is needed to add noise to statistical frequency tables. The perturbation probabilities are constructed given the following constraints:
+#' produces perturbation table that is needed to add noise to statistical frequency or magnitude tables. The perturbation probabilities are constructed given the following constraints:
 #' - Unbiasedness of the noise
 #' - Fixed noise variance
 #' - Transition probabilities are between zero and one and the sum up to 1
@@ -21,8 +21,13 @@
 #' @keywords perturbation table, sdc
 #'
 #' @examples
-#' params_destatis <- pt_create_pParams(D=5, V=3, js=2, label="test")
-#' pt_create_pTable(params=params_destatis)
+#' # ptable for frequency tables
+#' params_cnts <- pt_create_pParams(D=5, V=3, js=2, label="test")
+#' pt_create_pTable(params=params_cnts)
+#' 
+#' # ptable for magnitude tables
+#' params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
+#' pt_create_pTable(params=params_nums)
 #' 
 #' @rdname pt_create_pTable
 #' @export

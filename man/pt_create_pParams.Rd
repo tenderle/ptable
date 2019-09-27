@@ -38,7 +38,11 @@ an object of \code{\linkS4class{ptable_params}}
 creates the required input for \code{\linkS4class{ptable}}.
 }
 \examples{
+# parameter setting for frequency tables
 pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
+
+# parameter setting for magnitude tables
+pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
 
 }
 \author{
