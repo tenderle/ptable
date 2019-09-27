@@ -2,6 +2,8 @@
 
 export(pt_create_pParams)
 export(pt_create_pTable)
+export(pt_ex_cnts)
+export(pt_ex_nums)
 export(pt_export)
 export(pt_vignette)
 export(ptable)
