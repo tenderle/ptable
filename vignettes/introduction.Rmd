@@ -45,31 +45,34 @@ As suggested in *@marley2011* and illustrated in *@giessing2016*  the package im
 
 
 
-Up to now the main functionality of the package is separated into two steps:
+Up to now the main functionality of the package is separated into **two steps**:
 
-1. **Setting the parameters** using the function `pt_create_pParams()`: Users of the package are requested to define a noise variance `V=...`, a maximum perturbation value `D=...` and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. Further arguments of the function are presented in the following sections.
+1. **Setting the parameters** using the function `pt_create_pParams()`: Users of the package are requested to define a noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the maximum noise) and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. The parameters can be defined for either frequency tables (using the argument `table='cnts'`) or magnitude tables (using the argument `table='nums'`). Further arguments of the function are presented in the following sections.
 
-2. **Computing the transition probabilities** using the function `pt_create_pTable()` given the result of step one (i.e. the parameter object). There are two approaches to perturb tables. They differ in the way record keys have to be specified, the format of the perturbation tables and the way, the actual lookup is done. Therefore, users are also requested to specify the format of the perturbation table by the argument `type`. The preferred and, hence, standard approach directly relies on the transition probabilities and is supported by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey) Therefore, the default type and format is set to the standard approach by `type="destatis"`. The output of the function `pt_create_pTable()` can directly be used as input argument by the function `perturbTable()` of the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+2. **Computing the transition probabilities** using the function `pt_create_pTable()` given the result of step one (i.e. the parameter object). The function computes transition probabilities and provides perturbation tables that are supported by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The output of the function `pt_create_pTable()` can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
 
-**Important Note:** In a future release after the prototype testing phase, these two functions may be merged into one function and, hence, one step.
+**Important Note:** In a future release after the prototype testing phase, these two functions _may_ be merged into one function and, hence, one step.
 
 
 ### Graphical User interface (GUI)
 In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a vizualisation mode using the function `ptable()` and allows users to experiment with different paramter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
 
+**Important Note:** The current GUI provides perturbation tables for frequency tables (`type='cnts'`) only.
 
 ### Auxiliary features
 The ptable package provides auxiliary functions that allow to process the results of the function `pt_create_pTable()`.
 
-Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `fifi_plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 
+Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 
 
-Further, `pt_export()` allows users to write the perturbation table into an external file. The format of the file can be specified such that it can be made available to [**Tau-Argus**](https://github.com/sdcTools/tauargus), the software SAS or, in a future release, to the commercial tabulation package **SuperSTAR**.
-
-
+Further, `pt_export()` allows users to write the perturbation table into an external file. The format of the file can be specified such that it can be made available to [**Tau-Argus**](https://github.com/sdcTools/tauargus) or the software SAS.
 
 
+# Frequency Tables {#fretab}
+
+_Note_: The following examples are illustrated for frequency tables with cell counts. Differences to magnitude tables with continuous/numeric variables are highlighted in the subsequent [section](#magtab). 
 
 ## Examples of the main features
+
 
 ### Load the Package
 ```{r}
@@ -79,6 +82,8 @@ packageVersion("ptable")
 
 
 ### Minimal Parameter Setting and Computation of the Transition Probabilities
+
+
 
 #### Minimal Parameter Setting
 ```{r}
@@ -98,7 +103,6 @@ The result of the above function is an object of class "ptable_params", that con
 
 Once the parameters are set, the probabilities can be computed running:
 ```{r}
-# note: the default approach is of type="destatis" (in a separate section we will show the difference when setting type="abs")
 ptable_destatis <- pt_create_pTable(params = params)
 ```
 
@@ -280,7 +284,7 @@ params <- pt_create_pParams(D=2, V=1.08, js=1, mono=c(TRUE,TRUE,FALSE,TRUE))
 result <- pt_create_pTable(params=params)
 ```
 
-The resulting object `result` can now be plotted using the function `fifi_plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
+The resulting object `result` can now be plotted using the function `plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
 
 #### Plotting the Transition Probabilities in a Matrix
 
@@ -328,7 +332,7 @@ pt_export(result, file="ptable.csv", SDCtool="TauArgus")
 pt_export(result, file="ptable.csv", SDCtool="SAS")
 ```
 
-**IMPORTANT NOTE:** You can only export the file this way if the perturbation file was created by `pt_create_pTable()` using the default argument `type="destatis"`.
+
 
 
 
@@ -365,5 +369,31 @@ result <- pt_create_pTable(params=params)
 plot(result, type="d")
 ```
 
+
+# Magnitude Tables {#magtab}
+
+## Simple Setting
+
+### Setting the parameters for magnitude tables
+
+There is a further argument `table` that can be used to define the type of the table. Default - if not specified in the function `pt_create_pParams()` - is `table='cnts'` for frequency tables. In case of magnitude tables, this argument must be set to `table='nums'` as followed:
+
+```{r}
+params_nums <- pt_create_pParams(D=2, V=1, table="nums", icat=c(1,2))
+```
+
+However, when specifying parameters for magnitude tables, users can also set the following arguments:
+
+- `icat` (mandatory): The categories for the interpolation.
+- `type` (optional): Distinction between odd and even numbers (see Giessing/Tent 2019).
+
+### Computation of transition matrix
+
+The computation of the perturbation table is done identically to the frequency case:
+```{r}
+res <- pt_create_pTable(params = params_nums)
+```
+
+## Setting different
 
 # References
