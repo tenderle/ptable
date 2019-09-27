@@ -49,11 +49,11 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
   # special ptab for small cells
   if (separation) {
     p_sc <- pt_create_pParams(
-      D = 10,
+      D = 5,
       V = 1,
       table = "nums",
-      step = 0.5,
-      icat = c(1, 3, 7, 10),
+      step = 5,
+      icat = c(1, 3, 5),
       type = "all")
     res$small_cells <- pt_create_pTable(p_sc)
   }
@@ -61,25 +61,25 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
   if (!parity) {
     p_all <- pt_create_pParams(
       D = 10,
-      V = 1,
+      V = 3,
       table = "nums",
-      step = 0.5,
+      step = 2,
       icat = c(1, 5, 10),
       type = "all")
     res$all <- pt_create_pTable(p_all)
   } else {
     p_even <- pt_create_pParams(
-      D = 10,
+      D = 8,
       V = 1,
       table = "nums",
-      step = 0.5,
-      icat = c(1, 5, 10),
+      step = 2,
+      icat = c(1, 5, 8),
       type = "even")
     p_odd <- pt_create_pParams(
-      D = 15,
+      D = 10,
       V = 2,
       table = "nums",
-      step = 1,
+      step = 4,
       icat = c(1, 10),
       type = "odd")
 
