@@ -18,9 +18,9 @@ Function to export perturbation table to Tau-Argus or SAS (as csv-file).
 }
 \examples{
 params <- pt_create_pParams(D=5, V=3, js=2, label="test")
-ptable_destatis <- pt_create_pTable(params=params)
+ptab <- pt_create_pTable(params=params)
 \dontrun{
-pt_export(ptable_destatis,file="Test", SDCtool="TauArgus")
+pt_export(ptab,file="Test", SDCtool="TauArgus")
 }
 
 }

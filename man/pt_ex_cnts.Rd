@@ -16,5 +16,5 @@ for quickly creating ptables to demonstate usage in other tools.
 }
 \examples{
 ptab <- pt_ex_cnts()
-plot(ptab)
+plot(ptab, type="t")
 }
