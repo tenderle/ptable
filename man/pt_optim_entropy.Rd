@@ -5,11 +5,7 @@
 \title{pt_optim_entropy}
 \usage{
 pt_optim_entropy(optim = optim, mono = mono, v = v,
-<<<<<<< HEAD
-  variance = variance, lb = p_lb, ub = p_ub)
-=======
   variance = variance, lb = p_lb, ub = p_ub, ndigits)
->>>>>>> 139a0b8c42ef6227e0ba278c06258140ba10d955
 }
 \arguments{
 \item{optim}{optimization paramter (1=standard, 2-4=further test implementations)}

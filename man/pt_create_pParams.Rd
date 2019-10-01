@@ -5,13 +5,8 @@
 \title{pt_create_pParams}
 \usage{
 pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-<<<<<<< HEAD
-  mono = TRUE, epsilon = 0.0000001, label = paste("D", D, "V", V *
-  100, sep = ""), pTableSize = 70)
-=======
   mono = TRUE, table = "cnts", step = 2, icat = NULL,
   type = "all", label = paste("D", D, "V", V * 100, sep = ""))
->>>>>>> 139a0b8c42ef6227e0ba278c06258140ba10d955
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
