@@ -68,11 +68,6 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     
   }
   
-  
-  
-  
-  
-  
   if (table1=="nums" & nr==2){
     params2 <- slot(inp[[2]], "pParams")
     table2 <- slot(params2, "table")
@@ -93,20 +88,9 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     pTable <- slot(inp[[1]], "pTable")
     pTable <- pTable[,c('i','j','p','v','p_int_ub','type'),]
     
-  }
-    
-  
-  
-  
-  
-  
+  } 
   write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
   
   return(pTable)
-  
-  
-  
+   
 }
-  
-  
- 

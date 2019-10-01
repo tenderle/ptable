@@ -56,8 +56,6 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
     ncat <- length(icat)
   }
   
-  
-  
   if (table=="cnts") {
     message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
     step <- 1
