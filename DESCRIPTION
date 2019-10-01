@@ -13,5 +13,5 @@ License: EUPL
 Encoding: UTF-8
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr

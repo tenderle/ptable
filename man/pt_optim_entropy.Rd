@@ -4,8 +4,8 @@
 \alias{pt_optim_entropy}
 \title{pt_optim_entropy}
 \usage{
-pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
-  lb = p_lb, ub = p_ub)
+pt_optim_entropy(optim = optim, mono = mono, v = v,
+  variance = variance, lb = p_lb, ub = p_ub)
 }
 \arguments{
 \item{optim}{optimization paramter (1=standard, 2-4=further test implementations)}

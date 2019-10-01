@@ -4,9 +4,9 @@
 \alias{pt_create_pParams}
 \title{pt_create_pParams}
 \usage{
-pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
-  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""),
-  pTableSize = 70)
+pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
+  mono = TRUE, epsilon = 0.0000001, label = paste("D", D, "V", V *
+  100, sep = ""), pTableSize = 70)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
