@@ -11,9 +11,9 @@
 #'
 #' @examples 
 #' params <- pt_create_pParams(D=5, V=3, js=2, label="test")
-#' ptable_destatis <- pt_create_pTable(params=params)
+#' ptab <- pt_create_pTable(params=params)
 #' \dontrun{
-#' pt_export(ptable_destatis,file="Test", SDCtool="TauArgus")
+#' pt_export(ptab,file="Test", SDCtool="TauArgus")
 #' }
 #' 
 #' @rdname pt_export
@@ -23,11 +23,12 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   
   stopifnot(SDCtool %in% c("TauArgus","SAS"))
   
-  #inp.names <- names(list(...))
+  inp.names <- names(list(...))
   inp <- list(...)
-  input <- eval(substitute(alist(...)))
+  #input <- eval(substitute(alist(...)))
   
   nr <- length(inp)
+  message(inp.names)
   
   if( !(nr %in% c(1,2)) )
     stop(paste("At least 1 but no more than 2 input objects \n"))
@@ -67,12 +68,7 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     
   }
   
-  
-  
-  
-  
-  
-  if (nr==2){
+  if (table1=="nums" & nr==2){
     params2 <- slot(inp[[2]], "pParams")
     table2 <- slot(params2, "table")
     type2 <- slot(params2, "type")
@@ -84,20 +80,17 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     
     pTable <- rbind(slot(inp[[1]], "pTable"),
                     slot(inp[[2]], "pTable"))
-    
     pTable <- pTable[,c('i','j','p','v','p_int_ub','type'),]
+    
   }
   
-  
-  
-  
-  write.table(pTable, file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE)
+  if (table1=="nums" & nr==1){
+    pTable <- slot(inp[[1]], "pTable")
+    pTable <- pTable[,c('i','j','p','v','p_int_ub','type'),]
+    
+  } 
+  write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
   
   return(pTable)
-  
-  
-  
+   
 }
-  
-  
- 

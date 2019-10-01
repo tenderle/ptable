@@ -56,14 +56,16 @@ pt_create_pParams <-function(D, V, js=0, pstay=NULL, optim=1, mono=TRUE, table="
     ncat <- length(icat)
   }
   
-  slot(out, "ncat") <- as.integer(ncat)
-  
   if (table=="cnts") {
-    message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored. Also, 'pstay' will be ignored in the current version."))
+    message(paste("Since type of table is frequency table (argument table is set to 'cnts'), the input parameters 'step' and 'icat' will be ignored."))
     step <- 1
-    icat <- c(1:ncat)
+    icat_extra <- icat[icat > ncat]
+    icat <- c(1:ncat, icat_extra)
+    ncat <- length(icat)
   }
 
+  slot(out, "ncat") <- as.integer(ncat)
+  
   if (table=="nums"){
     
     if (!all(is.na(pstay)) | js > 0)

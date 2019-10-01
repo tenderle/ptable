@@ -9,10 +9,10 @@
 #' @md
 #' @examples
 #' ptab <- pt_ex_cnts()
-#' plot(ptab)
+#' plot(ptab, type="t")
 pt_ex_cnts <- function() {
   suppressMessages(p <- pt_create_pParams(
-    D = 5, V = 3, table = "cnts"))
+    D = 2, V = 1.05, mono=c(T,T,F,T), js=1, table = "cnts"))
   pt_create_pTable(p)
 }
 
@@ -51,6 +51,7 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
     p_sc <- pt_create_pParams(
       D = 5,
       V = 1,
+      optim=c(4,1,1),
       table = "nums",
       step = 5,
       icat = c(1, 3, 5),
@@ -64,6 +65,7 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
       V = 3,
       table = "nums",
       step = 2,
+      optim=c(4,1,1),
       icat = c(1, 5, 10),
       type = "all")
     res$all <- pt_create_pTable(p_all)
@@ -78,6 +80,7 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
     p_odd <- pt_create_pParams(
       D = 10,
       V = 2,
+      optim=c(4,1),
       table = "nums",
       step = 4,
       icat = c(1, 10),
