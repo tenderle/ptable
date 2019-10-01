@@ -101,7 +101,15 @@ works within a browser.
 -   Improve accuracy of ptable by means of digits-functionality
 -   Add generic functions in pt\_methods.R, e.g. plot(…)
 
-#### Version 0.3.1/2.
+### Version 0.3.2.
+
+-   feature: generic function `plot` instead of `fifi_function`
+-   feature: functions `pt_ex_cnts()` and `pt_ex_nums()` for quick
+    examples
+-   updated vignette
+-   updated dashboard
+
+#### Version 0.3.1.
 
 -   minor updates (e.g. updated argument `step`)
 
