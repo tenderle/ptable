@@ -24,8 +24,8 @@ pt_ex_cnts <- function() {
 #' [pt_create_pTable()] with some default parameters. This is useful
 #' for quickly creating ptables to demonstate usage in other tools.
 #'
-#' @param parity a scalar logical; if `TRUE`, two ptables for even and odd
-#' numbers are created; if `FALSE`, only a single ptable will be generated
+#' @param parity a scalar logical; if `TRUE`, a single ptable will be generated.
+#' If `FALSE`, two ptables for even and odd numbers are created
 #' @param separation a scalar logical; if `TRUE`, an additional ptable with
 #' variance `1` will be returned that is designed to perturb small cell values
 #'
@@ -41,7 +41,7 @@ pt_ex_cnts <- function() {
 #'
 #' # different ptables for even/odd cells
 #' names(pt_ex_nums(parity = TRUE, separation = TRUE))
-pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
+pt_ex_nums <- function(parity = TRUE, separation = FALSE) {
   stopifnot(rlang::is_scalar_logical(parity))
   stopifnot(rlang::is_scalar_logical(separation))
 
@@ -59,7 +59,7 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
     res$small_cells <- pt_create_pTable(p_sc)
   }
 
-  if (!parity) {
+  if (parity) {
     p_all <- pt_create_pParams(
       D = 10,
       V = 3,
@@ -90,7 +90,7 @@ pt_ex_nums <- function(parity = FALSE, separation = FALSE) {
     res$odd = pt_create_pTable(p_odd)
   }
 
-  if (!parity & !separation) {
+  if (parity == TRUE & separation == FALSE) {
     return(res$all)
   } else {
     return(res[sort(names(res))])

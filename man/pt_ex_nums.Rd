@@ -4,11 +4,11 @@
 \alias{pt_ex_nums}
 \title{Quick ptables for numeric variables}
 \usage{
-pt_ex_nums(parity = FALSE, separation = FALSE)
+pt_ex_nums(parity = TRUE, separation = FALSE)
 }
 \arguments{
-\item{parity}{a scalar logical; if \code{TRUE}, two ptables for even and odd
-numbers are created; if \code{FALSE}, only a single ptable will be generated}
+\item{parity}{a scalar logical; if \code{TRUE}, a single ptable will be generated.
+If \code{FALSE}, two ptables for even and odd numbers are created}
 
 \item{separation}{a scalar logical; if \code{TRUE}, an additional ptable with
 variance \code{1} will be returned that is designed to perturb small cell values}
