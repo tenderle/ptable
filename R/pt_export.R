@@ -23,12 +23,12 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   
   stopifnot(SDCtool %in% c("TauArgus","SAS"))
   
-  #inp.names <- names(list(...))
+  inp.names <- names(list(...))
   inp <- list(...)
-  input <- eval(substitute(alist(...)))
+  #input <- eval(substitute(alist(...)))
   
   nr <- length(inp)
-  message(input)
+  message(inp.names)
   
   if( !(nr %in% c(1,2)) )
     stop(paste("At least 1 but no more than 2 input objects \n"))
