@@ -51,7 +51,6 @@ setClass("ptable_params",
            stopifnot(is_integerish(object@optim))
            stopifnot(is_logical(object@mono))
            stopifnot(is_integerish(object@icat))
-
            stopifnot(is_integerish(object@step))
 
            if (is_empty(object@label))
