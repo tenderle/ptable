@@ -1,7 +1,7 @@
 #' A quick ptable that can be used in various examples
 #'
 #' [pt_ex_cnts()] returns a perturbation table object from
-#' [pt_create_pTable()] with some default parameters. This is useful
+#' [create_cnt_ptable()] with some default parameters. This is useful
 #' for quickly creating ptables to demonstate usage in other tools.
 #'
 #' @return an object of [ptable-class]
@@ -9,11 +9,9 @@
 #' @md
 #' @examples
 #' ptab <- pt_ex_cnts()
-#' plot(ptab, type="t")
+#' plot(ptab, type = "t")
 pt_ex_cnts <- function() {
-  suppressMessages(p <- pt_create_pParams(
-    D = 2, V = 1.05, mono=c(T,T,F,T), js=1, table = "cnts"))
-  pt_create_pTable(p)
+  create_cnt_ptable(D = 2, V = 1.05, mono = c(TRUE, TRUE, FALSE, TRUE), js = 1)
 }
 
 # parity: two tables for even/odd numbers
@@ -21,7 +19,7 @@ pt_ex_cnts <- function() {
 #' Quick ptables for numeric variables
 #'
 #' [pt_ex_nums()] returns a perturbation table objects from
-#' [pt_create_pTable()] with some default parameters. This is useful
+#' [create_num_ptable()] with some default parameters. This is useful
 #' for quickly creating ptables to demonstate usage in other tools.
 #'
 #' @param parity a scalar logical; if `TRUE`, a single ptable will be generated.
@@ -48,46 +46,37 @@ pt_ex_nums <- function(parity = TRUE, separation = FALSE) {
   res <- list()
   # special ptab for small cells
   if (separation) {
-    p_sc <- pt_create_pParams(
+    res$small_cells <- create_num_ptable(
       D = 5,
       V = 1,
-      optim=c(4,1,1),
-      table = "nums",
+      optim = c(4, 1, 1),
       step = 5,
       icat = c(1, 3, 5),
       type = "all")
-    res$small_cells <- pt_create_pTable(p_sc)
   }
 
   if (parity) {
-    p_all <- pt_create_pParams(
+    res$all <- create_num_ptable(
       D = 10,
       V = 3,
-      table = "nums",
       step = 2,
       optim=c(4,1,1),
       icat = c(1, 5, 10),
       type = "all")
-    res$all <- pt_create_pTable(p_all)
   } else {
-    p_even <- pt_create_pParams(
+    res$even <- create_num_ptable(
       D = 8,
       V = 1,
-      table = "nums",
       step = 2,
       icat = c(1, 5, 8),
       type = "even")
-    p_odd <- pt_create_pParams(
+    res$odd <- create_num_ptable(
       D = 10,
       V = 2,
-      optim=c(4,1),
-      table = "nums",
+      optim = c(4, 1),
       step = 4,
       icat = c(1, 10),
       type = "odd")
-
-    res$even = pt_create_pTable(p_even)
-    res$odd = pt_create_pTable(p_odd)
   }
 
   if (parity == TRUE & separation == FALSE) {
