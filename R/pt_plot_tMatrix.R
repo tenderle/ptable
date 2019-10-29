@@ -10,12 +10,13 @@
 #'
 #' @examples
 #' # Simple Example
-#' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
-#' plot(ptab, type = "t")
+#' params <- pt_create_pParams(D=5, V=2, label="Example")
+#' ptable_destatis <- pt_create_pTable(params=params)
+#' plot(ptable_destatis, type="t")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptab, type ="t", file = "example_tMatrix.pdf")
+#' plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
 #' }
 #' @rdname pt_plot_tMatrix
 #' @import ggplot2

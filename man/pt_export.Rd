@@ -2,7 +2,7 @@
 % Please edit documentation in R/pt_export.R
 \name{pt_export}
 \alias{pt_export}
-\title{Export ptables as a csv-file}
+\title{pt_export}
 \usage{
 pt_export(..., file, SDCtool = "TauArgus")
 }
@@ -17,10 +17,12 @@ pt_export(..., file, SDCtool = "TauArgus")
 Function to export perturbation table to Tau-Argus or SAS (as csv-file).
 }
 \examples{
-ptab <- create_cnt_ptable(D = 5, V = 3, js = 2, label = "test")
+params <- pt_create_pParams(D=5, V=3, js=2, label="test")
+ptab <- pt_create_pTable(params=params)
 \dontrun{
-pt_export(ptab, file = "Test", SDCtool = "TauArgus")
+pt_export(ptab,file="Test", SDCtool="TauArgus")
 }
+
 }
 \author{
 Tobias Enderle

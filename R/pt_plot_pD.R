@@ -11,12 +11,13 @@
 #'
 #' @examples
 #' # Simple Example
-#' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
-#' plot(ptab, type = "d")
+#' params <- pt_create_pParams(D=5, V=2, label="Example")
+#' ptable_destatis <- pt_create_pTable(params=params)
+#' plot(ptable_destatis, type="d")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptab, type = "d", file = "graph.pdf")
+#' plot(ptable_destatis, type="d", file="graph.pdf")
 #' }
 #' @rdname pt_plot_pD
 #' @import lattice

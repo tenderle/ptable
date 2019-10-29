@@ -43,19 +43,21 @@ As suggested in *@marley2011* and illustrated in *@giessing2016*  the package im
 
 - The absolute value of any perturbation is less than a specified integer value D.
 
-Starting from versions `> 0.3.2`, functions `create_cnt_ptable()` and `create_num_ptable()` allow to create perturbation objects for count- and/or numeric variables in one step. The required inputs to both these functions are the noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the maximum noise) and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. Further arguments to these functions are presented in the following sections.
 
-In versions <= `0.3.2`, this process was separated into two parts:
 
-1: defining parameters using `pt_create_pParams()`
-2: creating the final perturbation outputs using `pt_create_pTable()`
+Up to now the main functionality of the package is separated into **two steps**:
 
-While this steps still work in newer versions of the package, it is however suggested to use functions `create_cnt_ptable()` and `create_num_ptable()` directly as they compute the required perturbation tables that can be used as inputs by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The outputs of these functions can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+1. **Setting the parameters** using the function `pt_create_pParams()`: Users of the package are requested to define a noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the maximum noise) and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. The parameters can be defined for either frequency tables (using the argument `table='cnts'`) or magnitude tables (using the argument `table='nums'`). Further arguments of the function are presented in the following sections.
+
+2. **Computing the transition probabilities** using the function `pt_create_pTable()` given the result of step one (i.e. the parameter object). The function computes transition probabilities and provides perturbation tables that are supported by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The output of the function `pt_create_pTable()` can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+
+**Important Note:** In a future release after the prototype testing phase, these two functions _may_ be merged into one function and, hence, one step.
+
 
 ### Graphical User interface (GUI)
 In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a vizualisation mode using the function `ptable()` and allows users to experiment with different paramter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
 
-**Important Note:** The current GUI provides perturbation tables for frequency tables (`type = 'cnts'`) only.
+**Important Note:** The current GUI provides perturbation tables for frequency tables (`type='cnts'`) only.
 
 ### Auxiliary features
 The ptable package provides auxiliary functions that allow to process the results of the function `pt_create_pTable()`.
@@ -78,22 +80,36 @@ library(ptable)
 packageVersion("ptable")
 ```
 
+
 ### Minimal Parameter Setting and Computation of the Transition Probabilities
-#### Computation of the Transition Probabilities
+
+
+
+#### Minimal Parameter Setting
 ```{r}
-# note: all parameters except for maximum noise D and variance V have default values 
-ptab <- create_cnt_ptable(D = 2, V = 1)
+# note:  all parameters except for maximum noise D and variance V have default values 
+params <- pt_create_pParams(D=2, V=1)
 ```
+
 
 The minimum set of parameters that have to be specified are:
 
 - `D`: the maximum noise/perturbation (a positive integer) and
 - `V`: the noise or perturbation variance (a positive integer).
 
-The result of the above function is an object of class "ptable" which contains the following slots:
+The result of the above function is an object of class "ptable_params", that contains all information necessary for the computation of the perturbation probabilities.
+
+#### Computation of the Transition Probabilities
+
+Once the parameters are set, the probabilities can be computed running:
+```{r}
+ptable_destatis <- pt_create_pTable(params = params)
+```
+
+The resulting object of class "ptable" contains the following slots:
 
 ```{r}
-str(ptab)
+str(ptable_destatis)
 ```
 
 The most relevant and important slots of the object are:
@@ -104,18 +120,18 @@ The most relevant and important slots of the object are:
 - `empResults`: A data frame for output checking of the constraints.
 
 #### The Transition Matrix
-Let's have a look at the transition matrix (i.e. at the slot `@pMatrix`) of the object `ptab`:
+Let's have a look at the transition matrix (i.e. at the slot `@pMatrix`) of the object `ptable_destatis`:
 
 ```{r}
 # note: to look at a specific slot, just name the object and add the corresponding slot with a leading "@"
-ptab@pMatrix
+ptable_destatis@pMatrix
 ```
-Each row of the transition matrix represents the noise distribution for an original frequency count. The probability that an original frequency count of 1 becomes a 3 (i.e. the 1 is perturbed with a noise value of +2) is `r ptab@pMatrix[2,4]`.
+Each row of the transition matrix represents the noise distribution for an original frequency count. The probability that an original frequency count of 1 becomes a 3 (i.e. the 1 is perturbed with a noise value of +2) is `r ptable_destatis@pMatrix[2,4]`.
 
 ```{r}
-diag(ptab@pMatrix)
+diag(ptable_destatis@pMatrix)
 ```
-The main diagonal shows the preservation probabilities. These are the probabilities that the original frequencies remain unchanged. In this instance, the probability that an original frequency 2 remains unchanged is `r diag(ptab@pMatrix)[2+1]`. 
+The main diagonal shows the preservation probabilities. These are the probabilities that the original frequencies remain unchanged. In this instance, the probability that an original frequency 2 remains unchanged is `r diag(ptable_destatis@pMatrix)[2+1]`. 
 
 #### Symmetry - and what does it mean in the context of perturbation tables?
 
@@ -123,7 +139,6 @@ As you may have recognized, the transition matrix has a finite number of rows (t
 
 ```{r}
 # let's have a look at the number of different original positive frequency counts that will be treated
-params <- slot(ptab, "pParams")
 params@ncat
 # if this number is added by +1 (for the zero count) we get
 params@ncat + 1
@@ -133,24 +148,24 @@ The number depends on both, the maximum perturbation `D` and the threshold value
 
 ```{r} 
 # the object @pClasses shows all original frequencies that have their own distribution
-ptab@pClasses
+ptable_destatis@pClasses
 
 # symmetry is achieved for the original frequency count i=...
-max(ptab@pClasses)
+max(ptable_destatis@pClasses)
 # or
-ptab@pClasses[params@ncat+1]
+ptable_destatis@pClasses[params@ncat+1]
 ```
 
-In the given example, each frequency count larger than `r max(ptab@pClasses)` will be perturbed according to the distribution
-for i=`r max(ptab@pClasses)`. For example, in case of i=3 the distribution reads as follows
+In the given example, each frequency count larger than `r max(ptable_destatis@pClasses)` will be perturbed according to the distribution
+for i=`r max(ptable_destatis@pClasses)`. For example, in case of i=3 the distribution reads as follows
 ```{r, echo=FALSE} 
-a <- ptab@pMatrix[max(ptab@pClasses)+1,]
+a <- ptable_destatis@pMatrix[max(ptable_destatis@pClasses)+1,]
 names(a) <- as.character(c(1:5))
 a
 ```
 or in case of i=12326
 ```{r, echo=FALSE} 
-b <- ptab@pMatrix[max(ptab@pClasses)+1,]
+b <- ptable_destatis@pMatrix[max(ptable_destatis@pClasses)+1,]
 names(b) <- as.character(12326+c(-2:2))
 b
 ```
@@ -161,7 +176,7 @@ Given this symmetry, the transition matrix can be displayed in the reduced form.
 Next, we will check the empirical results that can be used for troubleshooting:
 
 ```{r}
-ptab@empResults
+ptable_destatis@empResults
 ```
 
 The matrix has the following columns:
@@ -176,14 +191,15 @@ The matrix has the following columns:
 As can be seen in the example, the preset variance of `V=1` does not hold for the original frequency `i=1`. To fulfill the condition of a fixed variance, we re-run the computation with a different variance parameter. Let's try a variance parameter `V=0.9`:
 
 ```{r}
-ptab_new <- create_cnt_ptable(D = 2, V = 0.9)
-ptab_new@empResults
+params_new <- pt_create_pParams(D=2, V=0.9)
+ptable_destatis_new <- pt_create_pTable(params = params_new)
+ptable_destatis_new@empResults
 ```
 
 The new computation with the updated variance parameter results in a perturbation table that fullfills all conditions. Of course, the resulting transition matrix now differs from the first one:
 
 ```{r}
-ptab_new@pMatrix
+ptable_destatis_new@pMatrix
 ```
 
 ***
@@ -205,7 +221,8 @@ However, let's change and modify them with respect to our needs:
 
 ```{r}
 # note:  once again, check the diagonal entries
-ptable_e21 <- create_cnt_ptable(D = 4, V = 1, pstay = 0.5)
+params <- pt_create_pParams(D=4, V=1, pstay=0.5)
+ptable_e21 <- pt_create_pTable(params = params)
 # note:  once again, check the empirical results or the diagonal entries
 ptable_e21@empResults
 diag(ptable_e21@pMatrix)
@@ -219,7 +236,8 @@ The probability of an original frequency to remain unperturbed (i.e. that the ta
 
 ```{r}
 # note:  ptable::pt_create_pTable(...) could also be used as input for argument "pTable"
-ptable_e22 <- create_cnt_ptable(D = 5, V = 3, js = 2)
+params <- pt_create_pParams(D=5, V=3, js=2)
+ptable_e22 <- pt_create_pTable(params = params)
 ptable_e22@pMatrix
 ```
 
@@ -232,13 +250,12 @@ Further parameters of the function `pt_create_pParams()` are explained in the he
 
 ### Advanced Parameter Setting
 
-Several parameters of the function `create_cnt_ptable()` that we have learned so far, can also be assigned to each original positive frequency count separately using the vector notation in R.
+Several parameters of the function `pt_create_pParams()` that we have learned so far, can also be assigned to each original positive frequency count separately using the vector notation in R.
 
 First, we recommend to check how many different entries do we need. Therefore, let's begin with the simple parameter setting
 
 ```{r}
-result <- create_cnt_ptable(D = 4, V = 1)
-params <- slot(result, "pParams")
+params <- pt_create_pParams(D=4, V=1)
 # and let's check the number of different positive original frequencies
 params@ncat 
 ```
@@ -246,9 +263,8 @@ params@ncat
 Let's assume we want to assign different probabilities for `pstay`, one for each positive original count, we have to specify a vector of length `r params@ncat`:
 ```{r}
 # note: so far we have used a scalar for "pstay"", but now we use a vector
-result <- create_cnt_ptable(D = 4, V = 1, pstay = c(0.5, 0.5, 0.7, 0.8))
-params <- slot(result, "pParams")
-
+params <- pt_create_pParams(D=4, V=1, pstay=c(0.5,0.5,0.7,0.8))
+result <- pt_create_pTable(params=params)
 # let's check the results
 result@empResults
 ```
@@ -264,7 +280,8 @@ The same holds for the argument `mono`.
 
 ```{r}
 # note:  in the example we are working with the result of the following parameter setting
-result <- create_cnt_ptable(D = 2, V = 1.08, js = 1, mono = c(TRUE, TRUE, FALSE, TRUE))
+params <- pt_create_pParams(D=2, V=1.08, js=1, mono=c(TRUE,TRUE,FALSE,TRUE))
+result <- pt_create_pTable(params=params)
 ```
 
 The resulting object `result` can now be plotted using the function `plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
@@ -282,7 +299,7 @@ The transition matrix plot is a heatmap plot indicating the probability (the dar
 
 The perturbation table can be graphically represented as a perturbation panel:
 ```{r, fig.height=5, fig.width = 7}
-plot(result, type = "p")
+plot(result, type="p")
 ```
 Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored subbars corresponds to the respective transition probability.
 
@@ -292,7 +309,7 @@ It can be seen from the perturbation panel where the x-axis shown at the bottom 
 
 #### Plotting the Distribution of the Perturbation Values/Noise
 ```{r, fig.height=5, fig.width = 7}
-plot(result, type = "d")
+plot(result, type="d")
 ```
 
 The distribution plot of the perturbation/noise values is very helpful for designing the noise and troubleshooting. Each panel of the plot represents an original frequency count. The most important information of the empirical results (see section above) are also given within each panel: `M` shows the bias, `V` is the achieved variance (and not the preset variance parameter!). Further, violations are reported in red (e.g. in case of a not fullfilled fixed variance).
@@ -301,7 +318,7 @@ The distribution plot of the perturbation/noise values is very helpful for desig
 
 The plots shown above can also be saved to a file (e.g. png, pdf):
 ```{r, eval=FALSE }
-plot(result, type = "d", file = "graph.pdf")
+plot(result, type="d", file="graph.pdf")
 ```
 
 
@@ -310,16 +327,22 @@ plot(result, type = "d", file = "graph.pdf")
 To use the perturbation table in SDC tools like **Tau-Argus** or **SAS**, users can export the result:
 ```{r, eval=FALSE}
 # for Tau-Argus
-pt_export(result, file = "ptable.csv", SDCtool = "TauArgus")
+pt_export(result, file="ptable.csv", SDCtool="TauArgus")
 # or for SAS
-pt_export(result, file = "ptable.csv", SDCtool = "SAS")
+pt_export(result, file="ptable.csv", SDCtool="SAS")
 ```
+
+
+
+
+
 
 ## Troubleshooting Example: Violation of the fixed variance condition
 
 Let's assume we want to assign different probabilities for `pstay` as done in an example above, but with very large values:
 ```{r}
-result <- create_cnt_ptable(D = 4, V = 1.5, pstay = c(0.8, 0.9, 0.9, 0.9))
+params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9))
+result <- pt_create_pTable(params=params)
 # let's check the results
 result@empResults
 ```
@@ -327,36 +350,50 @@ Since the values for `pstay` are too large to fullfill the fixed variance condit
 
 By the way: The same conclusions can be drawn from the distribution plot in a more comfortable way
 ```{r, fig.height=5, fig.width = 7}
-plot(result, type = "d")
+plot(result, type="d")
 ```
+
 
 Consequently, we would now have to adjust the variance to `V=1.225` and re-run the computation:
 ```{r, fig.height=5, fig.width = 7}
-result <- create_cnt_ptable(D = 4, V = 1.225, pstay = c(0.8, 0.9, 0.9, 0.9))
-plot(result, type = "d")
+params <- pt_create_pParams(D=4, V=1.225, pstay=c(0.8,0.9,0.9,0.9))
+result <- pt_create_pTable(params=params)
+plot(result, type="d")
 ```
+
 
 Alternatively, we can change the monotony condition for i=1:
 ```{r, fig.height=5, fig.width = 7}
-result <- create_cnt_ptable(
-  D = 4, V = 1.5, pstay = c(0.8, 0.9, 0.9, 0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
-plot(result, type = "d")
+params <- pt_create_pParams(D=4, V=1.5, pstay=c(0.8,0.9,0.9,0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
+result <- pt_create_pTable(params=params)
+plot(result, type="d")
 ```
+
 
 # Magnitude Tables {#magtab}
 
 ## Simple Setting
 
 ### Setting the parameters for magnitude tables
-If the goal is to create perturbation parameters suitable for numerical variables (magnitude tables), one may use function `create_num_ptable()` as shown below.
+
+There is a further argument `table` that can be used to define the type of the table. Default - if not specified in the function `pt_create_pParams()` - is `table='cnts'` for frequency tables. In case of magnitude tables, this argument must be set to `table='nums'` as followed:
 
 ```{r}
-res <- create_num_ptable(D = 2, V = 1, icat = c(1, 2))
+params_nums <- pt_create_pParams(D=2, V=1, table="nums", icat=c(1,2))
 ```
 
-However, when creating objects for magnitude tables, users can also set the following arguments:
+However, when specifying parameters for magnitude tables, users can also set the following arguments:
 
 - `icat` (mandatory): The categories for the interpolation.
 - `type` (optional): Distinction between odd and even numbers (see Giessing/Tent 2019).
+
+### Computation of transition matrix
+
+The computation of the perturbation table is done identically to the frequency case:
+```{r}
+res <- pt_create_pTable(params = params_nums)
+```
+
+## Setting different
 
 # References

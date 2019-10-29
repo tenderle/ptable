@@ -1,4 +1,4 @@
-#' Export ptables as a csv-file
+#' pt_export
 #'
 #' Function to export perturbation table to Tau-Argus or SAS (as csv-file).
 #'
@@ -10,10 +10,12 @@
 #' @keywords export
 #'
 #' @examples 
-#' ptab <- create_cnt_ptable(D = 5, V = 3, js = 2, label = "test")
+#' params <- pt_create_pParams(D=5, V=3, js=2, label="test")
+#' ptab <- pt_create_pTable(params=params)
 #' \dontrun{
-#' pt_export(ptab, file = "Test", SDCtool = "TauArgus")
+#' pt_export(ptab,file="Test", SDCtool="TauArgus")
 #' }
+#' 
 #' @rdname pt_export
 #' @export
 #'

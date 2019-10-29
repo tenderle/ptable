@@ -20,12 +20,13 @@ Method to plot results
 }
 \examples{
 # Simple Example
-ptab <- create_cnt_ptable(D = 2, V = 1.08, js = 1, mono = FALSE, label = "Example")
-plot(ptab, type = "d")
+params <- pt_create_pParams(D=2, V=1.08,js=1, mono=FALSE, label="Example")
+ptable_destatis <- pt_create_pTable(params=params)
+plot(ptable_destatis, type="d")
 
 \dontrun{
 ## Export result
-plot(ptab, type = "d", file = "graph.pdf")
+plot(ptable_destatis, type="d", file="graph.pdf")
 }
 
 }

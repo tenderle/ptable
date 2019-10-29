@@ -10,12 +10,13 @@
 #'
 #' @examples
 #' # Simple Example
-#' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
-#' plot(ptab, type="p")
+#' params <- pt_create_pParams(D=5, V=2, label="Example")
+#' ptable_destatis <- pt_create_pTable(params=params)
+#' plot(ptable_destatis, type="p")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptab, type = "p", file = "example_pPanel.png")
+#' plot(ptable_destatis, type="p", file="example_pPanel.png")
 #' }
 #' @rdname pt_plot_pPanel
 #' @import ggplot2

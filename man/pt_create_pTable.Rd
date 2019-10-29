@@ -2,60 +2,43 @@
 % Please edit documentation in R/pt_create_pTable.R
 \name{pt_create_pTable}
 \alias{pt_create_pTable}
-\title{Create a perturbation table for count data}
+\title{pt_create_pTable}
 \usage{
 pt_create_pTable(params, monitoring = FALSE, debugging = FALSE)
 }
 \arguments{
-\item{params}{a \code{list} or an object generated with \code{\link[=pt_create_pParams]{pt_create_pParams()}}. In
-case a simple list is provided, the named list-arguments are expected to be
-the same as those documented in \code{\link[=pt_create_pParams]{pt_create_pParams()}}.}
+\item{params}{an object of class \code{\linkS4class{ptable_params}}
+generated with \code{\link{pt_create_pParams}}}
 
 \item{monitoring}{(logical) output monitoring on/off}
 
 \item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
-an object of \linkS4class{ptable}
+an object of \code{\linkS4class{ptable}}
 }
 \description{
-\code{\link[=pt_create_pTable]{pt_create_pTable()}} produces a perturbation table that is needed to
-add noise to statistical frequency tables. The perturbation probabilities
-are constructed given the following constraints:
+produces perturbation table that is needed to add noise to statistical frequency or magnitude tables. The perturbation probabilities are constructed given the following constraints:
 \itemize{
 \item Unbiasedness of the noise
 \item Fixed noise variance
 \item Transition probabilities are between zero and one and the sum up to 1
-\item Perturbations will not produce negaive cell values or positive cell values
-equal to or less than a specific threshold value
-\item The absolute value of any perturbation is less than a specific integer
-value (i.e. the maxiumum noise)
+\item Perturbations will not produce negaive cell values or positive cell values equal to or less than a specific threshold value
+\item The absolute value of any perturbation is less than a specific integer value (i.e. the maxiumum noise)
 }
 }
 \details{
-Please note that \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} and \code{\link[=create_num_ptable]{create_num_ptable()}}
-provide direct wrappers to create perturbation tables for count- and numeric
-variables. For more information, see the vignette using \code{\link[=pt_vignette]{pt_vignette()}}.
+For more information, see the vignette using \code{pt_vignette()}.
 }
 \examples{
-# ptable for frequency tables 
-# old way
-params_cnts <- pt_create_pParams(D = 5, V = 3, js = 2, label = "test1")
-pt_create_pTable(params = params_cnts)
-
-# new, direct way
-create_cnt_ptable(D = 5, V = 3, js = 2, label = "test2")
+# ptable for frequency tables
+params_cnts <- pt_create_pParams(D=5, V=3, js=2, label="test")
+pt_create_pTable(params=params_cnts)
 
 # ptable for magnitude tables
-# old way
-params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1, 3, 5))
-pt_create_pTable(params = params_nums)
+params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
+pt_create_pTable(params=params_nums)
 
-# new way
-create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
-}
-\seealso{
-\code{\link[=create_cnt_ptable]{create_cnt_ptable()}}, \code{\link[=create_num_ptable]{create_num_ptable()}}
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}
