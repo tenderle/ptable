@@ -10,13 +10,12 @@
 #'
 #' @examples
 #' # Simple Example
-#' params <- pt_create_pParams(D=5, V=2, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params)
-#' plot(ptable_destatis, type="p")
+#' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+#' plot(ptab, type="p")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptable_destatis, type="p", file="example_pPanel.png")
+#' plot(ptab, type = "p", file = "example_pPanel.png")
 #' }
 #' @rdname pt_plot_pPanel
 #' @import ggplot2
@@ -30,7 +29,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
   }
-
+  
   params <- slot(pert_table, "pParams")
   pTable <- slot(pert_table,"pTable")
   
@@ -57,10 +56,10 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
     pert_pos <- brewer.pal(D0, "Blues")[c(2:D0)]
     pert_neg <- brewer.pal(D0, "Greens")[c(D0:2)]
   } else {
-  getPalette <- colorRampPalette(c(brewer.pal(9, "Greens")[c(D0:1)], 
-                                   brewer.pal(9,"Greys")[2],
-                                   brewer.pal(9, "Blues")[c(1:D0)]
-                                   ))
+    getPalette <- colorRampPalette(c(brewer.pal(9, "Greens")[c(D0:1)], 
+                                     brewer.pal(9,"Greys")[2],
+                                     brewer.pal(9, "Blues")[c(1:D0)]
+    ))
   }
   
   # ggplot figure

@@ -8,13 +8,12 @@
 #' 
 #' @examples
 #' # Simple Example
-#' params <- pt_create_pParams(D=2, V=1.08,js=1, mono=FALSE, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params)
-#' plot(ptable_destatis, type="d")
+#' ptab <- create_cnt_ptable(D = 2, V = 1.08, js = 1, mono = FALSE, label = "Example")
+#' plot(ptab, type = "d")
 #' 
 #' \dontrun{
 #' ## Export result
-#' plot(ptable_destatis, type="d", file="graph.pdf")
+#' plot(ptab, type = "d", file = "graph.pdf")
 #' }
 #' 
 #' @exportMethod plot

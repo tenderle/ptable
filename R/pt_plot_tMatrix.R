@@ -10,13 +10,12 @@
 #'
 #' @examples
 #' # Simple Example
-#' params <- pt_create_pParams(D=5, V=2, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params)
-#' plot(ptable_destatis, type="t")
+#' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+#' plot(ptab, type = "t")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
+#' plot(ptab, type ="t", file = "example_tMatrix.pdf")
 #' }
 #' @rdname pt_plot_tMatrix
 #' @import ggplot2
@@ -25,7 +24,7 @@
 pt_plot_tMatrix <- function(pert_table, file=NULL){
   
   i <- j <- p <- NULL
-    
+  
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
   }
@@ -53,7 +52,7 @@ pt_plot_tMatrix <- function(pert_table, file=NULL){
           axis.title = element_text(size = 18),
           legend.title = element_text(size = 16),
           legend.text = element_text(size = 16),
-      legend.position = "right",
+          legend.position = "right",
           legend.background = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.major.x = element_blank(),

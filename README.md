@@ -99,7 +99,15 @@ works within a browser.
 -   Improved `fifi_...`-functions
 -   Add test environment
 -   Improve accuracy of ptable by means of digits-functionality
--   Add generic functions in pt\_methods.R, e.g. plot(…)
+
+### Version 0.3.3.
+
+-   feature: new functions `create_cnt_table()` (for count/frequency
+    tables) and `create_num_table()` (for numerical/magnitude tables)
+    that both wrap `pt_create_pParams()` and `pt_create_pTable()`
+-   code cleanup and improved documenatation
+-   updated vignette
+-   Thx to @bernhard-da for the commits.
 
 ### Version 0.3.2.
 
