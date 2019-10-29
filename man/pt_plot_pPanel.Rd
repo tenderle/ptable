@@ -16,13 +16,12 @@ Function to plot the perturbation panel using the R-package \code{\link{ggplot}}
 }
 \examples{
 # Simple Example
-params <- pt_create_pParams(D=5, V=2, label="Example")
-ptable_destatis <- pt_create_pTable(params=params, type="destatis")
-fifi_plot(ptable_destatis, type="p")
+ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+plot(ptab, type="p")
 
 \dontrun{
 ## Export result
-fifi_plot(ptable_destatis, type="p", file="example_pPanel.png")
+plot(ptab, type = "p", file = "example_pPanel.png")
 }
 }
 \author{

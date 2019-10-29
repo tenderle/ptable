@@ -4,8 +4,8 @@
 \alias{pt_optim_entropy}
 \title{pt_optim_entropy}
 \usage{
-pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
-  lb = p_lb, ub = p_ub)
+pt_optim_entropy(optim = optim, mono = mono, v = v,
+  variance = variance, lb = p_lb, ub = p_ub, ndigits)
 }
 \arguments{
 \item{optim}{optimization paramter (1=standard, 2-4=further test implementations)}
@@ -19,6 +19,8 @@ pt_optim_entropy(optim = optim, mono = mono, v = v, variance = variance,
 \item{lb}{(integer) vector with lower bounds of the controls}
 
 \item{ub}{(integer) vector with upper bounds of the controls}
+
+\item{ndigits}{(integer) number of digits}
 }
 \value{
 The return value contains a list with two elements:

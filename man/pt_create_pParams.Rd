@@ -2,39 +2,58 @@
 % Please edit documentation in R/pt_create_pParams.R
 \name{pt_create_pParams}
 \alias{pt_create_pParams}
-\title{pt_create_pParams}
+\title{Define perturbation parameters}
 \usage{
-pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
-  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""),
-  pTableSize = 70)
+pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
+  mono = TRUE, table = "cnts", step = 2, icat = NULL,
+  type = "all", label = paste("D", D, "V", V * 100, sep = ""))
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
 
 \item{V}{perturbation parameter for variance (scalar)}
 
-\item{js}{treshold value for blocking of small frequencies (i.e. the perturbation will not produce positive cell values that are equal to or smaller than the treshold value).}
+\item{js}{treshold value for blocking of small frequencies (i.e. the perturbation
+will not produce positive cell values that are equal to or smaller than
+the treshold value).}
 
-\item{pstay}{optional parameter to set the probability (0 < p < 1) of an original frequency to remain unperturbed: NA (default) no preset probability (i.e. produces the maximum entropy solution)}
+\item{pstay}{optional parameter to set the probability (0 < p < 1) of
+an original frequency to remain unperturbed: NA (default) no preset
+probability (i.e. produces the maximum entropy solution)}
 
 \item{optim}{optimization parameter: \code{1} standard approach (default)}
 
-\item{mono}{(logical) vector specifying optimization parameter for monotony condition}
+\item{mono}{(logical) vector specifying optimization parameter for
+monotony condition}
 
-\item{epsilon}{(double)}
+\item{table}{(character) type of the table: frequency or magnitude table}
+
+\item{step}{(integer) step width}
+
+\item{icat}{(integer) categorized original frequencies i}
+
+\item{type}{(character) indicator for the extra column 'type' used for
+magnitude tables: 'even', 'odd' or 'all' (default)}
 
 \item{label}{(character) label of the Output}
-
-\item{pTableSize}{(number) defining the number of required columns if abs-formatted ptable is chosen as argument in \code{\link{pt_create_pTable}}}
 }
 \value{
-an object of \code{\linkS4class{ptable_params}}
+an object of class \linkS4class{ptable_params}
 }
 \description{
-creates the required input for \code{\linkS4class{ptable}}.
+creates the required input for \code{\link[=pt_create_pTable]{pt_create_pTable()}}, \code{\link[=create_cnt_ptable]{create_cnt_ptable()}}
+or \code{\link[=create_num_ptable]{create_num_ptable()}}.
+}
+\details{
+this function may be dropped in future versions; please use
+\code{\link[=create_cnt_ptable]{create_cnt_ptable()}} and \code{\link[=create_num_ptable]{create_num_ptable()}} directly.
 }
 \examples{
-pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
+# parameter setting for frequency tables
+pt_create_pParams(D = 5, V = 2, js = 2, pstay = 0.5, optim = 1, mono = TRUE)
+
+# parameter setting for magnitude tables
+pt_create_pParams(D = 5, V = 2, table = "nums", step = 4, icat = c(1, 3, 5))
 
 }
 \author{

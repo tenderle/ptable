@@ -18,13 +18,12 @@ Function to plot the ditribution of the perturbation values using the R-package 
 }
 \examples{
 # Simple Example
-params <- pt_create_pParams(D=5, V=2, label="Example")
-ptable_destatis <- pt_create_pTable(params=params, type="destatis")
-fifi_plot(ptable_destatis, type="d")
+ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+plot(ptab, type = "d")
 
 \dontrun{
 ## Export result
-fifi_plot(ptable_destatis, type="d", file="graph.pdf")
+plot(ptab, type = "d", file = "graph.pdf")
 }
 }
 \author{
