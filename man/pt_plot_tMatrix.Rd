@@ -17,12 +17,12 @@ Function to plot the transition matrix using the R-package \code{\link{ggplot}}.
 \examples{
 # Simple Example
 params <- pt_create_pParams(D=5, V=2, label="Example")
-ptable_destatis <- pt_create_pTable(params=params)
-plot(ptable_destatis, type="t")
+ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+fifi_plot(ptable_destatis, type="t")
 
 \dontrun{
 ## Export result
-plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
+fifi_plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
 }
 }
 \author{

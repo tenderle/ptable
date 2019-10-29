@@ -16,6 +16,17 @@ fifi_plot(obj, type = "d", file = NULL)
 \description{
 Function to visualize the perturbation table.
 }
+\examples{
+# Simple Example
+params <- pt_create_pParams(D=2, V=1.08,js=1, mono=FALSE, label="Example")
+ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+fifi_plot(ptable_destatis, type="d")
+
+\dontrun{
+## Export result
+fifi_plot(ptable_destatis, type="d", file="graph.pdf")
+}
+}
 \author{
 Tobias Enderle
 }

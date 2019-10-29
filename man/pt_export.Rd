@@ -4,10 +4,10 @@
 \alias{pt_export}
 \title{pt_export}
 \usage{
-pt_export(..., file, SDCtool = "TauArgus")
+pt_export(input, file, SDCtool = "TauArgus")
 }
 \arguments{
-\item{...}{1 or 2 input object of class \code{\linkS4class{ptable}}}
+\item{input}{an object of class \code{\linkS4class{ptable}}}
 
 \item{file}{(character) filename}
 
@@ -18,9 +18,9 @@ Function to export perturbation table to Tau-Argus or SAS (as csv-file).
 }
 \examples{
 params <- pt_create_pParams(D=5, V=3, js=2, label="test")
-ptab <- pt_create_pTable(params=params)
+ptable_destatis <- pt_create_pTable(params=params, type="destatis")
 \dontrun{
-pt_export(ptab,file="Test", SDCtool="TauArgus")
+pt_export(ptable_destatis,file="Test", SDCtool="TauArgus")
 }
 
 }

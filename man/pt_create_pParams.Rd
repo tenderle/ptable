@@ -4,9 +4,9 @@
 \alias{pt_create_pParams}
 \title{pt_create_pParams}
 \usage{
-pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, table = "cnts", step = 2, icat = NULL,
-  type = "all", label = paste("D", D, "V", V * 100, sep = ""))
+pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1, mono = TRUE,
+  epsilon = 0.0000001, label = paste("D", D, "V", V * 100, sep = ""),
+  pTableSize = 70)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -21,15 +21,11 @@ pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
 
 \item{mono}{(logical) vector specifying optimization parameter for monotony condition}
 
-\item{table}{(character) type of the table: frequency or magnitude table}
-
-\item{step}{(integer) step width}
-
-\item{icat}{(integer) categorized original frequencies i}
-
-\item{type}{(character) indicator for the extra column 'type' used for magnitude tables: 'even', 'odd' or 'all' (default)}
+\item{epsilon}{(double)}
 
 \item{label}{(character) label of the Output}
+
+\item{pTableSize}{(number) defining the number of required columns if abs-formatted ptable is chosen as argument in \code{\link{pt_create_pTable}}}
 }
 \value{
 an object of \code{\linkS4class{ptable_params}}
@@ -38,11 +34,7 @@ an object of \code{\linkS4class{ptable_params}}
 creates the required input for \code{\linkS4class{ptable}}.
 }
 \examples{
-# parameter setting for frequency tables
 pt_create_pParams(D=5, V=2, js=2, pstay=0.5, optim=1, mono=TRUE)
-
-# parameter setting for magnitude tables
-pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1,3,5))
 
 }
 \author{

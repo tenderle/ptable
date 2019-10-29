@@ -7,7 +7,7 @@
 #' @importFrom utils RShowDoc
 #' @examples
 #' \dontrun{
-#' #pt_vignette()
+#' pt_vignette()
 #' }
 pt_vignette <- function() {
   RShowDoc("introduction", package="ptable")

@@ -8,7 +8,6 @@
 #' @param variance (numeric) variance parameter
 #' @param lb (integer) vector with lower bounds of the controls
 #' @param ub (integer) vector with upper bounds of the controls
-#' @param ndigits (integer) number of digits
 #'
 #' @seealso Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
 #' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to pro-tect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communi-ties, Luxembourg, 2006, pp. 299-302
@@ -29,21 +28,20 @@ pt_optim_entropy <- function(optim=optim, mono=mono,
                      variance=variance,
                      #epsilon=epsilon,
                      lb=p_lb,
-                     ub=p_ub,
-                     ndigits){
+                     ub=p_ub){
 
                      #x0=rep(1, length(v))){
 
   p <- p_lb <- p_ub <- NULL
-  options(digits=ndigits,scipen=ndigits)
+  options(digits=7,scipen=7)
 
   x0=rep(1, length(v))
 
   # Fixed parameters
   local_opts <- list( "algorithm" = "NLOPT_LD_MMA",
-                      "xtol_rel"  = 1/(10^ndigits) )
+                      "xtol_rel"  = 1.0e-7 )
   opts <- list( "algorithm" = "NLOPT_LD_SLSQP",
-                "xtol_rel"  = 1/(10^ndigits), #1.0e-7,
+                "xtol_rel"  = 1.0e-7,
                 "maxeval"   = 100000,
                 "local_opts" = local_opts )
 

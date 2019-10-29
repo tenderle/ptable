@@ -12,12 +12,12 @@
 #' @examples
 #' # Simple Example
 #' params <- pt_create_pParams(D=5, V=2, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params)
-#' plot(ptable_destatis, type="d")
+#' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+#' fifi_plot(ptable_destatis, type="d")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptable_destatis, type="d", file="graph.pdf")
+#' fifi_plot(ptable_destatis, type="d", file="graph.pdf")
 #' }
 #' @rdname pt_plot_pD
 #' @import lattice
@@ -42,7 +42,6 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
 
   D <- slot(params, "D")
   VARIANZ <- slot(params, "V")
-  step <- slot(params, "step")
 
 
   mypanel_zwo<-function(x,y,...){
@@ -90,17 +89,18 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   dFrame <- slot(pert_table,"dFrame")
   type <- slot(pert_table,"type")
 
-  subFrame <- copy(dFrame)
-  #subFrame <- subFrame[v %in% seq(-5,5,by=step) & check == TRUE & i_info!="i=0",,]
-  subFrame <- subFrame[v %in% round(seq(-5,5,by=1/step),4) & check == TRUE & i_info!="i=0",,]
-  
+  if(!type %in% c("destatis")) {
+    stop("type must be 'destatis'\n")
+  }
+
+  subFrame <- dFrame[v %in% seq(-5,5,by=1) & check == TRUE & i_info!="i=0",,]
   p <- xyplot(p ~ v | i_info, data=subFrame, ylim=ylimit,
               xlab="v (=perturbation value)", ylab="p (=perturbation probability)",
               par.settings = my.settings,
               par.strip.text=list(col="white", font=1.5),
               panel=mypanel_zwo,
               main=attr(dFrame,"label"),
-              sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.2.0)",  sep=""))
+              sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.1.0)",  sep=""))
 
   #update(p, par.settings = list(par.sub.text = list(lineheight = 5)))
   if (!is.null(file)) {

@@ -11,12 +11,12 @@
 #' @examples
 #' # Simple Example
 #' params <- pt_create_pParams(D=5, V=2, label="Example")
-#' ptable_destatis <- pt_create_pTable(params=params)
-#' plot(ptable_destatis, type="t")
+#' ptable_destatis <- pt_create_pTable(params=params, type="destatis")
+#' fifi_plot(ptable_destatis, type="t")
 #'
 #' \dontrun{
 #' ## Export result
-#' plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
+#' fifi_plot(ptable_destatis, type="t", file="example_tMatrix.pdf")
 #' }
 #' @rdname pt_plot_tMatrix
 #' @import ggplot2
@@ -34,7 +34,6 @@ pt_plot_tMatrix <- function(pert_table, file=NULL){
   tMatrix <- slot(pert_table,"dFrame")
   tMatrix <- tMatrix[,c("i","j","p")]
   
-  #tMatrix[, i:=factor(i)]
   tMatrix[, i:=factor(i, levels=rev(levels(i)))]
   
   # TODO: relative text sizes

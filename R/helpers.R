@@ -1,8 +1,56 @@
 
+# initializing perturbation matrix
+# fifi_matrix is used in ptable()
+fifi_matrix <- function(ncat, D, pstay=NULL, blocking=blocking){
+
+  pstay <- c(1,pstay)
+  
+  nrows <- ncat + 1
+  ncols <- nrows+D
+
+  # probabilities for no perturbation
+  Matrix<-diag(pstay,nrows,ncols)
+
+  # blocked target frequencies
+  Matrix[,blocking+1] <- 0
+
+  # Zero retains zero
+  Matrix[1,1]<-1
+
+  colnames(Matrix) <-  0:(ncols-1)
+  rownames(Matrix) <- 0:ncat
+
+  return(Matrix)
+}
+
 
 # ================================================ #
 # Check of conditions #
 # ================================================ #
+
+fifi_check <- function(P, D=D, ncat=ncat){
+
+  devMat <- fifi_devMat(D=D, ncat=ncat)
+
+  nrow <- nrow(P)
+  ncol <- nrow+D
+
+  cat.i <- (nrow-1)
+  cat.j <- (ncol-1)
+
+  constr1 <- sapply(1:nrow, function(row) P[row,] %*%  devMat[row,] )
+  constr2 <- sapply(1:nrow, function(row) P[row,] %*%  (devMat[row,])^2 )
+  constr5 <- rowSums(P)
+
+  p_stay=diag(P)
+
+  out <- data.table(i=c(0:cat.i), p_mean=round(constr1,3), p_var=round(constr2,3), p_sum=round(constr5,10), p_stay=p_stay)
+  #rownames(out) <- c(0:cat.i)
+
+  return(out)
+
+}
+
 
 fifi_check_p <- function(p, v){
 
@@ -18,26 +66,133 @@ fifi_check_p <- function(p, v){
 
 }
 
-fifi_check_pTable <- function(DT){
-  
-  . <- i <- j <- p_mean <- p_var <- p_sum <- p <- NULL
-  
-  constr1 <- aggregate((p*v)~i, data=DT, sum)
-  constr2 <- aggregate((p*v^2)~i, data=DT,sum)
-  constr5 <- aggregate(p~i, data=DT,sum) 
-  pstay <- round(DT[i==j, c("i","p")],4)
-  
-  out <- data.table(i=constr1[,1], 
-                    p_mean=round(constr1[,2],5), 
-                    p_var=round(constr2[,2],5), 
-                    p_sum=round(constr5[,2],5))
-  
-  out <- merge(out, pstay, by="i", all = TRUE)
-  out$p[is.na(out$p)] <- 0
-  out <- out[,.(i, p_mean, p_var, p_sum, p_stay=p)]
-  
-  
-  return(out)
-  
+
+# matrix with deviations #
+# ====================== #
+
+fifi_devMat <- function(D=D, ncat=ncat){
+
+  nrows <- ncat + 1
+  ncols <- nrows+D
+
+  cat_i <- (nrows-1)
+  cat_j <- (ncols-1)
+
+  a <- 0:cat_j
+  devMat <- sapply(1:ncols, function(x) x-a-1)[1:nrows,]
+
+  colnames(devMat) <- 0:(cat_j)
+  rownames(devMat) <- 0:(cat_i)
+
+  return(devMat)
+
 }
+
+
+
+fifi_df <- function(probMat,D, szenario, blocking, ncat) {
+  "-<-" <- p_int_lb <- p_int_ub <- i_info <- NULL
+  devMat <- fifi_devMat(D=D, ncat=ncat)
+
+  ncol <- ncol(probMat)
+  nrow <- nrow(probMat)
+
+  OUT <- data.table()
+
+  # TODO: rewrite code using data.table
+  for (z.i in 1:nrow){
+    for (z.j in 1:ncol){
+
+      i <- z.i - 1
+      j <- z.j - 1
+
+      check <- j %in% c((i-D) : (i+D) )
+      if (j %in% blocking) check <- FALSE
+
+      OUT <- rbind(OUT,
+                   data.table(i=i, j=j, p=probMat[z.i, z.j], v=devMat[z.i, z.j], check=check) )
+    }
+  }
+
+  OUT$i <- as.factor(OUT$i)
+  OUT$j <- as.factor(OUT$j)
+  #cat(ncol,"\n")
+
+  kum_oben <- unlist(sapply(0:(nrow-1), function(i) cumsum(OUT$p[OUT$i == i]), simplify=TRUE))
+  kum_unten <- kum_oben[1:(nrow(kum_oben)-1),]
+  kum_unten <- rbind(0, kum_unten)
+
+  OUT[,p_int_lb:=as.vector(kum_unten),]
+  OUT[,p_int_ub:=as.vector(kum_oben),]
+
+  OUT[,i_info:=paste("i=",i,sep=""),]
+  OUT[i==max(as.integer(as.character(i))),i_info:=paste("i>=",i," (symmtery)",sep=""),]
+
+  return(OUT)
+}
+
+
+fifi_probframe <- function(DF=DF, D=D){ #, file=NULL, saveDF=FALSE , date=format(Sys.time(), "%Y%m%d")
+  v <- i <- j <- p_int_lb <- p_int_ub <- NULL
+  neu <- DF[v %in% c(-D : D),c('i','j','p','v','p_int_lb','p_int_ub'),]
+  neu <- neu[!(i==0 & j!=0),,]
+  neu[,i:=as.integer(as.character(i))]
+  neu[,j:=as.integer(as.character(j))]
+  neu[,v:=as.integer(v)]
+
+  neu[,p_int_lb:=round(p_int_lb, 10)]
+  neu[,p_int_ub:=round(p_int_ub, 10)]
+
+  neu <- neu[p_int_lb != p_int_ub,]
+
+  # Save (different formats)
+  #if (saveDF) write.csv2(neu, file=paste("de_",file,".csv",sep=""), row.names = FALSE)
+  #if (saveDF) write.table(neu, file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE)
+
+  return(neu)
+
+}
+
+
+# Allocation function for ABS approach (i.e. if type="abs")
+# TODO: replace heuristic allocation function by optimization procedure
+
+fifi_allocate <- function(v, p, nrows=256){
+  
+  
+  
+  # empirical allocation frequencies and frequency sum
+  predrawn_freq <- round(p*nrows)
+  predrawn_freqsum <- sum(predrawn_freq)
+  
+  # probabilities of empirical frequency distribution
+  predrawn_p <- predrawn_freq/nrows
+  
+  
+  # difference between sample size (N=256) and empirical sum
+  diff <- nrows - predrawn_freqsum
+  
+  predrawn_freq_adj <- predrawn_freq
+  
+  # probabilities to be adjusted and indicator
+  adj <- sort(predrawn_p, decreasing = TRUE)[1:abs(diff)]
+  adj_ind <- predrawn_p %in% adj
+  
+  # adjustment to allocation
+  if (diff > 0) predrawn_freq_adj[ adj_ind ] <- predrawn_freq_adj[ adj_ind ] + 1
+  if (diff < 0) predrawn_freq_adj[ adj_ind ] <- predrawn_freq_adj[ adj_ind ] - 1
+  
+  # adjusted frequency distribution
+  adj_p <- predrawn_freq_adj/nrows
+  MW <- mean(adj_p%*%v)
+  V <- mean((adj_p)%*%(v^2))
+  
+  predrawn_values <- sample(rep(v, predrawn_freq_adj))
+  
+  
+  out <- list(predrawn_values= predrawn_values, adj_p=adj_p, predrawn_freq_adj=predrawn_freq_adj, N=sum(predrawn_freq_adj), MW=MW, VAR=V)
+  
+  return(predrawn_values)
+}
+
 

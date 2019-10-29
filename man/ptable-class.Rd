@@ -24,8 +24,6 @@ An S4 class to represent perturbation table
 
 \item{\code{tStamp}}{(character) ...}
 
-\item{\code{type}}{(character)}
-
-\item{\code{table}}{(character) type of table: frequency counts (cnts) or magnitude (nums)}
+\item{\code{type}}{(character) specifying the type of pTable (either 'abs' or 'destatis')}
 }}
 
