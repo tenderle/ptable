@@ -113,7 +113,7 @@ works within a browser.
 
 -   update: replaced `lattice` by `ggplot2` in density plot function
     `pt_plot_pD()`
--   feature: Github actions
+-   feature: Github actions (code coverage and CMD check)
 
 ### Version 0.3.3.
 
