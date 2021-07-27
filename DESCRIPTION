@@ -7,11 +7,15 @@ Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", r
           person("Sarah", "Giessing", email = "sarah.giessing@destatis.de", role = c("ctb")))
 Description: This package computes perturbation tables with probabilities or pre-drawn perturbation values.
 Imports: data.table,nloptr,RColorBrewer,flexdashboard,lattice,methods,rlang,rmarkdown,ggplot2
-Suggests: cellKey, sdcTable,
-    knitr
+Suggests: 
+    cellKey,
+    sdcTable,
+    knitr,
+    testthat (>= 3.0.0)
 License: EUPL
 Encoding: UTF-8
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
 LazyData: true
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Config/testthat/edition: 3
