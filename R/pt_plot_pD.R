@@ -19,11 +19,12 @@
 #' plot(ptab, type = "d", file = "graph.pdf")
 #' }
 #' @rdname pt_plot_pD
-#' @import lattice
-#' @import RColorBrewer
+#' @import ggplot2
+#' @importFrom utils packageVersion
 #'
 pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   v <- check <- i_info <- NULL
+  i <- iter <- mw <- p <- ps <- pstay <- psum <- var <- xl <- xr <- y <- NULL
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
   }
@@ -32,81 +33,69 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   timestamp <- slot(pert_table, "tStamp")
   
   empResults <- slot(pert_table, "empResults")
-  
-  M <- empResults$p_mean
-  V <- empResults$p_var
-  BW <- round(empResults$p_stay, 2)
-  SUM_W <- empResults$p_sum
-  ITER <- empResults$iter
-  
+
   D <- slot(params, "D")
   VARIANZ <- slot(params, "V")
   step <- slot(params, "step")
   
-  
-  mypanel_zwo<-function(x,y,...){
-    
-    panel.abline(v = seq(-D,D, by=2), lty = "solid", lwd=0.25, col = "light grey")
-    panel.abline(v = 0, lty = "solid", col = "white")
-    panel.abline(v = 0, lty = "dashed", lwd=0.5, col = "light grey")
-    
-    # Important: +1 in order to start with i=1
-    m <- format(M[panel.number()+1], nsmall=3)
-    v <- format(V[panel.number()+1], nsmall=3)
-    bw <- format(round(BW[panel.number()+1],2), nsmall=2)
-    sv <- SUM_W[panel.number()+1]
-    iter <- ITER[panel.number()+1]
-    
-    
-    if(sv < 0.999999) sv <- "< 1"
-    else {
-      if(sv > 1.000001) sv <- "> 1"
-      else sv = "= 1"
-    }
-    
-    highlightColor <- "black"
-    if (VARIANZ != as.numeric(v)) highlightColor <- "red"
-    
-    panel.text(-(D-(0.3*D)),0.8, paste("M = ",m,sep=""), cex=0.7)
-    panel.text(-(D-(0.3*D)),0.7, paste("V = ",v,sep=""), cex=0.7, col=highlightColor)
-    panel.text((D-(0.3*D)),0.8, paste("p_stay = ",bw,sep=""), cex=0.7)
-    panel.text((D-(0.3*D)),0.7, paste("p_sum ",sv,sep=""), cex=0.7)
-    panel.text((D-(0.3*D)),0.6, paste("iter = ",iter,sep=""), cex=0.7)
-    
-    panel.xyplot(x, y, type="l", lwd=c(1.5),...)
-    panel.xyplot(x, y, type="p", pch=16,...)
-  }
-  
-  # Settings:
-  myColours <- brewer.pal(6,"Blues")
-  my.settings <- list(
-    superpose.polygon=list(col=myColours[2:5], border="transparent"),
-    strip.background=list(col=myColours[5]),
-    strip.border=list(col="black"),
-    par.sub.text = list(cex = 0.5, font=1, just="right", x = grid::unit(0.95, "npc"))
+  dt_meta <- data.table(
+    i = empResults$i,
+    xl = -D,
+    xr = D,
+    y = 0.95,
+    mw = empResults$p_mean,
+    var = empResults$p_var,
+    pstay = round(empResults$p_stay, 2),
+    psum = empResults$p_sum,
+    iter = empResults$iter,
+    col = ifelse(VARIANZ != as.numeric(empResults$p_var), 7, 6)
   )
   
+  dt_meta[, ps := ifelse(psum < 0.999999, "< 1", ifelse(psum > 1.000001, "> 1", "= 1"))][]
+  dt_meta <- dt_meta[i > 0]
+  
+  cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
   dFrame <- slot(pert_table,"dFrame")
   type <- slot(pert_table,"type")
   
   subFrame <- copy(dFrame)
-  #subFrame <- subFrame[v %in% seq(-5,5,by=step) & check == TRUE & i_info!="i=0",,]
-  subFrame <- subFrame[v %in% round(seq(-5,5,by=1/step),4) & check == TRUE & i_info!="i=0",,]
+  subFrame[, i := as.numeric(as.vector(i)) ]
   
-  p <- xyplot(p ~ v | i_info, data=subFrame, ylim=ylimit,
-              xlab="v (=perturbation value)", ylab="p (=perturbation probability)",
-              par.settings = my.settings,
-              par.strip.text=list(col="white", font=1.5),
-              panel=mypanel_zwo,
-              main=attr(dFrame,"label"),
-              sub=paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version 0.2.0)",  sep=""))
+  output <- ggplot(data = subFrame[i > 0 & check == TRUE], aes(x = as.integer(v), y = p)) +
+    geom_point(group = 1, colour=cbPalette[6], size = 2) +
+    geom_line(group =1, colour=cbPalette[3], size=1) +
+    facet_wrap(~ i, labeller = "label_both") +
+    scale_x_continuous(name="Noise (v)", limits=c(-D,D), breaks=seq(-D,D,by=2)) +
+    scale_y_continuous(name="Perturbation probability (p)", limits=ylimit, breaks=seq(0,1,by=0.2)) +
+    theme_bw() + 
+    theme(axis.text =element_text(size = 16), 
+          axis.title = element_text(size = 18),
+          plot.title = element_text(size = 18)) + 
+      labs(title = attr(dFrame,"label"), 
+           caption = paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version ",packageVersion('ptable'),")",  sep="")) +
+    theme(strip.background = element_rect(fill=cbPalette[3])) +
+    geom_text(data = dt_meta,colour=cbPalette[dt_meta$col],
+              aes(xl, y, label = paste0("p_mean = ",mw)), hjust = 0, vjust = 0.5,
+              inherit.aes = FALSE) +
+    geom_text(data = dt_meta, colour=cbPalette[dt_meta$col],
+              aes(xl, y, label = paste0("p_var = ",var)), hjust = 0, vjust = 2,
+              inherit.aes = FALSE) +
+    geom_text(data = dt_meta,colour=cbPalette[dt_meta$col],
+              aes(xr, y, label = paste0("p_stay = ",pstay)), hjust =1, vjust = 0.5,
+              inherit.aes = FALSE) +
+    geom_text(data = dt_meta,colour=cbPalette[dt_meta$col],
+              aes(xr, y, label = paste0("p_sum ",ps)), hjust =1, vjust = 2,
+              inherit.aes = FALSE) +
+    geom_text(data = dt_meta, colour=cbPalette[dt_meta$col],
+              aes(xr, y, label = paste0("iter = ",iter)), hjust =1, vjust = 3.5,
+              inherit.aes = FALSE)
+  
   
   #update(p, par.settings = list(par.sub.text = list(lineheight = 5)))
   if (!is.null(file)) {
-    pdf(file=file)
-    print(p)
-    dev.off()
+    ggsave(filename=file, width=8, height=5)
     cat("graph saved to",shQuote(file),"\n")
   }
-  return(p)
+  return(output)
 }

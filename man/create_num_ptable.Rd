@@ -4,10 +4,19 @@
 \alias{create_num_ptable}
 \title{Create a ptable suitable for numerical variables}
 \usage{
-create_num_ptable(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, step = 2, icat = NULL, type = "all",
-  label = paste0("D", D, "V", V * 100), monitoring = FALSE,
-  debugging = FALSE)
+create_num_ptable(
+  D,
+  V,
+  js = 0,
+  pstay = NULL,
+  optim = 1,
+  mono = TRUE,
+  step = 2,
+  icat = NULL,
+  type = "all",
+  label = paste0("D", D, "V", V * 100),
+  monitoring = FALSE
+)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -37,8 +46,6 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 \item{label}{(character) label of the Output}
 
 \item{monitoring}{(logical) output monitoring on/off}
-
-\item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
 an object of \linkS4class{ptable}

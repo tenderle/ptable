@@ -4,9 +4,19 @@
 \alias{pt_create_pParams}
 \title{Define perturbation parameters}
 \usage{
-pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, table = "cnts", step = 2, icat = NULL,
-  type = "all", label = paste("D", D, "V", V * 100, sep = ""))
+pt_create_pParams(
+  D,
+  V,
+  js = 0,
+  pstay = NULL,
+  optim = 1,
+  mono = TRUE,
+  table = "cnts",
+  step = 2,
+  icat = NULL,
+  type = "all",
+  label = paste("D", D, "V", V * 100, sep = "")
+)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}

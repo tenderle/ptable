@@ -4,9 +4,16 @@
 \alias{create_cnt_ptable}
 \title{Create a ptable suitable for count variables}
 \usage{
-create_cnt_ptable(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, label = paste0("D", D, "V", V * 100),
-  monitoring = FALSE, debugging = FALSE)
+create_cnt_ptable(
+  D,
+  V,
+  js = 0,
+  pstay = NULL,
+  optim = 1,
+  mono = TRUE,
+  label = paste0("D", D, "V", V * 100),
+  monitoring = FALSE
+)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -29,8 +36,6 @@ monotony condition}
 \item{label}{(character) label of the Output}
 
 \item{monitoring}{(logical) output monitoring on/off}
-
-\item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
 an object of \linkS4class{ptable}

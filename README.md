@@ -1,10 +1,13 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-R-package `ptable`
-------------------
+## R-package `ptable`
 
-Overview
---------
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/tenderle/ptable/workflows/R-CMD-check/badge.svg)](https://github.com/tenderle/ptable/actions)
+<!-- badges: end -->
+
+## Overview
 
 The goal of the **ptable** package is to produce perturbation tables
 that can be used for applying noise to statistical tables.
@@ -99,6 +102,12 @@ works within a browser.
 -   Improved `fifi_...`-functions
 -   Add test environment
 -   Improve accuracy of ptable by means of digits-functionality
+
+### Version 0.3.4.
+
+-   update: replaced `lattice` by `ggplot2` in density plot function
+    `pt_plot_pD()`
+-   feature: Github actions
 
 ### Version 0.3.3.
 

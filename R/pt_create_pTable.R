@@ -361,8 +361,7 @@ create_cnt_ptable <- function(D,
                               optim = 1,
                               mono = TRUE,
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE,
-                              debugging = FALSE) {
+                              monitoring = FALSE) {
   
   params <-   pt_create_pParams(
     table = "cnts",
@@ -380,7 +379,7 @@ create_cnt_ptable <- function(D,
   pt_create_pTable(
     params = params,
     monitoring = monitoring,
-    debugging = debugging)
+    debugging = FALSE)
 }
 
 #' Create a ptable suitable for numerical variables
@@ -408,8 +407,7 @@ create_num_ptable <- function(D,
                               icat = NULL,
                               type = "all",
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE,
-                              debugging = FALSE) {
+                              monitoring = FALSE) {
   
   params <-   pt_create_pParams(
     table = "nums",
@@ -427,5 +425,5 @@ create_num_ptable <- function(D,
   pt_create_pTable(
     params = params,
     monitoring = monitoring,
-    debugging = debugging)
+    debugging = FALSE)
 }
