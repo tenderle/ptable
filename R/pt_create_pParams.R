@@ -13,7 +13,9 @@
 #' @param pstay optional parameter to set the probability (0 < p < 1) of 
 #' an original frequency to remain unperturbed: NA (default) no preset 
 #' probability (i.e. produces the maximum entropy solution)
-#' @param optim optimization parameter: `1` standard approach (default)
+#' @param optim optimization parameter: `1` standard approach (default) with
+#' regular contraints, `4` alternative approach with simplified constraints (may work
+#' if constraints using the standard approach are violated)
 #' @param mono (logical) vector specifying optimization parameter for 
 #' monotony condition
 #' @param label (character) label of the Output
@@ -119,6 +121,10 @@ pt_create_pParams <- function(D,
     
     if (max(icat) > D) {
       stop("The largest entry of 'icat' can be 'D'.", call. = FALSE)
+    }
+    
+    if (step <= 0) {
+      stop("Argument `step` must be a positive integer", call. = FALSE)
     }
     
     if ((D * step) >= 50) {

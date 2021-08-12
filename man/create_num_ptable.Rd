@@ -31,7 +31,9 @@ the treshold value).}
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
-\item{optim}{optimization parameter: \code{1} standard approach (default)}
+\item{optim}{optimization parameter: \code{1} standard approach (default) with
+regular contraints, \code{4} alternative approach with simplified constraints (may work
+if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}
@@ -75,5 +77,5 @@ create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 \code{\link[=pt_create_pTable]{pt_create_pTable()}}, \code{\link[=pt_create_pParams]{pt_create_pParams()}}
 }
 \author{
-Bernhard Meindl, \email{bernhard.meindl@statistik.gv.at}
+Tobias Enderle, \email{tobias.enderle@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@statistik.gv.at}
 }

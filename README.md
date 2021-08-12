@@ -107,15 +107,17 @@ works within a browser.
 -   Add error codes
 -   Improved `fifi_...`-functions
 -   Add test environment
+-   Improve codecov (higher coverage)
 -   Improve accuracy of ptable by means of digits-functionality
 
-### Version 0.3.4.
+#### Version 0.3.4.
 
+-   update: generic error message when constraints are violated
 -   update: replaced `lattice` by `ggplot2` in density plot function
     `pt_plot_pD()`
 -   feature: Github actions (code coverage and CMD check)
 
-### Version 0.3.3.
+#### Version 0.3.3.
 
 -   feature: new functions `create_cnt_table()` (for count/frequency
     tables) and `create_num_table()` (for numerical/magnitude tables)
@@ -124,7 +126,7 @@ works within a browser.
 -   updated vignette
 -   Thx to @bernhard-da for the commits.
 
-### Version 0.3.2.
+#### Version 0.3.2.
 
 -   feature: generic function `plot` instead of `fifi_function`
 -   feature: functions `pt_ex_cnts()` and `pt_ex_nums()` for quick

@@ -31,7 +31,9 @@ the treshold value).}
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
-\item{optim}{optimization parameter: \code{1} standard approach (default)}
+\item{optim}{optimization parameter: \code{1} standard approach (default) with
+regular contraints, \code{4} alternative approach with simplified constraints (may work
+if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}
