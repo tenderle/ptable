@@ -23,11 +23,11 @@ else a named list
 for quickly creating ptables to demonstate usage in other tools.
 }
 \examples{
-class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
+# class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
 
 # extra ptable for small cells
-names(pt_ex_nums(parity = FALSE, separation = TRUE))
+# names(pt_ex_nums(parity = FALSE, separation = TRUE))
 
 # different ptables for even/odd cells
-names(pt_ex_nums(parity = TRUE, separation = TRUE))
+# names(pt_ex_nums(parity = TRUE, separation = TRUE))
 }

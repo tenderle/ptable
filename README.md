@@ -1,10 +1,19 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-R-package `ptable`
-------------------
+## R-package `ptable`
 
-Overview
---------
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/tenderle/ptable/workflows/R-CMD-check/badge.svg)](https://github.com/tenderle/ptable/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/tenderle/ptable/branch/master/graph/badge.svg)](https://codecov.io/gh/tenderle/ptable?branch=master)
+[![GitHub last
+commit](https://img.shields.io/github/last-commit/tenderle/ptable.svg?logo=github)](https://github.com/tenderle/ptable/commits/master)
+[![GitHub code size in
+bytes](https://img.shields.io/github/languages/code-size/tenderle/ptable.svg?logo=github)](https://github.com/tenderle/ptable)
+<!-- badges: end -->
+
+## Overview
 
 The goal of the **ptable** package is to produce perturbation tables
 that can be used for applying noise to statistical tables.
@@ -98,9 +107,17 @@ works within a browser.
 -   Add error codes
 -   Improved `fifi_...`-functions
 -   Add test environment
+-   Improve codecov (higher coverage)
 -   Improve accuracy of ptable by means of digits-functionality
 
-### Version 0.3.3.
+#### Version 0.3.4.
+
+-   update: generic error message when constraints are violated
+-   update: replaced `lattice` by `ggplot2` in density plot function
+    `pt_plot_pD()`
+-   feature: Github actions (code coverage and CMD check)
+
+#### Version 0.3.3.
 
 -   feature: new functions `create_cnt_table()` (for count/frequency
     tables) and `create_num_table()` (for numerical/magnitude tables)
@@ -109,7 +126,8 @@ works within a browser.
 -   updated vignette
 -   Thx to @bernhard-da for the commits.
 
-### Version 0.3.2.
+
+#### Version 0.3.2.
 
 -   feature: generic function `plot` instead of `fifi_function`
 -   feature: functions `pt_ex_cnts()` and `pt_ex_nums()` for quick

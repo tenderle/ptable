@@ -4,9 +4,19 @@
 \alias{pt_create_pParams}
 \title{Define perturbation parameters}
 \usage{
-pt_create_pParams(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, table = "cnts", step = 2, icat = NULL,
-  type = "all", label = paste("D", D, "V", V * 100, sep = ""))
+pt_create_pParams(
+  D,
+  V,
+  js = 0,
+  pstay = NULL,
+  optim = 1,
+  mono = TRUE,
+  table = "cnts",
+  step = 2,
+  icat = NULL,
+  type = "all",
+  label = paste("D", D, "V", V * 100, sep = "")
+)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -21,7 +31,9 @@ the treshold value).}
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
-\item{optim}{optimization parameter: \code{1} standard approach (default)}
+\item{optim}{optimization parameter: \code{1} standard approach (default) with
+regular contraints, \code{4} alternative approach with simplified constraints (may work
+if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}

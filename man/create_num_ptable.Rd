@@ -4,10 +4,19 @@
 \alias{create_num_ptable}
 \title{Create a ptable suitable for numerical variables}
 \usage{
-create_num_ptable(D, V, js = 0, pstay = NULL, optim = 1,
-  mono = TRUE, step = 2, icat = NULL, type = "all",
-  label = paste0("D", D, "V", V * 100), monitoring = FALSE,
-  debugging = FALSE)
+create_num_ptable(
+  D,
+  V,
+  js = 0,
+  pstay = NULL,
+  optim = 1,
+  mono = TRUE,
+  step = 2,
+  icat = NULL,
+  type = "all",
+  label = paste0("D", D, "V", V * 100),
+  monitoring = FALSE
+)
 }
 \arguments{
 \item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
@@ -22,7 +31,9 @@ the treshold value).}
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
-\item{optim}{optimization parameter: \code{1} standard approach (default)}
+\item{optim}{optimization parameter: \code{1} standard approach (default) with
+regular contraints, \code{4} alternative approach with simplified constraints (may work
+if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}
@@ -37,8 +48,6 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 \item{label}{(character) label of the Output}
 
 \item{monitoring}{(logical) output monitoring on/off}
-
-\item{debugging}{(logical) debug monitoring on/off}
 }
 \value{
 an object of \linkS4class{ptable}
@@ -68,5 +77,5 @@ create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 \code{\link[=pt_create_pTable]{pt_create_pTable()}}, \code{\link[=pt_create_pParams]{pt_create_pParams()}}
 }
 \author{
-Bernhard Meindl, \email{bernhard.meindl@statistik.gv.at}
+Tobias Enderle, \email{tobias.enderle@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@statistik.gv.at}
 }

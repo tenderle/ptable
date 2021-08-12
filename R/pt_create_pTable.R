@@ -214,7 +214,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
           message("Sum of p: ", chp %% 1)
         }
         if (chp != 1) {
-          stop("The variance parameter you set is too small!", call. = FALSE)
+          stop(paste0("The ptable can't be calculated without a violation of the constraints. The combination of the input parameters you set (e.g. D=",D,", V=",V,", js=",js," or pstay) doesn't work. Please try another specification: either change the arguments 'mono=' or 'optim=' or try to use a different combination of input parameters (hint: changing the variance is sufficient in most cases)."), call. = FALSE)
         }
       }
     }
@@ -349,7 +349,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
 #' @inheritParams pt_create_pParams
 #' @inheritParams pt_create_pTable
 #' @return an object of [ptable-class]
-#' @author Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
+#' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
 #' @export
 #' @rdname create_cnt_ptable
 #' @md
@@ -361,13 +361,12 @@ create_cnt_ptable <- function(D,
                               optim = 1,
                               mono = TRUE,
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE,
-                              debugging = FALSE) {
+                              monitoring = FALSE) {
   
   params <-   pt_create_pParams(
     table = "cnts",
     type = "all",
-    step = -1,
+    step = 1,
     icat = NULL,
     D = D,
     V = V,
@@ -380,7 +379,7 @@ create_cnt_ptable <- function(D,
   pt_create_pTable(
     params = params,
     monitoring = monitoring,
-    debugging = debugging)
+    debugging = FALSE)
 }
 
 #' Create a ptable suitable for numerical variables
@@ -393,7 +392,7 @@ create_cnt_ptable <- function(D,
 #' @inheritParams pt_create_pParams
 #' @inheritParams pt_create_pTable
 #' @return an object of [ptable-class]
-#' @author Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
+#' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
 #' @export
 #' @rdname create_num_ptable
 #' @md
@@ -408,8 +407,7 @@ create_num_ptable <- function(D,
                               icat = NULL,
                               type = "all",
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE,
-                              debugging = FALSE) {
+                              monitoring = FALSE) {
   
   params <-   pt_create_pParams(
     table = "nums",
@@ -427,5 +425,5 @@ create_num_ptable <- function(D,
   pt_create_pTable(
     params = params,
     monitoring = monitoring,
-    debugging = debugging)
+    debugging = FALSE)
 }
