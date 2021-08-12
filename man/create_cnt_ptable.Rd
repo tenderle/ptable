@@ -4,6 +4,7 @@
 \alias{create_cnt_ptable}
 \title{Create a ptable suitable for count variables}
 \usage{
+
 create_cnt_ptable(
   D,
   V,

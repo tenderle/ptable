@@ -126,6 +126,7 @@ works within a browser.
 -   updated vignette
 -   Thx to @bernhard-da for the commits.
 
+
 #### Version 0.3.2.
 
 -   feature: generic function `plot` instead of `fifi_function`
