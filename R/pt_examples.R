@@ -32,7 +32,7 @@ pt_ex_cnts <- function() {
 #' @export
 #' @md
 #' @examples
-#' class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
+#' # class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
 #'
 #' # extra ptable for small cells
 #' names(pt_ex_nums(parity = FALSE, separation = TRUE))

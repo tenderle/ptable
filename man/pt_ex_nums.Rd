@@ -23,7 +23,7 @@ else a named list
 for quickly creating ptables to demonstate usage in other tools.
 }
 \examples{
-class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
+# class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
 
 # extra ptable for small cells
 names(pt_ex_nums(parity = FALSE, separation = TRUE))
