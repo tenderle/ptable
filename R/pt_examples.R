@@ -35,10 +35,10 @@ pt_ex_cnts <- function() {
 #' # class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
 #'
 #' # extra ptable for small cells
-#' names(pt_ex_nums(parity = FALSE, separation = TRUE))
+#' # names(pt_ex_nums(parity = FALSE, separation = TRUE))
 #'
 #' # different ptables for even/odd cells
-#' names(pt_ex_nums(parity = TRUE, separation = TRUE))
+#' # names(pt_ex_nums(parity = TRUE, separation = TRUE))
 pt_ex_nums <- function(parity = TRUE, separation = FALSE) {
   stopifnot(rlang::is_scalar_logical(parity))
   stopifnot(rlang::is_scalar_logical(separation))
