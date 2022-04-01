@@ -4,7 +4,6 @@
 \alias{create_cnt_ptable}
 \title{Create a ptable suitable for count variables}
 \usage{
-
 create_cnt_ptable(
   D,
   V,
@@ -13,7 +12,8 @@ create_cnt_ptable(
   optim = 1,
   mono = TRUE,
   label = paste0("D", D, "V", V * 100),
-  monitoring = FALSE
+  monitoring = FALSE,
+  create = TRUE
 )
 }
 \arguments{
@@ -39,6 +39,8 @@ monotony condition}
 \item{label}{(character) label of the Output}
 
 \item{monitoring}{(logical) output monitoring on/off}
+
+\item{create}{Create the ptable object: TRUE (default) or FALSE}
 }
 \value{
 an object of \linkS4class{ptable}

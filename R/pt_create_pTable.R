@@ -1,6 +1,6 @@
-#' Create a perturbation table for count data
+#' @title Create a perturbation table
 #'
-#' [pt_create_pTable()] produces a perturbation table that is needed to 
+#' @description [pt_create_pTable()] produces a perturbation table that is needed to 
 #' add noise to statistical frequency tables. The perturbation probabilities 
 #' are constructed given the following constraints:
 #' - Unbiasedness of the noise
@@ -339,15 +339,16 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   out
 }
 
-#' Create a ptable suitable for count variables
+#' @title Create a ptable suitable for count variables
 #' 
-#' [create_cnt_ptable()] is a wrapper for [pt_create_pTable()] allowing
+#' @description [create_cnt_ptable()] is a wrapper for [pt_create_pTable()] allowing
 #' only to specify the relevant options for count variables. 
 #' 
 #' @seealso [pt_create_pTable()], [pt_create_pParams()]
 #' 
 #' @inheritParams pt_create_pParams
 #' @inheritParams pt_create_pTable
+#' @param create Create the ptable object: TRUE (default) or FALSE
 #' @return an object of [ptable-class]
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
 #' @export
@@ -361,7 +362,8 @@ create_cnt_ptable <- function(D,
                               optim = 1,
                               mono = TRUE,
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE) {
+                              monitoring = FALSE,
+                              create = TRUE) {
   
   params <-   pt_create_pParams(
     table = "cnts",
@@ -376,10 +378,22 @@ create_cnt_ptable <- function(D,
     mono = mono,
     label = label)
   
-  pt_create_pTable(
-    params = params,
-    monitoring = monitoring,
-    debugging = FALSE)
+  if (create){
+  
+    ptab <- pt_create_pTable(
+      params = params,
+      monitoring = monitoring,
+      debugging = FALSE)
+    
+  out <- ptab
+  
+  } else {
+    
+    out <- params
+  }
+  
+  return(out)
+  
 }
 
 #' Create a ptable suitable for numerical variables
@@ -391,6 +405,7 @@ create_cnt_ptable <- function(D,
 #' 
 #' @inheritParams pt_create_pParams
 #' @inheritParams pt_create_pTable
+#' @param create Create the ptable object: TRUE (default) or FALSE
 #' @return an object of [ptable-class]
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}, Bernhard Meindl, \email{bernhard.meindl@@statistik.gv.at}
 #' @export
@@ -407,7 +422,8 @@ create_num_ptable <- function(D,
                               icat = NULL,
                               type = "all",
                               label = paste0("D", D, "V", V * 100),
-                              monitoring = FALSE) {
+                              monitoring = FALSE,
+                              create = TRUE) {
   
   params <-   pt_create_pParams(
     table = "nums",
@@ -422,8 +438,19 @@ create_num_ptable <- function(D,
     icat = icat,
     label = label)
   
-  pt_create_pTable(
-    params = params,
-    monitoring = monitoring,
-    debugging = FALSE)
+  if (create){
+    
+    ptab <- pt_create_pTable(
+      params = params,
+      monitoring = monitoring,
+      debugging = FALSE)
+    
+    out <- ptab
+    
+  } else {
+    
+    out <- params
+  }
+  
+  return(out)
 }

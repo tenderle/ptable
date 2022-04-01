@@ -2,7 +2,7 @@
 % Please edit documentation in R/pt_vignette.R
 \name{pt_vignette}
 \alias{pt_vignette}
-\title{pt_vignette}
+\title{Vignette}
 \usage{
 pt_vignette()
 }
@@ -10,7 +10,7 @@ pt_vignette()
 a browser windows/tab with showing the vignette
 }
 \description{
-starts the package vignette that gets you started with the package
+Starts the package vignette that gets you started with the package
 }
 \examples{
 \dontrun{

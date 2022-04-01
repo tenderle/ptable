@@ -1,6 +1,6 @@
-#' Export ptables as a csv-file
+#' @title Export ptables as a csv-file
 #'
-#' Function to export perturbation table to Tau-Argus or SAS (as csv-file).
+#' @description Function to export perturbation table to Tau-Argus or SAS (as csv-file).
 #'
 #' @param ... 1 or 2 input object of class \code{\linkS4class{ptable}}
 #' @param file (character) filename
@@ -83,8 +83,13 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   }
   
   if (table1=="nums" & nr==1){
-    pTable <- slot(inp[[1]], "pTable")
-    pTable <- pTable[,c('i','j','p','v','p_int_ub','type'),]
+    
+    if (SDCtool=="TauArgus")
+      pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_ub','type'),]
+
+    if (SDCtool=="SAS")
+      pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_lb','p_int_ub','type'),]
+    
     
   } 
   write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)

@@ -16,6 +16,25 @@ fifi_plot(obj, type = "d", file = NULL)
 \description{
 Function to visualize the perturbation table.
 }
+\examples{
+
+ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+
+# Distribution Plot of the Noise
+plot(ptab, type = "d")
+
+# Perturbations Panel of the Noise
+plot(ptab, type = "p")
+
+# Transition Matrix
+plot(ptab, type = "t")
+
+\dontrun{
+## Export result
+plot(ptab, type ="t", file = "example_tMatrix.pdf")
+}
+
+}
 \author{
 Tobias Enderle
 }
