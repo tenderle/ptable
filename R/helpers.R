@@ -18,24 +18,22 @@ fifi_check_p <- function(p, v){
 
 }
 
+
 fifi_check_pTable <- function(DT){
   
   . <- i <- j <- p_mean <- p_var <- p_sum <- p <- NULL
   
-  constr1 <- aggregate((p*v)~i, data=DT, sum)
-  constr2 <- aggregate((p*v^2)~i, data=DT,sum)
-  constr5 <- aggregate(p~i, data=DT,sum) 
-  pstay <- round(DT[i==j, c("i","p")],4)
+  out <- DT[, list(p_mean = sum(p*v),
+                   p_var = sum(p*v^2),
+                   p_sum = sum(p)), by = list(i)]
+
+  pstay <- DT[i==j, list(p_stay = sum(p)), by = list(i)]
   
-  out <- data.table(i=constr1[,1], 
-                    p_mean=round(constr1[,2],5), 
-                    p_var=round(constr2[,2],5), 
-                    p_sum=round(constr5[,2],5))
+  out <- merge(out, pstay)
+  out <- round(out, 5)
   
-  out <- merge(out, pstay, by="i", all = TRUE)
-  out$p[is.na(out$p)] <- 0
-  out <- out[,.(i, p_mean, p_var, p_sum, p_stay=p)]
-  
+  out$p_stay[is.na(out$p_stay)] <- 0
+  out[is.na(p_stay), p_stay := 0][]
   
   return(out)
   
