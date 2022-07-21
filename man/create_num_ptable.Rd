@@ -15,7 +15,8 @@ create_num_ptable(
   icat = NULL,
   type = "all",
   label = paste0("D", D, "V", V * 100),
-  monitoring = FALSE
+  monitoring = FALSE,
+  create = TRUE
 )
 }
 \arguments{
@@ -48,6 +49,8 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 \item{label}{(character) label of the Output}
 
 \item{monitoring}{(logical) output monitoring on/off}
+
+\item{create}{Create the ptable object: TRUE (default) or FALSE}
 }
 \value{
 an object of \linkS4class{ptable}

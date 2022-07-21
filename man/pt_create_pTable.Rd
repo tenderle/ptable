@@ -2,7 +2,7 @@
 % Please edit documentation in R/pt_create_pTable.R
 \name{pt_create_pTable}
 \alias{pt_create_pTable}
-\title{Create a perturbation table for count data}
+\title{Create a perturbation table}
 \usage{
 pt_create_pTable(params, monitoring = FALSE, debugging = FALSE)
 }

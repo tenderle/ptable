@@ -16,16 +16,24 @@ plot(obj, type = "d", file = NULL, ...)
 \item{...}{additional parameters passed to methods}
 }
 \description{
-Method to plot results
+Function to plot the perturbation panel using the R-package \code{\link{ggplot2}}.
 }
 \examples{
-# Simple Example
-ptab <- create_cnt_ptable(D = 2, V = 1.08, js = 1, mono = FALSE, label = "Example")
+
+ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+
+# Distribution Plot of the Noise
 plot(ptab, type = "d")
+
+# Perturbations Panel of the Noise
+plot(ptab, type = "p")
+
+# Transition Matrix
+plot(ptab, type = "t")
 
 \dontrun{
 ## Export result
-plot(ptab, type = "d", file = "graph.pdf")
+plot(ptab, type ="t", file = "example_tMatrix.pdf")
 }
 
 }
