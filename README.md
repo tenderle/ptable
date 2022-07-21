@@ -110,6 +110,12 @@ works within a browser.
 -   Improve codecov (higher coverage)
 -   Improve accuracy of ptable by means of digits-functionality
 
+#### Version 0.4.0
+
+-   feature: new function ‘modify_cnt_ptable()’ to generate modified
+    ptables (for count/frequency tables)
+-   update: minor code improvement
+
 #### Version 0.3.4.
 
 -   update: generic error message when constraints are violated

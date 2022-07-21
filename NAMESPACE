@@ -2,6 +2,7 @@
 
 export(create_cnt_ptable)
 export(create_num_ptable)
+export(modify_cnt_ptable)
 export(pt_check)
 export(pt_create_pParams)
 export(pt_create_pTable)

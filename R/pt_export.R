@@ -58,8 +58,10 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   
   if (table1=="cnts"){
     
-    if (SDCtool=="TauArgus")
+    if (SDCtool=="TauArgus"){
       pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_ub'),]
+      message("\n NOTE: If you have modified the ptable using 'modify_cnt_ptable()': Please use a new Tau-Argus Release (>= 4.2.3).")
+    }
     
     if (SDCtool=="SAS")
       pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_lb','p_int_ub'),]
@@ -94,6 +96,6 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   } 
   write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
   
-  return(pTable)
+  #return(pTable)
   
 }
