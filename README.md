@@ -29,6 +29,9 @@ We have a first rough version with which interested users may play
 around. Feedback (via issues) with regards to bugs or features requests
 are very welcome as well as pull-requests.
 
+With Release 0.4.0 we offer an additional modification of ptables for
+count data.
+
 ### Installation
 
 The package can directly be installed from `github` using the `devtools`
@@ -74,6 +77,13 @@ library(ptable)
 ?pt_create_pTable
 ```
 
+#### Help for modification of ptables
+
+``` r
+## help for specifying the perturbation parameters
+?modify_cnt_ptable
+```
+
 #### Documentation
 
 Once finished, the package will also contain a package **vignette**. The
@@ -112,7 +122,7 @@ works within a browser.
 
 #### Version 0.4.0
 
--   feature: new function ‘modify_cnt_ptable()’ to generate modified
+-   feature: new function `modify_cnt_ptable()` to generate modified
     ptables (for count/frequency tables)
 -   update: minor code improvement
 
