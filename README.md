@@ -108,7 +108,7 @@ works within a browser.
 
 ### News
 
-#### ToDo’s
+#### To-Dos
 
 -   Merge the two main functions `pt_create_pParams(...)` and
     `pt_create_pTable(...)` into one function
@@ -138,7 +138,7 @@ works within a browser.
 -   feature: new functions `create_cnt_table()` (for count/frequency
     tables) and `create_num_table()` (for numerical/magnitude tables)
     that both wrap `pt_create_pParams()` and `pt_create_pTable()`
--   code cleanup and improved documenatation
+-   code cleanup and improved documentation
 -   updated vignette
 -   Thx to @bernhard-da for the commits.
 
@@ -195,8 +195,8 @@ works within a browser.
 
 #### Version 0.1.9
 
--   Some updates of the dashboard (e.g. now diretly opens in webbrowser,
-    download buttons)
+-   Some updates of the dashboard (e.g. now directly opens in web
+    browser, download buttons)
 
 #### Version 0.1.8
 
@@ -216,17 +216,17 @@ works within a browser.
 #### Version 0.1.6
 
 -   feature: new function `pt_export()` to export ptable (csv format
-    used by [**tauargus**](https://github.com/sdcTools/tauargus))
+    used by [**Tauargus**](https://github.com/sdcTools/tauargus))
 -   feature: new argument of function `fifi_plot()` in order to save
     graphical pdf output
 
 #### Version 0.1.5
 
--   bugfixing: dashboard
+-   bug-fixing: dashboard
 
 #### Version 0.1.1 - 0.1.4
 
--   bugfixing: CRAN compatibility and minor fixes (e.g. depends)
+-   bug-fixing: CRAN compatibility and minor fixes (e.g. depends)
 
 #### Version 0.1.0
 
