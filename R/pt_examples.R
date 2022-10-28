@@ -74,7 +74,7 @@ pt_ex_nums <- function(parity = TRUE, separation = FALSE) {
       D = 10,
       V = 2,
       optim = c(4, 1),
-      step = 4,
+      step = 2,
       icat = c(1, 10),
       type = "odd")
   }
