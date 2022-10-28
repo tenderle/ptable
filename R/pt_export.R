@@ -19,6 +19,11 @@
 #'
 pt_export <- function(..., file, SDCtool="TauArgus"){
   
+  if (!is.null(file)) {
+    stopifnot(is_scalar_character(file))
+  }
+  
+  
   stopifnot(SDCtool %in% c("TauArgus","SAS"))
   
   inp.names <- names(list(...))
