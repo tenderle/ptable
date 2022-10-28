@@ -66,7 +66,7 @@ pt_create_pParams <- function(D,
     pstay <- NA
   }
   
-  if (sum(c(0, 1) %in% pstay) > 0) {
+  if ( sum (!((pstay < 1 ) & (pstay > 0)), na.rm = TRUE) > 0  ) {
     e <- c(
       "Parameter 'pstay' must be larger than zero and smaller",
       "than one (i.e. 0 < pstay < 1).")
