@@ -6,10 +6,10 @@
 #' - Unbiasedness of the noise
 #' - Fixed noise variance
 #' - Transition probabilities are between zero and one and the sum up to 1
-#' - Perturbations will not produce negaive cell values or positive cell values 
+#' - Perturbations will not produce negative cell values or positive cell values 
 #' equal to or less than a specific threshold value 
 #' - The absolute value of any perturbation is less than a specific integer 
-#' value (i.e. the maxiumum noise)
+#' value (i.e. the maximum noise)
 #' 
 #' @details Please note that [create_cnt_ptable()] and [create_num_ptable()] 
 #' provide direct wrappers to create perturbation tables for count- and numeric
@@ -170,7 +170,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
         if (iter > 0) {
           # If check_var=='FALSE' then prevent a further WHILE-loop, 
           # otherwise reduce p_lb by 0.05 to allow smaller p_stay in order to 
-          # fullfill the variance contraint
+          # fulfill the variance constraint
           p_lb[which(v_current == 0)] <- p_lb[which(v_current == 0)] - 0.05
           p_lb <- ifelse(p_lb < epsilon , epsilon, p_lb) # prevents negative values
         }

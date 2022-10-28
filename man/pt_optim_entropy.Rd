@@ -15,7 +15,7 @@ pt_optim_entropy(
 )
 }
 \arguments{
-\item{optim}{optimization paramter (1=standard, 2-4=further test implementations)}
+\item{optim}{optimization parameter (1=standard, 2-4=further test implementations)}
 
 \item{mono}{(logical) monotony parameter}
 

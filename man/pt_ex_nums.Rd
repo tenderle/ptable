@@ -20,7 +20,7 @@ else a named list
 \description{
 \code{\link[=pt_ex_nums]{pt_ex_nums()}} returns a perturbation table objects from
 \code{\link[=create_num_ptable]{create_num_ptable()}} with some default parameters. This is useful
-for quickly creating ptables to demonstate usage in other tools.
+for quickly creating ptables to demonstrate usage in other tools.
 }
 \examples{
 # class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"

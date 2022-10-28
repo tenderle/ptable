@@ -135,7 +135,7 @@ works within a browser.
 -   update: generic error message when constraints are violated
 -   update: replaced `lattice` by `ggplot2` in density plot function
     `pt_plot_pD()`
--   feature: Github actions (code coverage and CMD check)
+-   feature: Github actions (code coverage and *CMD* check)
 
 #### Version 0.3.3.
 
@@ -215,12 +215,12 @@ works within a browser.
 
 -   compatibility with R-package
     [**cellKey**](https://github.com/sdcTools/cellKey) (type of ptable:
-    ‘abs’/‘destatis’ formatted ptable)
+    *abs* or *destatis* formatted ptable)
 
 #### Version 0.1.6
 
 -   feature: new function `pt_export()` to export ptable (csv format
-    used by [**Tauargus**](https://github.com/sdcTools/tauargus))
+    used by [**TauArgus**](https://github.com/sdcTools/tauargus))
 -   feature: new argument of function `fifi_plot()` in order to save
     graphical pdf output
 

@@ -21,16 +21,16 @@ create_cnt_ptable(
 
 \item{V}{perturbation parameter for variance (scalar)}
 
-\item{js}{treshold value for blocking of small frequencies (i.e. the perturbation
+\item{js}{threshold value for blocking of small frequencies (i.e. the perturbation
 will not produce positive cell values that are equal to or smaller than
-the treshold value).}
+the threshold value).}
 
 \item{pstay}{optional parameter to set the probability (0 < p < 1) of
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
 \item{optim}{optimization parameter: \code{1} standard approach (default) with
-regular contraints, \code{4} alternative approach with simplified constraints (may work
+regular constraints, \code{4} alternative approach with simplified constraints (may work
 if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for

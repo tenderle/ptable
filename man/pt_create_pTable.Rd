@@ -26,10 +26,10 @@ are constructed given the following constraints:
 \item Unbiasedness of the noise
 \item Fixed noise variance
 \item Transition probabilities are between zero and one and the sum up to 1
-\item Perturbations will not produce negaive cell values or positive cell values
+\item Perturbations will not produce negative cell values or positive cell values
 equal to or less than a specific threshold value
 \item The absolute value of any perturbation is less than a specific integer
-value (i.e. the maxiumum noise)
+value (i.e. the maximum noise)
 }
 }
 \details{

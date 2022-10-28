@@ -2,7 +2,7 @@
 #'
 #' Function to solve the non-linear optimization problem used within \code{\link{ptable}()}.
 #'
-#' @param optim optimization paramter (1=standard, 2-4=further test implementations)
+#' @param optim optimization parameter (1=standard, 2-4=further test implementations)
 #' @param mono (logical) monotony parameter
 #' @param v (integer) vector with perturbation values (i.e. deviations to the original frequency)
 #' @param variance (numeric) variance parameter

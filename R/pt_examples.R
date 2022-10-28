@@ -2,7 +2,7 @@
 #'
 #' [pt_ex_cnts()] returns a perturbation table object from
 #' [create_cnt_ptable()] with some default parameters. This is useful
-#' for quickly creating ptables to demonstate usage in other tools.
+#' for quickly creating ptables to demonstrate usage in other tools.
 #'
 #' @return an object of [ptable-class]
 #' @export
@@ -20,7 +20,7 @@ pt_ex_cnts <- function() {
 #'
 #' [pt_ex_nums()] returns a perturbation table objects from
 #' [create_num_ptable()] with some default parameters. This is useful
-#' for quickly creating ptables to demonstate usage in other tools.
+#' for quickly creating ptables to demonstrate usage in other tools.
 #'
 #' @param parity a scalar logical; if `TRUE`, a single ptable will be generated.
 #' If `FALSE`, two ptables for even and odd numbers are created

@@ -14,5 +14,5 @@ pt_plot_pD(pert_table, ylimit = c(-0.05, 0.95), file = NULL)
 \item{file}{if not \code{NULL}, a path to a file where the graph is saved to as pdf}
 }
 \description{
-Function to plot the ditribution of the perturbation values using the R-package \code{\link{ggplot2}}.
+Function to plot the distribution of the perturbation values using the R-package \code{\link{ggplot2}}.
 }

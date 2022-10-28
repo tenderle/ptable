@@ -82,7 +82,7 @@ setClass("ptable_params",
 NULL
 
 #' An S4 class to represent perturbation table
-#' @slot pMatrix (matrix) perturbation matrix with probabilites
+#' @slot pMatrix (matrix) perturbation matrix with probabilities
 #' @slot pClasses (numeric) numeric classes
 #' @slot pTable (data.table) perturbation table with probabilities
 #' @slot dFrame (data.frame) for visualizing issues (to be done in upcoming releases)

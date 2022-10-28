@@ -10,7 +10,7 @@ An S4 class to represent perturbation table
 \section{Slots}{
 
 \describe{
-\item{\code{pMatrix}}{(matrix) perturbation matrix with probabilites}
+\item{\code{pMatrix}}{(matrix) perturbation matrix with probabilities}
 
 \item{\code{pClasses}}{(numeric) numeric classes}
 

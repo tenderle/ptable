@@ -54,7 +54,7 @@ fifi_plot <- function(obj, type="d", file=NULL){
 }
 
 #' @title pt_plot_pD
-#' @description Function to plot the ditribution of the perturbation values using the R-package \code{\link{ggplot2}}.
+#' @description Function to plot the distribution of the perturbation values using the R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param ylimit (numeric) vector with limits of y-axis (probabilities)
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf

@@ -12,7 +12,7 @@ an object of \linkS4class{ptable}
 \description{
 \code{\link[=pt_ex_cnts]{pt_ex_cnts()}} returns a perturbation table object from
 \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} with some default parameters. This is useful
-for quickly creating ptables to demonstate usage in other tools.
+for quickly creating ptables to demonstrate usage in other tools.
 }
 \examples{
 ptab <- pt_ex_cnts()
