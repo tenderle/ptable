@@ -42,7 +42,7 @@ Function to solve the non-linear optimization problem used within \code{\link{pt
 \seealso{
 Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
 
-Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to pro-tect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communi-ties, Luxembourg, 2006, pp. 299-302
+Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to protect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communities, Luxembourg, 2006, pp. 299-302
 }
 \author{
 Tobias Enderle, Sarah Giessing, Jonas Peter

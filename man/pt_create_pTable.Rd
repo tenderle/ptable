@@ -62,4 +62,4 @@ Tobias Enderle, \email{tobias.enderle@destatis.de}
 }
 \keyword{perturbation}
 \keyword{sdc}
-\keyword{table,}
+\keyword{table}

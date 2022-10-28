@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-The cell-key method (CKM) based random noise approach is a post-tabular Statistical Disclosure Control (SDC) technique. Random noise will be added to each table cell, according to some noise probability distribution - also referred to as **perturbation table** - and a mechanism to draw from that noise distribution in the so-called lookup step. The perturbation table consists of transition probabilitites that describe the probabilities of transitioning from one state (e.g. a given original frequency count) to another (e.g. target frequency count). In other words, they are referred to as the probabilities of the random noises.
+The cell-key method (CKM) based random noise approach is a post-tabular Statistical Disclosure Control (SDC) technique. Random noise will be added to each table cell, according to some noise probability distribution - also referred to as **perturbation table** - and a mechanism to draw from that noise distribution in the so-called lookup step. The perturbation table consists of transition probabilities that describe the probabilities of transitioning from one state (e.g. a given original frequency count) to another (e.g. target frequency count). In other words, they are referred to as the probabilities of the random noises.
 
 The goal of this package is to produce perturbation tables that can be used for applying random noise to statistical tables (also described as "to perturb statistical tables") by SDC tools like the R-package [**cellKey**](https://github.com/sdcTools/cellKey) or the software [**Tau-Argus**](https://github.com/sdcTools/tauargus). 
 
@@ -53,7 +53,7 @@ In versions <= `0.3.2`, this process was separated into two parts:
 While this steps still work in newer versions of the package, it is however suggested to use functions `create_cnt_ptable()` and `create_num_ptable()` directly as they compute the required perturbation tables that can be used as inputs by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The outputs of these functions can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
 
 ### Graphical User interface (GUI)
-In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a vizualisation mode using the function `ptable()` and allows users to experiment with different paramter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
+In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
 
 **Important Note:** The current GUI provides perturbation tables for frequency tables (`type = 'cnts'`) only.
 
@@ -166,12 +166,12 @@ ptab@empResults
 
 The matrix has the following columns:
 
-- `i`: indicates the original frequency to which the remeinaing columns are referred to
+- `i`: indicates the original frequency to which the remaining columns are referred to
 - `p_mean`: shows the bias of the perturbation of an original frequency (should be zero: unbiasedness)
 - `p_var`: shows the noise variance of an original frequency (**Note:** If p_var differs from the chosen input parameter `V` - as it does in the example above - we have a violation of the fixed variance condition. In that case, we have to set a different variance parameter or to change other parameters!)
 - `p_sum`: the sum of the transition probabilities for an original frequency count must equal to 1
 - `p_stay`: corresponds to the diagonal of the transition matrix
-- `iter`: any value other than 1 points out discrepancies (e.g. violation of the fixed variance parameter)^[In case of extended parameter settings, i.e. setting the argument `pstay=...` the algorithm tries to reduce the pre-set pstay-value iteratively in order to fullfill the fixed variance condition.] 
+- `iter`: any value other than 1 points out discrepancies (e.g. violation of the fixed variance parameter)^[In case of extended parameter settings, i.e. setting the argument `pstay=...` the algorithm tries to reduce the pre-set pstay-value iteratively in order to fulfill the fixed variance condition.] 
 
 As can be seen in the example, the preset variance of `V=1` does not hold for the original frequency `i=1`. To fulfill the condition of a fixed variance, we re-run the computation with a different variance parameter. Let's try a variance parameter `V=0.9`:
 
@@ -180,7 +180,7 @@ ptab_new <- create_cnt_ptable(D = 2, V = 0.9)
 ptab_new@empResults
 ```
 
-The new computation with the updated variance parameter results in a perturbation table that fullfills all conditions. Of course, the resulting transition matrix now differs from the first one:
+The new computation with the updated variance parameter results in a perturbation table that fulfills all conditions. Of course, the resulting transition matrix now differs from the first one:
 
 ```{r}
 ptab_new@pMatrix
@@ -213,7 +213,7 @@ diag(ptable_e21@pMatrix)
 
 The probability of an original frequency to remain unperturbed (i.e. that the target frequency equals the original frequency) is set to `r diag(ptable_e21@pMatrix)[2]*100`%. In the advanced parameter settings we will learn how we can assign a specific parameter to each original frequency count.
 
-**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/tree/master/TargetedRecordSwapping] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonised protection of census data in the ESS".]
+**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/tree/master/TargetedRecordSwapping] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonized protection of census data in the ESS".]
 
 #### Do not allow for positive cell values equal to or below a specified threshold value
 
@@ -223,7 +223,7 @@ ptable_e22 <- create_cnt_ptable(D = 5, V = 3, js = 2)
 ptable_e22@pMatrix
 ```
 
-Since the threshold value `js` is set to 2, we do not allow target frequencies 1 and 2. Hence, the corresonding columns contain zero probabilities.
+Since the threshold value `js` is set to 2, we do not allow target frequencies 1 and 2. Hence, the corresponding columns contain zero probabilities.
 
 **Important note regarding "*false zeroes*":** Since the possibility of false zeroes is an important strength of a perturbative SDC method, zeroes are always allowed and cannot be excluded from the set of target frequencies.
 
@@ -253,7 +253,7 @@ params <- slot(result, "pParams")
 result@empResults
 ```
 
-The perturbation table we just created is arranged such that 50% of ones and twoes, 70% of i=3 and 80% of all frequencies i>3 retain unperturbed.
+The perturbation table we just created is arranged such that 50% of ones and twos, 70% of i=3 and 80% of all frequencies i>3 retain unperturbed.
 
 The same holds for the argument `mono`.
 
@@ -276,7 +276,7 @@ The resulting object `result` can now be plotted using the function `plot()`. Ac
 plot(result, type = "t")
 ```
 
-The transition matrix plot is a heatmap plot indicating the probability (the darker the background of a transition probability, the higher the probability). Since the threshold value is set to `js=1`, we don't allow for ones. That means, the target frequencies 1 are not allowed and, hence, the corresponding column in the transition matrix only consits of zero probabilities.
+The transition matrix plot is a heat-map plot indicating the probability (the darker the background of a transition probability, the higher the probability). Since the threshold value is set to `js=1`, we don't allow for ones. That means, the target frequencies 1 are not allowed and, hence, the corresponding column in the transition matrix only consist of zero probabilities.
 
 #### Plotting the Perturbation Panel
 
@@ -284,18 +284,18 @@ The perturbation table can be graphically represented as a perturbation panel:
 ```{r, fig.height=5, fig.width = 7}
 plot(result, type = "p")
 ```
-Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored subbars corresponds to the respective transition probability.
+Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored sub-bars corresponds to the respective transition probability.
 
 An original frequency count i=1 changes with probability 0.5133 to j = 0. The adjustment equals -1. Accordingly a light blue bar of length 0.5133 is drawn in the panel. With a probability of 0.46 the original i = 1 becomes j = 2, so the modification equals +1. A light green bar of length 0.46 is attached. Finally, with a probability of 0.0267 the original i = 1 becomes j = 3, so the modification equals +2. Accordingly a dark green bar of length 0.0267 is attached. This way, all probabilities for the row i = 1 of the perturbation table are shown in the panel. The probabilities for i = 2, 3 and 4 are shown in the panel in a similar way.
 
-It can be seen from the perturbation panel where the x-axis shown at the bottom with probability between 0 und 1 corresponds to a cumulative probability distribution.
+It can be seen from the perturbation panel where the x-axis shown at the bottom with probability between 0 and 1 corresponds to a cumulative probability distribution.
 
 #### Plotting the Distribution of the Perturbation Values/Noise
 ```{r, fig.height=5, fig.width = 7}
 plot(result, type = "d")
 ```
 
-The distribution plot of the perturbation/noise values is very helpful for designing the noise and troubleshooting. Each panel of the plot represents an original frequency count. The most important information of the empirical results (see section above) are also given within each panel: `M` shows the bias, `V` is the achieved variance (and not the preset variance parameter!). Further, violations are reported in red (e.g. in case of a not fullfilled fixed variance).
+The distribution plot of the perturbation/noise values is very helpful for designing the noise and troubleshooting. Each panel of the plot represents an original frequency count. The most important information of the empirical results (see section above) are also given within each panel: `M` shows the bias, `V` is the achieved variance (and not the preset variance parameter!). Further, violations are reported in red (e.g. in case of a not fulfilled fixed variance).
 
 #### Save the plot to a file
 
@@ -323,7 +323,7 @@ result <- create_cnt_ptable(D = 4, V = 1.5, pstay = c(0.8, 0.9, 0.9, 0.9))
 # let's check the results
 result@empResults
 ```
-Since the values for `pstay` are too large to fullfill the fixed variance condition, the algorithm reduces the values of `pstay` iteratively. We then receive valid results for i=2,3 and 4. However, in case of i=1 it did not work. The variance differs and we violate the fixed variance condition. 
+Since the values for `pstay` are too large to fulfill the fixed variance condition, the algorithm reduces the values of `pstay` iteratively. We then receive valid results for i=2,3 and 4. However, in case of i=1 it did not work. The variance differs and we violate the fixed variance condition. 
 
 By the way: The same conclusions can be drawn from the distribution plot in a more comfortable way
 ```{r, fig.height=5, fig.width = 7}

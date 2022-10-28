@@ -18,9 +18,9 @@ ptable()
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}
 }
-\keyword{dashboard,}
-\keyword{flexdashboard,}
+\keyword{dashboard}
+\keyword{flexdashboard}
 \keyword{perturbation}
 \keyword{shiny}
-\keyword{table,}
-\keyword{visualisation,}
+\keyword{table}
+\keyword{visualisation}

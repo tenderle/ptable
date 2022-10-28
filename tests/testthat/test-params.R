@@ -1,6 +1,6 @@
 
 
-context("Parameter Testing")
+#context("Parameter Testing")
 
 
 test_that("Error capturing", {

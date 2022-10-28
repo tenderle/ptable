@@ -25,7 +25,7 @@
 #' @return an object of [ptable-class]
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
-#' @keywords perturbation table, sdc
+#' @keywords perturbation table sdc
 #'
 #' @examples
 #' # ptable for frequency tables 

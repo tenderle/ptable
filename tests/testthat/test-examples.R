@@ -1,5 +1,5 @@
 
-context("Example Testing")
+#context("Example Testing")
 
 
 test_that("Error capturing", {

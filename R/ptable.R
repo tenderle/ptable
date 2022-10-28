@@ -6,7 +6,7 @@
 #'
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
-#' @keywords perturbation table, visualisation, dashboard, flexdashboard, shiny
+#' @keywords perturbation table visualisation dashboard flexdashboard shiny
 #'
 #' @examples
 #' \dontrun{

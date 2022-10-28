@@ -11,7 +11,7 @@
 #' @param ndigits (integer) number of digits
 #'
 #' @seealso Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
-#' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to pro-tect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communi-ties, Luxembourg, 2006, pp. 299-302
+#' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to protect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communities, Luxembourg, 2006, pp. 299-302
 #' @return The return value contains a list with two elements:
 #' \describe{
 #'  \item{"\code{result}"}{   optimal value of the controls}
