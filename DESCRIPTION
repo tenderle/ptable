@@ -1,8 +1,8 @@
 Package: ptable
 Type: Package
-Date: 2022-09-14
+Date: 2023-02-xx
 Title: Generation of Perturbation Tables
-Version: 0.4.0
+Version: 0.4.x
 Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", role = c("aut", "cre")))
 Description: A tool for producing perturbation tables that are needed to apply the cell-key method.
 Imports: data.table,nloptr,RColorBrewer,flexdashboard,methods,rlang,rmarkdown,ggplot2
@@ -14,6 +14,6 @@ Encoding: UTF-8
 Language: en-US
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Config/testthat/edition: 3
