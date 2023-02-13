@@ -102,7 +102,7 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   
   output <- ggplot(data = subFrame[i > 0 & check == TRUE], aes(x = as.integer(v), y = p)) +
     geom_point(group = 1, colour=cbPalette[6], size = 2) +
-    geom_line(group =1, colour=cbPalette[3], size=1) +
+    geom_line(group =1, colour=cbPalette[3], linewidth=1) +
     facet_wrap(~ i, labeller = "label_both") +
     scale_x_continuous(name="Noise (v)", limits=c(-D,D), breaks=seq(-D,D,by=2)) +
     scale_y_continuous(name="Perturbation probability (p)", limits=ylimit, breaks=seq(0,1,by=0.2)) +
@@ -155,7 +155,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   }
   
   params <- slot(pert_table, "pParams")
-  pTable <- slot(pert_table,"pTable")
+  pTable <- copy(slot(pert_table,"pTable"))
   
   pTable <- pTable[order(v,p, decreasing = TRUE)]
   pTable <- pTable[,i_char:=as.character(i)]
@@ -195,7 +195,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
       guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
       scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
       #scale_fill_manual(values=getPalette((2*D/step)+1)) +
-      labs(title="Perturbation Panel", y="p (probability)", x="i (original frequency)") +
+      labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
       theme(axis.text =element_text(size = 16),
             axis.title = element_text(size = 18),
             legend.title = element_text(size = 16),
@@ -214,7 +214,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
       guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
       #scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
       scale_fill_manual(values=getPalette((2*D*step)+1)) +
-      labs(title="Perturbation Panel", y="p (probability)", x="i (original frequency)") +
+      labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
       theme(axis.text =element_text(size = 16),
             axis.title = element_text(size = 18),
             legend.title = element_text(size = 16),

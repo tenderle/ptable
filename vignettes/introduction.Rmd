@@ -33,34 +33,25 @@ We now briefly mention the features of the **ptable** package before we actually
 
 ### Main features
 
-As suggested in *@marley2011* and illustrated in *@giessing2016*  the package implements a maximum entropy approach to compute transition probabilities that guarantee certain characteristics for the random noise:
+As suggested in *@marley2011* and illustrated in *@giessing2016* the package implements a maximum entropy approach to compute transition probabilities that guarantee certain characteristics for the random noise:
 
-- One of the main characteristics is the *unbiasedness* of the noise in the sense that the expected bias of each separate original frequency is 0. This important characteristic guarantees unbiasedness of the method independent of the distribution of original frequencies in a hypercube or set of hypercubes.
+- The **maximum noise** (i.e. absolute value of any perturbation) is less than a specified integer value D.
 
-- The perturbations have a *fixed noise variance* $\sigma^2$ that determines the spread of the possible noise values.
+- One of the main characteristics is the **zero mean** or unbiased noise in the sense that the expected bias of each separate original frequency is 0. This important characteristic guarantees unbiased noise independent of the distribution of original frequencies in a hypercube or set of hypercubes.
 
-- The perturbations will not produce negative cell values or positive cell values equal to or smaller than a specified threshold value js.
+- The perturbations have a **fixed noise variance** $\sigma ^2$ that determines the spread of the possible noise values.
 
-- The absolute value of any perturbation is less than a specified integer value D.
+- The perturbations will produce **no negative frequency counts**.
 
-Starting from versions `> 0.3.2`, functions `create_cnt_ptable()` and `create_num_ptable()` allow to create perturbation objects for count- and/or numeric variables in one step. The required inputs to both these functions are the noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the maximum noise) and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. Further arguments to these functions are presented in the following sections.
-
-In versions <= `0.3.2`, this process was separated into two parts:
-
-1: defining parameters using `pt_create_pParams()`
-2: creating the final perturbation outputs using `pt_create_pTable()`
-
-While this steps still work in newer versions of the package, it is however suggested to use functions `create_cnt_ptable()` and `create_num_ptable()` directly as they compute the required perturbation tables that can be used as inputs by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The outputs of these functions can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+- In the perturbed table will be **no positive frequency counts less than a specified threshold** value js.
 
 ### Graphical User interface (GUI)
 In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
 
-**Important Note:** The current GUI provides perturbation tables for frequency tables (`type = 'cnts'`) only.
+_Note_: The current GUI provides perturbation tables for frequency tables (`type = 'cnts'`) only.
 
 ### Auxiliary features
-The ptable package provides auxiliary functions that allow to process the results of the function `pt_create_pTable()`.
-
-Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 
+The package provides auxiliary functions that allow to process and review the results. Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 
 
 Further, `pt_export()` allows users to write the perturbation table into an external file. The format of the file can be specified such that it can be made available to [**Tau-Argus**](https://github.com/sdcTools/tauargus) or the software SAS.
 
@@ -73,8 +64,10 @@ _Note_: The following examples are illustrated for frequency tables with cell co
 
 
 ### Load the Package
-```{r}
+```{r, message=FALSE}
 library(ptable)
+```
+```{r}
 packageVersion("ptable")
 ```
 
@@ -188,7 +181,37 @@ ptab_new@pMatrix
 
 ***
 
-The goal of the following subsections is to create perturbation tables with extended and afterwards with advanced parameter settings of the function `pt_create_pParams()`.
+### The default ptable and the modified ptable 
+
+#### The default ptable
+
+For our SDC tools - the `cellKey`-package and TauArgus - we use the ptable with noise intervals with result after accumulating the noise probabilities 
+
+```{r}
+ptab_new@pTable
+```
+
+
+The noise intervals in the standard ptable are ordered from -D to D. A modified ptable still has the same properties as the standard ptable but can ensure a higher protection of perturbed frequency tables since the noise probabilities are split and the intervals are rearranged.
+
+#### The modified ptable
+
+Modify the ptable to have a higher level of protection
+```{r}
+mod_ptab_new <- modify_cnt_ptable(ptab_new, threshold = 0.2, seed = 123)
+```
+
+The noise probabilities larger than the threshold value will be split. Then, the split noise probabilities are randomly rearranged using a seed. Finally, the intervals of the ptable will be adjusted.
+
+```{r}
+mod_ptab_new@pTable
+```
+
+
+
+
+
+The goal of the following subsections is to create perturbation tables with extended and afterwards with advanced parameter settings of the function `create_cnt_ptable()`.
 
 
 ### Extended Parameter Setting
@@ -213,7 +236,7 @@ diag(ptable_e21@pMatrix)
 
 The probability of an original frequency to remain unperturbed (i.e. that the target frequency equals the original frequency) is set to `r diag(ptable_e21@pMatrix)[2]*100`%. In the advanced parameter settings we will learn how we can assign a specific parameter to each original frequency count.
 
-**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/tree/master/TargetedRecordSwapping] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonized protection of census data in the ESS".]
+**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonized protection of census data in the ESS".]
 
 #### Do not allow for positive cell values equal to or below a specified threshold value
 
@@ -227,7 +250,7 @@ Since the threshold value `js` is set to 2, we do not allow target frequencies 1
 
 **Important note regarding "*false zeroes*":** Since the possibility of false zeroes is an important strength of a perturbative SDC method, zeroes are always allowed and cannot be excluded from the set of target frequencies.
 
-Further parameters of the function `pt_create_pParams()` are explained in the help page that can be accessed by calling `?pt_create_pParams()`.
+Further parameters of the function `create_cnt_ptable()` are explained in the help page.
 
 
 ### Advanced Parameter Setting
@@ -315,6 +338,8 @@ pt_export(result, file = "ptable.csv", SDCtool = "TauArgus")
 pt_export(result, file = "ptable.csv", SDCtool = "SAS")
 ```
 
+_Note_: For the purpose of production please modify the ptable and don't use the default ptable. But be aware of the interpretation using the perturbation panel (up to the current version, the ptable will always plot the default ptable).
+
 ## Troubleshooting Example: Violation of the fixed variance condition
 
 Let's assume we want to assign different probabilities for `pstay` as done in an example above, but with very large values:
@@ -358,5 +383,17 @@ However, when creating objects for magnitude tables, users can also set the foll
 
 - `icat` (mandatory): The categories for the interpolation.
 - `type` (optional): Distinction between odd and even numbers (see Giessing/Tent 2019).
+
+## Remarks
+
+> Starting from versions `> 0.3.2`, functions `create_cnt_ptable()` and `create_num_ptable()` allow to create perturbation objects for count- and/or numeric variables in one step. The required inputs to both these functions are the noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the maximum noise) and a threshold value `js=...`. In addition they can fix important transition probabilities in advance, i.e. the probability of an original frequency to remain unperturbed `pstay=...`. Further arguments to these functions are presented in the following sections.
+>
+> In versions `<= 0.3.2`, this process was separated into two parts:
+> 
+> 1. defining parameters using `pt_create_pParams()`
+> 2. creating the final perturbation outputs using `pt_create_pTable()`
+>
+>While these steps still work in newer versions of the package, it is however suggested to use functions `create_cnt_ptable()` and `create_num_ptable()` directly as they compute the required perturbation tables that can be used as inputs by both SDC tools, [**Tau-Argus**](https://github.com/sdcTools/tauargus) and [**cellKey**](https://github.com/sdcTools/cellKey). The outputs of these functions can directly be used as input argument by the [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+
 
 # References
