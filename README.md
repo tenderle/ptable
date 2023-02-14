@@ -79,14 +79,12 @@ To load the package `ptable` you have to call
 library(ptable)
 ```
 
-#### Help
+#### Help & Documentation
 
 ``` r
 ## help file
-?ptable_pkg
+?ptable::ptable_pkg
 ```
-
-#### Documentation
 
 A detailed documentation is given in the **vignette**:
 
@@ -105,6 +103,10 @@ ptable()
 
 The download buttons (for downloading the ptable and the graphics) only
 works within a browser.
+
+### Updates
+
+The changelog is given [here](blob/master/news.md).
 
 ### To-Dos
 
