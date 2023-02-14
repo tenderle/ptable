@@ -148,7 +148,7 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
 #'
 pt_plot_pPanel <- function(pert_table, file=NULL){
   
-  i <- i_char <- j <- p <- u <- v <- NULL
+  i <- i_char <- j <- p <- u <- v <- p_int_lb <- NULL
   
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
