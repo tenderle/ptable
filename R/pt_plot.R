@@ -143,8 +143,6 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
 #' @import ggplot2
-#' @importFrom grDevices colorRampPalette
-#' @importFrom stats aggregate
 #'
 pt_plot_pPanel <- function(pert_table, file=NULL){
   
