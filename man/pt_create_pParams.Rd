@@ -61,11 +61,13 @@ this function may be dropped in future versions; please use
 \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} and \code{\link[=create_num_ptable]{create_num_ptable()}} directly.
 }
 \examples{
+\dontrun{
 # parameter setting for frequency tables
 pt_create_pParams(D = 5, V = 2, js = 2, pstay = 0.5, optim = 1, mono = TRUE)
 
 # parameter setting for magnitude tables
 pt_create_pParams(D = 5, V = 2, table = "nums", step = 4, icat = c(1, 3, 5))
+}
 
 }
 \author{

@@ -40,17 +40,19 @@ variables. For more information, see the vignette using \code{\link[=pt_vignette
 \examples{
 # ptable for frequency tables 
 # old way
+\dontrun{
 params_cnts <- pt_create_pParams(D = 5, V = 3, js = 2, label = "test1")
 pt_create_pTable(params = params_cnts)
-
+}
 # new, direct way
 create_cnt_ptable(D = 5, V = 3, js = 2, label = "test2")
 
 # ptable for magnitude tables
 # old way
+\dontrun{ 
 params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1, 3, 5))
 pt_create_pTable(params = params_nums)
-
+}
 # new way
 create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 }
