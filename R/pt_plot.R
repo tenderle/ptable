@@ -169,6 +169,7 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   pTable <- pTable[order(i,p_int_lb, decreasing = FALSE)]
   
   D <- slot(params, "D")
+  intervals <- attr(pTable, "intervals")
   
   if (D>6) { myBreaks <- c(-D, 0, D) } else { myBreaks <- c(-D:D) }
   
@@ -177,11 +178,11 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
   output <- s + geom_bar(stat="identity", position = "fill") + 
     coord_flip() + 
-    {if(D<=6)guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))} +
+    {if(D<=6)guides(fill= guide_legend(title="v (noise value):", title.position = "top", reverse=FALSE, size=16))} +
     scale_fill_gradient2(
-      low = brewer.pal(9, "Greens")[9],
+      low = brewer.pal(9, "Greens")[8],
       mid = "grey95",
-      high = brewer.pal(9, "Blues")[9],
+      high = brewer.pal(9, "Blues")[8],
       midpoint = 0,
       space = "Lab",
       na.value = "grey50",
@@ -189,9 +190,10 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
       aesthetics = "fill",
       breaks=myBreaks
     ) +
-    labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
-    theme(axis.text =element_text(size = 16),
-          axis.title = element_text(size = 18),
+    labs(title=paste0("Perturbation Panel (",intervals," intervals)"), y="p (probability)", x="i (original frequency)") +
+    theme(plot.title = element_text(size = 18),
+          axis.text =element_text(size = 16),
+          axis.title = element_text(size = 16),
           legend.title = element_text(size = 16),
           legend.text = element_text(size = 16),
           legend.position = "bottom", 

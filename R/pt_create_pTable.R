@@ -323,6 +323,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   # Ouput
   out <- new("ptable")
   attr(DF, "label") <- label
+  attr(pTable, "intervals") <- "default"
   
   slot(out, "dFrame") <- DF
   slot(out, "pTable") <- pTable

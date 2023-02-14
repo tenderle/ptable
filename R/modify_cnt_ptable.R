@@ -139,7 +139,7 @@ modify_cnt_ptable <- function(input,
   
   
   ptab_mod <- modify(ptab = ptab, seed = seed, threshold = threshold)
-  
+  attr(ptab_mod, "intervals") <- "modified"
   
   if (class(input)[1] == "ptable"){
     
