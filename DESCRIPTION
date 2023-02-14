@@ -3,17 +3,32 @@ Type: Package
 Date: 2023-02-13
 Title: Generation of Perturbation Tables
 Version: 0.4.0
-Authors@R: c(person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", role = c("aut", "cre")))
+Authors@R: c(
+  person(
+    given = "Tobias", 
+    family = "Enderle", 
+    email = "tobias.enderle@destatis.de", 
+    role = c("aut", "cre")))
 Description: A tool for producing perturbation tables that are needed to apply the cell-key method.
-Imports: data.table,nloptr,RColorBrewer,flexdashboard,methods,rlang,rmarkdown,ggplot2
+Imports: 
+  data.table,
+  nloptr,
+  RColorBrewer,
+  flexdashboard,
+  methods,
+  rlang,
+  rmarkdown,
+  ggplot2
 Suggests: 
     knitr,
     testthat (>= 3.0.0)
 License: EUPL
 Encoding: UTF-8
 Language: en-US
+NeedsCompilation: no
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
 LazyData: true
+BugReports: https://github.com/sdcTools/ptable/issues
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Config/testthat/edition: 3
