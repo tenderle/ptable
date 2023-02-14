@@ -106,7 +106,7 @@ works within a browser.
 
 ### Updates
 
-The changelog is given [here](blob/master/news.md).
+The changelog is given [here](news.md).
 
 ### To-Dos
 
