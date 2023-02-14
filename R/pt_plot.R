@@ -168,67 +168,43 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   lev_char[lev_num == 0] <- "0 (no perturbation)"
   
   pTable[, u:= factor(v, levels = (unique(as.character(v))), labels = lev_char ) ]
-  
+  pTable <- pTable[order(i,p_int_lb, decreasing = FALSE)]
   
   D <- slot(params, "D")
-  step <- slot(params, "step")
-  D0 <- (D*step)+1
   
-  # Colors for perturbation values
-  if (D0 <= 9){
-    pert_no <- brewer.pal(D0, "Greys")[2]
-    pert_pos <- brewer.pal(D0, "Blues")[c(2:D0)]
-    pert_neg <- brewer.pal(D0, "Greens")[c(D0:2)]
-  } else {
-    getPalette <- colorRampPalette(c(brewer.pal(9, "Greens")[c(D0:1)], 
-                                     brewer.pal(9,"Greys")[2],
-                                     brewer.pal(9, "Blues")[c(1:D0)]
-    ))
-  }
+  if (D>6) { myBreaks <- c(-D, 0, D) } else { myBreaks <- c(-D:D) }
   
   # ggplot figure
-  s <- ggplot(pTable, x=i, y=p, aes(i_char,p, fill = u ))
+  s <- ggplot(pTable, x=i, aes(i_char,p, fill = v ))
   
-  if (D0 <= 9){
-    output <- s + geom_bar(stat="identity", position = "fill") + 
-      coord_flip() + 
-      guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
-      scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
-      #scale_fill_manual(values=getPalette((2*D/step)+1)) +
-      labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
-      theme(axis.text =element_text(size = 16),
-            axis.title = element_text(size = 18),
-            legend.title = element_text(size = 16),
-            legend.text = element_text(size = 16),
-            legend.position = "bottom", 
-            legend.box.background = element_rect(colour = "grey"),
-            legend.background = element_blank(),
-            panel.grid.major.x = element_line(colour = "lightgrey"),
-            panel.background = element_blank(),
-            axis.ticks=element_blank(),
-            axis.text.y = element_text(margin = margin(r = -15, l=5))) +
-      ylim(0,1)
-  } else {
-    output <- s + geom_bar(stat="identity", position = "fill") + 
-      coord_flip() + 
-      guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))+
-      #scale_fill_manual(values=c(pert_neg,pert_no,pert_pos)) +
-      scale_fill_manual(values=getPalette((2*D*step)+1)) +
-      labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
-      theme(axis.text =element_text(size = 16),
-            axis.title = element_text(size = 18),
-            legend.title = element_text(size = 16),
-            legend.text = element_text(size = 16),
-            legend.position = "bottom", 
-            legend.box.background = element_rect(colour = "grey"),
-            legend.background = element_blank(),
-            panel.grid.major.x = element_line(colour = "lightgrey"),
-            panel.background = element_blank(),
-            axis.ticks=element_blank(),
-            axis.text.y = element_text(margin = margin(r = -15, l=5))) +
-      ylim(0,1)
-    
-  }
+  output <- s + geom_bar(stat="identity", position = "fill") + 
+    coord_flip() + 
+    {if(D<=6)guides(fill= guide_legend(title="v (perturbation value):", title.position = "top", reverse=TRUE, size=16))} +
+    scale_fill_gradient2(
+      low = brewer.pal(9, "Greens")[9],
+      mid = "grey95",
+      high = brewer.pal(9, "Blues")[9],
+      midpoint = 0,
+      space = "Lab",
+      na.value = "grey50",
+      guide = "colourbar",
+      aesthetics = "fill",
+      breaks=myBreaks
+    ) +
+    labs(title="Perturbation Panel (unmodified ptable)", y="p (probability)", x="i (original frequency)") +
+    theme(axis.text =element_text(size = 16),
+          axis.title = element_text(size = 18),
+          legend.title = element_text(size = 16),
+          legend.text = element_text(size = 16),
+          legend.position = "bottom", 
+          legend.box.background = element_rect(colour = "grey"),
+          legend.background = element_blank(),
+          panel.grid.major.x = element_line(colour = "lightgrey"),
+          panel.background = element_blank(),
+          axis.ticks=element_blank(),
+          axis.text.y = element_text(margin = margin(r = -15, l=5))) +
+    ylim(0,1)
+  
   if (!is.null(file)) {
     ggsave(filename=file, width=6, height=5)
     cat("graph of perturbation panel saved to",shQuote(file),"\n")
