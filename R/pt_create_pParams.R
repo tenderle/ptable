@@ -40,7 +40,7 @@
 #' pt_create_pParams(D = 5, V = 2, table = "nums", step = 4, icat = c(1, 3, 5))
 #' }
 #'
-#' @rdname pt_create_pParams
+#' @noRd
 pt_create_pParams <- function(D,
                               V,
                               js = 0,
