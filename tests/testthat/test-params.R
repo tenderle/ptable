@@ -5,6 +5,7 @@
 
 para1 <- pt_create_pParams(D = 3, V = 1)
 
+
 test_that("Error capturing", {
   expect_error(pt_create_pParams(D = 2))
   expect_error(pt_create_pParams(V = 3))
@@ -34,6 +35,14 @@ test_that("Error capturing", {
   expect_error(modify_cnt_ptable(create_cnt_ptable(D = 3, V = 1), threshold = 0, seed = 123))
   expect_error(modify_cnt_ptable(create_cnt_ptable(D = 3, V = 1), threshold = 1.1, seed = 123))
   
+  expect_error(modify_cnt_ptable(pt_ex_nums(), threshold = 0.1, seed = 123))
+  expect_error(modify_cnt_ptable(create_cnt_ptable(D = 3, V = 1)@pTable[, .(i,j,v)] , threshold = 0.1, seed = 123))
+  expect_error(modify_cnt_ptable(data.table(i=1, j=2) , threshold = 0.1, seed = 123))
+  expect_no_error(modify_cnt_ptable(create_cnt_ptable(D = 3, V = 1), threshold = 0.1, seed = 123))
+  
+  expect_no_error(modify_cnt_ptable(ck_ptab_cnts, threshold = 0.1, seed = 123))
+  expect_error(modify_cnt_ptable(ck_ptab_nums, threshold = 0.1, seed = 123))
+
   expect_message(ptab_mod <- modify_cnt_ptable(pt_create_pTable(para1), 0.3, seed = 5467))
   
   # entropy
