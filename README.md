@@ -75,7 +75,6 @@ install.packages('C:/Users/.../Downloads/v0.4.0.tar.gz', repos=NULL, type='sourc
 To load the package `ptable` you have to call
 
 ``` r
-## load the package
 library(ptable)
 ```
 
@@ -114,20 +113,22 @@ The changelog is given [here](NEWS.md).
 > `create_ptable()`, `create_cnt_ptable()` and `create_num_ptable()`
 > allow to create perturbation objects for count- and/or numeric
 > variables in one step. The required inputs to these functions are the
-> noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the
-> maximum noise).
+> maximum noise `D=...` and the noise variance `V=...`.
 >
 > In versions `<= 0.3.2`, this process was separated into two parts:
 >
 > 1.  defining parameters using `pt_create_pParams()`
 > 2.  creating the final perturbation outputs using `pt_create_pTable()`
 >
-> These steps still work in newer versions of the package differently if
-> necessary: 1. If the argument `create` in `create_ptable()`,
-> `create_cnt_ptable()` or `create_num_ptable()` is set to `FALSE`, then
-> these functions return an object of class \[ptable_params-class\]. 2.
-> This object can be used as input in `create_ptable()` only to create
-> the final perturbation output.
+> These steps still work in newer versions of the package differently
+> (if necessary):
+>
+> 1.  If the argument `create` in `create_ptable()`,
+>     `create_cnt_ptable()` or `create_num_ptable()` is set to `FALSE`,
+>     then these functions return an object of class
+>     \[ptable_params-class\].
+> 2.  This object can be used as input in `create_ptable()` only to
+>     create the final perturbation output.
 
 ### To-Dos
 
