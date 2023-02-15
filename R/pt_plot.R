@@ -73,12 +73,13 @@ fifi_plot <- function(obj, type="d", file=NULL){
 #' @noRd
 pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   v <- check <- i_info <- NULL
-  i <- iter <- mw <- p <- ps <- pstay <- psum <- var <- xl <- xr <- y <- NULL
+  . <- i <- j <- iter <- mw <- p <- ps <- pstay <- psum <- var <- xl <- xr <- y <- NULL
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
   }
   
   params <- slot(pert_table, "pParams")
+  label_ <- slot(params, "label")
   timestamp <- slot(pert_table, "tStamp")
   
   empResults <- slot(pert_table, "empResults")
@@ -105,13 +106,14 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   
   cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
   
-  dFrame <- slot(pert_table,"dFrame")
-  type <- slot(pert_table,"type")
+  pTable <- copy(slot(pert_table,"pTable"))
+  pTable[, check := TRUE]
+  pTable <- pTable[, .(p=sum(p), v, check), by=.(i,j)]
+  pTable[, i := as.factor(i)]
+  pTable[, i:=factor(i, levels=rev(levels(i)))]
+  pTable[, i := as.numeric(as.vector(i)) ]
   
-  subFrame <- copy(dFrame)
-  subFrame[, i := as.numeric(as.vector(i)) ]
-  
-  output <- ggplot(data = subFrame[i > 0 & check == TRUE], aes(x = as.integer(v), y = p)) +
+  output <- ggplot(data = pTable[i > 0 & check == TRUE], aes(x = as.integer(v), y = p)) +
     geom_point(group = 1, colour=cbPalette[6], size = 2) +
     geom_line(group =1, colour=cbPalette[3], linewidth=1) +
     facet_wrap(~ i, labeller = "label_both") +
@@ -121,7 +123,7 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
     theme(axis.text =element_text(size = 16), 
           axis.title = element_text(size = 18),
           plot.title = element_text(size = 18)) + 
-    labs(title = attr(dFrame,"label"), 
+    labs(title = paste0("Distribution Plot: ", label_), 
          caption = paste("Timestamp: ",timestamp,"\nR-Package 'ptable' (Version ",packageVersion('ptable'),")",  sep="")) +
     theme(strip.background = element_rect(fill=cbPalette[3])) +
     geom_text(data = dt_meta,colour=cbPalette[dt_meta$col],
@@ -234,22 +236,28 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
 #' @noRd
 pt_plot_tMatrix <- function(pert_table, file=NULL){
   
-  i <- j <- p <- NULL
+  . <- i <- j <- p <- NULL
   
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
   }
   
+  pTable <- slot(pert_table,"pTable")
+  tTable <- copy(pTable[, .(i,j,p)])
+  tTable <- tTable[, .(p=sum(p)), by=.(i,j)]
+  tTable[, i := as.factor(i)]
+  tTable[, j := as.factor(j)]
+  tTable[, i:=factor(i, levels=rev(levels(i)))]
   
-  tMatrix <- slot(pert_table,"dFrame")
-  tMatrix <- tMatrix[,c("i","j","p")]
+#  tMatrix <- slot(pert_table,"dFrame")
+#  tMatrix <- tMatrix[,c("i","j","p")]
   
   #tMatrix[, i:=factor(i)]
-  tMatrix[, i:=factor(i, levels=rev(levels(i)))]
+#  tMatrix[, i:=factor(i, levels=rev(levels(i)))]
   
   # TODO: relative text sizes
   
-  output <- ggplot( tMatrix, aes(j, i)) + 
+  output <- ggplot( tTable, aes(j, i)) + 
     geom_tile(aes(fill=p), color="lightgrey") +
     labs(title="Transition Matrix", y="i (original frequency)", x="j (target frequency)") +
     theme(legend.position="bottom") +

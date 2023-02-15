@@ -10,13 +10,11 @@ An S4 class to represent perturbation table
 \section{Slots}{
 
 \describe{
-\item{\code{pMatrix}}{(matrix) perturbation matrix with probabilities}
+\item{\code{tMatrix}}{(matrix) transition matrix with perturbation probabilities}
 
 \item{\code{pClasses}}{(numeric) numeric classes}
 
 \item{\code{pTable}}{(data.table) perturbation table with probabilities}
-
-\item{\code{dFrame}}{(data.frame) for visualizing issues (to be done in upcoming releases)}
 
 \item{\code{empResults}}{(data.table) ...}
 

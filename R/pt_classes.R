@@ -82,10 +82,9 @@ setClass("ptable_params",
 NULL
 
 #' An S4 class to represent perturbation table
-#' @slot pMatrix (matrix) perturbation matrix with probabilities
+#' @slot tMatrix (matrix) transition matrix with perturbation probabilities
 #' @slot pClasses (numeric) numeric classes
 #' @slot pTable (data.table) perturbation table with probabilities
-#' @slot dFrame (data.frame) for visualizing issues (to be done in upcoming releases)
 #' @slot empResults (data.table) ...
 #' @slot pParams a \code{\linkS4class{ptable_params}} object
 #' @slot tStamp (character) ...
@@ -96,10 +95,9 @@ NULL
 #' @export
 setClass("ptable",
          representation=list(
-           pMatrix="matrix",
+           tMatrix="matrix",
            pClasses="numeric",
            pTable="data.table",
-           dFrame="data.table",
            empResults="data.table",
            pParams="ptable_params",
            tStamp="character",
@@ -107,10 +105,9 @@ setClass("ptable",
            table="character"
          ),
          prototype=list(
-           pMatrix=matrix(),
+           tMatrix=matrix(),
            pClasses=numeric(),
            pTable=data.table(),
-           dFrame=data.table(),
            empResults=data.table(),
            pParams=NULL,
            tStamp=character(),

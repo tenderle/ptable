@@ -300,17 +300,6 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
     message("")
   }
   
-  # Perturbation Table with additional information
-  DF <- copy(erg_dt)
-  DF[, check := TRUE]
-  DF[, i := as.factor(i)]
-  DF[, j := as.factor(j)]
-  DF[, type := ttype]
-  DF[, p_int_lb := round(p_int_lb, ndigits)]
-  DF[, p_int_ub := round(p_int_ub, ndigits)]
-  # IMPORTANT step: Due to rounding errors, 'p' is replaced by the differences of the rounded intervals
-  DF[, p := p_int_ub - p_int_lb]
-  
   # Perturbation Table/Matrix
   pTable <- copy(erg_dt)
   pTable[, type := ttype]
@@ -322,12 +311,10 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   
   # Ouput
   out <- new("ptable")
-  attr(DF, "label") <- label
   attr(pTable, "intervals") <- "default"
   
-  slot(out, "dFrame") <- DF
   slot(out, "pTable") <- pTable
-  slot(out, "pMatrix") <- as.matrix(Matrix)
+  slot(out, "tMatrix") <- as.matrix(Matrix)
   
   slot(out, "pClasses") <- icat_
   slot(out, "pParams") <- pert_params
