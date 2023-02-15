@@ -221,17 +221,17 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
     }
     
     # Monitoring output of current iteration
-    if (FALSE) {
-      test <- rbind(
-        v = v_current,
-        p_init = p_init,
-        p_lb = p_lb,
-        p_new = p_new)
-      colnames(test) <- j
-      message("Current iteration ", iter, " for i=", i, ":")
-      print(test)
-      message("")
-    }
+    # if (FALSE) { #FALSE
+    #   test <- rbind(
+    #     v = v_current,
+    #     p_init = p_init,
+    #     p_lb = p_lb,
+    #     p_new = p_new)
+    #   colnames(test) <- j
+    #   message("Current iteration ", iter, " for i=", i, ":")
+    #   print(test)
+    #   message("")
+    # }
     
     dt <- data.table(
       i = i,

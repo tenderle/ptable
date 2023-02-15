@@ -74,9 +74,6 @@ fifi_plot <- function(obj, type="d", file=NULL){
 pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   v <- check <- i_info <- NULL
   . <- i <- j <- iter <- mw <- p <- ps <- pstay <- psum <- var <- xl <- xr <- y <- NULL
-  if (!is.null(file)) {
-    stopifnot(is_scalar_character(file))
-  }
   
   params <- slot(pert_table, "pParams")
   label_ <- slot(params, "label")
@@ -162,10 +159,6 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
   i <- i_char <- j <- p <- u <- v <- p_int_lb <- NULL
   
-  if (!is.null(file)) {
-    stopifnot(is_scalar_character(file))
-  }
-  
   params <- slot(pert_table, "pParams")
   pTable <- copy(slot(pert_table,"pTable"))
   
@@ -237,10 +230,6 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
 pt_plot_tMatrix <- function(pert_table, file=NULL){
   
   . <- i <- j <- p <- NULL
-  
-  if (!is.null(file)) {
-    stopifnot(is_scalar_character(file))
-  }
   
   pTable <- slot(pert_table,"pTable")
   tTable <- copy(pTable[, .(i,j,p)])
