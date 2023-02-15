@@ -9,7 +9,7 @@
 #' @slot label (character) label for output
 #' @slot icat (integer) categorized original frequencies i
 #' @slot table (character) type of table: frequency counts (cnts) or magnitude (nums)
-#' @slot step (integer) step width between 0 and 1
+#' @slot step (integer) step width
 #' @slot type (character) type of 
 #' @name ptable_params-class
 #' @rdname ptable_params-class
