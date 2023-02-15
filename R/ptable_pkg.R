@@ -54,7 +54,11 @@
 #' magnitude tables: 'even', 'odd' or 'all' (default)
 #' @param monitoring (logical) output monitoring on/off
 #' @param debugging (logical) debug monitoring on/off
-#' @param create (logical) scalar specifying (default: TRUE)
+#' @param create (logical) scalar specifying to create just the 
+#' input parameters of class [ptable_params-class] (FALSE) or also to create the 
+#' perturbation table object of class [ptable-class] (default: TRUE) 
+#' @param params object of class [ptable_params-class] can be used as input instead 
+#' of the remaining parameters
 #' 
 #' @seealso 
 #' * [plot()] to analyze the created perturbation table visually

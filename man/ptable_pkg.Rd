@@ -87,7 +87,12 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 
 \item{debugging}{(logical) debug monitoring on/off}
 
-\item{create}{(logical) scalar specifying (default: TRUE)}
+\item{create}{(logical) scalar specifying to create just the
+input parameters of class \linkS4class{ptable_params} (FALSE) or also to create the
+perturbation table object of class \linkS4class{ptable} (default: TRUE)}
+
+\item{params}{object of class \linkS4class{ptable_params} can be used as input instead
+of the remaining parameters}
 }
 \value{
 Depending on the argument \code{create} results an object-class of either
