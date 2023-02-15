@@ -33,7 +33,7 @@
 #' 
 #' @md
 #' @rdname plot
-#' 
+#' @exportMethod plot
 setGeneric("plot", function(obj, type="d", file=NULL, ...) {
 fifi_plot(obj, type=type, file=file,...)
 })
