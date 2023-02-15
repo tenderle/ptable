@@ -91,10 +91,7 @@ pt_create_pParams <- function(D,
     if (!is.null(icat)) {
       message("Ignoring argument `icat` for freqency tables")
     }
-    if (!is.null(icat)) {
-      message("Ignoring argument `icat` for freqency tables")
-    }
-    if (step >= 0) {
+    if (step > 1) {
       message("Ignoring argument `step` for freqency tables")
     }
     step <- 1
