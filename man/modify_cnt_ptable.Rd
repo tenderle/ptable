@@ -2,6 +2,7 @@
 % Please edit documentation in R/modify_cnt_ptable.R
 \name{modify_cnt_ptable}
 \alias{modify_cnt_ptable}
+\alias{modify_cnts_ptable}
 \title{Modify a ptable suitable for frequency count variables}
 \usage{
 modify_cnt_ptable(input, threshold = 0.2, seed = NULL)

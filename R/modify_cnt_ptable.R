@@ -161,3 +161,7 @@ modify_cnt_ptable <- function(input,
   return(output)
   
 }
+#' @rdname modify_cnt_ptable
+#' @usage NULL
+#' @export
+modify_cnts_ptable <- modify_cnt_ptable
