@@ -40,7 +40,6 @@ create_cnt_ptable(
 create_num_ptable(
   D,
   V,
-  js = 0,
   pstay = NULL,
   optim = 1,
   mono = TRUE,
@@ -90,7 +89,8 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 \item{create}{(logical) scalar specifying (default: TRUE)}
 }
 \value{
-an object of \linkS4class{ptable}
+Depending on the argument \code{create} results an object-class of either
+\linkS4class{ptable} (\code{create = TRUE}) or \linkS4class{ptable_params} (\code{create = FALSE}).
 }
 \description{
 \href{https://github.com/sdcTools/ptable}{ptable} makes it easy to create perturbation tables
@@ -125,17 +125,21 @@ equal to or less than a specific threshold value
 }
 \examples{
 
-# create ptable for frequency or magnitude tables
-create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
-
 # create ptable for frequency count tables 
 create_cnt_ptable(D = 3, V = 1.08, js = 1, label = "ptable_frequency_tab")
 
 # create ptable for magnitude tables 
 create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 
+# create ptable for frequency or magnitude tables
+create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
+create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
+
 }
 \seealso{
-\code{\link[=pt_export]{pt_export()}} to export the perturbation table for external SDCtools
+\itemize{
+\item \code{\link[=plot]{plot()}} to analyze the created perturbation table visually
+\item \code{\link[=pt_export]{pt_export()}} to export the perturbation table for external SDCtools
 like \href{https://github.com/sdcTools/tauargus}{TauArgus} or SAS.
+}
 }

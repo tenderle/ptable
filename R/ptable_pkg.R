@@ -56,21 +56,26 @@
 #' @param debugging (logical) debug monitoring on/off
 #' @param create (logical) scalar specifying (default: TRUE)
 #' 
-#' @seealso [pt_export()] to export the perturbation table for external SDCtools
+#' @seealso 
+#' * [plot()] to analyze the created perturbation table visually
+#' 
+#' * [pt_export()] to export the perturbation table for external SDCtools
 #' like [TauArgus](https://github.com/sdcTools/tauargus) or SAS.
 #'
-#' @return an object of [ptable-class]
+#' @return Depending on the argument `create` results an object-class of either 
+#' [ptable-class] (`create = TRUE`) or [ptable_params-class] (`create = FALSE`).
 #' 
 #' @examples
-#' 
-#' # create ptable for frequency or magnitude tables
-#' create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
 #' 
 #' # create ptable for frequency count tables 
 #' create_cnt_ptable(D = 3, V = 1.08, js = 1, label = "ptable_frequency_tab")
 #' 
 #' # create ptable for magnitude tables 
 #' create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
+#'
+#' # create ptable for frequency or magnitude tables
+#' create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
+#' create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
 #' 
 #' @export
 create_ptable <- function(D,
@@ -87,6 +92,10 @@ create_ptable <- function(D,
                           monitoring = FALSE,
                           debugging = FALSE,
                           create = TRUE) {
+  
+  stopifnot(is_logical(monitoring))
+  stopifnot(is_logical(debugging))
+  stopifnot(is_logical(create))
   
   params <-   pt_create_pParams(
     table = table,
@@ -129,35 +138,20 @@ create_cnt_ptable <- function(D,
                               monitoring = FALSE,
                               create = TRUE) {
   
-  params <-   pt_create_pParams(
-    table = "cnts",
-    type = "all",
-    step = 1,
-    icat = NULL,
-    D = D,
-    V = V,
-    js = js,
-    pstay = pstay,
-    optim = optim,
-    mono = mono,
-    label = label)
-  
-  if (create){
-    
-    ptab <- pt_create_pTable(
-      params = params,
-      monitoring = monitoring,
-      debugging = FALSE)
-    
-    out <- ptab
-    
-  } else {
-    
-    out <- params
-  }
-  
-  return(out)
-  
+  create_ptable(D = D,
+                V = V,
+                js = js,
+                pstay = pstay,
+                optim = optim,
+                mono = mono,
+                step = 1,
+                icat = NULL,
+                table = "cnts",
+                type = "all",
+                label = label,
+                monitoring = monitoring,
+                debugging = FALSE,
+                create = create)
 }
 #' @rdname ptable_pkg
 #' @usage NULL
@@ -167,7 +161,6 @@ create_cnts_ptable <- create_cnt_ptable
 #' @export
 create_num_ptable <- function(D,
                               V,
-                              js = 0,
                               pstay = NULL,
                               optim = 1,
                               mono = TRUE,
@@ -178,34 +171,20 @@ create_num_ptable <- function(D,
                               monitoring = FALSE,
                               create = TRUE) {
   
-  params <-   pt_create_pParams(
-    table = "nums",
-    D = D,
-    V = V,
-    js = js,
-    pstay = pstay,
-    optim = optim,
-    mono = mono,
-    type = type,
-    step = step,
-    icat = icat,
-    label = label)
-  
-  if (create){
-    
-    ptab <- pt_create_pTable(
-      params = params,
-      monitoring = monitoring,
-      debugging = FALSE)
-    
-    out <- ptab
-    
-  } else {
-    
-    out <- params
-  }
-  
-  return(out)
+  create_ptable(D = D,
+                V = V,
+                js = 0,
+                pstay = pstay,
+                optim = optim,
+                mono = mono,
+                step = step,
+                icat = icat,
+                table = "nums",
+                type = type,
+                label = label,
+                monitoring = monitoring,
+                debugging = FALSE,
+                create = create)
 }
 #' @rdname ptable_pkg
 #' @usage NULL
