@@ -22,7 +22,8 @@ create_ptable(
   label = paste0("D", D, "V", V * 100),
   monitoring = FALSE,
   debugging = FALSE,
-  create = TRUE
+  create = TRUE,
+  params = NULL
 )
 
 create_cnt_ptable(

@@ -4,7 +4,7 @@
 
 
 para1 <- pt_create_pParams(D = 3, V = 1)
-
+para2 <- create_cnt_ptable(D = 3, V = 1, optim = 3, create = FALSE)
 
 test_that("Error capturing", {
   expect_error(pt_create_pParams(D = 2))
@@ -52,5 +52,10 @@ test_that("Error capturing", {
   
   # no create
   expect_no_error(create_cnt_ptable(D = 3, V = 1, optim = 3, create = FALSE))
+  
+  # no create with external parameters
+  expect_no_error(create_ptable(params = para2))
+  # no create with external parameters, params loopd through create_ptable ;-)
+  expect_no_error(create_ptable(create = FALSE, params = para2))
   
   })

@@ -91,24 +91,32 @@ create_ptable <- function(D,
                           label = paste0("D", D, "V", V * 100),
                           monitoring = FALSE,
                           debugging = FALSE,
-                          create = TRUE) {
+                          create = TRUE,
+                          params = NULL) {
   
   stopifnot(is_logical(monitoring))
   stopifnot(is_logical(debugging))
   stopifnot(is_logical(create))
   
-  params <-   pt_create_pParams(
-    table = table,
-    D = D,
-    V = V,
-    js = js,
-    pstay = pstay,
-    optim = optim,
-    mono = mono,
-    type = type,
-    step = step,
-    icat = icat,
-    label = label)
+  out <- NULL
+  
+  if (is.null(params)){
+    params <-   pt_create_pParams(
+      table = table,
+      D = D,
+      V = V,
+      js = js,
+      pstay = pstay,
+      optim = optim,
+      mono = mono,
+      type = type,
+      step = step,
+      icat = icat,
+      label = label)
+  } else {
+    stopifnot(isS4(params))
+    stopifnot(class(params) == "ptable_params")
+  }
   
   if (create){
     
