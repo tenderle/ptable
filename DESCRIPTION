@@ -11,7 +11,7 @@ Authors@R: c(
     role = c("aut", "cre")))
 Description: A tool for producing perturbation tables that are needed to apply the cell-key method.
 Depends:
-  R(>= 3.6.1)
+  R(>= 3.6)
 Imports: 
   data.table,
   nloptr,
