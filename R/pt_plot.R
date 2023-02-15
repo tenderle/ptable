@@ -1,23 +1,27 @@
-#' @title pt_plot
+#' @title Plot the results of the perturbation table generator
 #'
-#' @description Function to visualize the perturbation table.
+#' @description [plot()] makes it easy to visualize the results of the created
+#' ptable-object that has been created by [create_cnt_ptable()], [create_cnt_ptable()]
+#' or [modify_cnt_ptable()]. 
 #'
 #' @param obj an object of class \code{\linkS4class{ptable}}
 #' @param type (character) type of graph: distribution "d" (standard), perturbation panel ("p"), transition matrix "t"
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
-#' 
+#' @param ... additional parameters passed to methods
 #' @author Tobias Enderle
 #' @keywords plot
 #'
 #' @examples
 #' 
 #' ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+#' ptab_mod <- modify_cnt_ptable(ptab, threshold = 0.3, seed = 5432)
 #' 
 #' # Distribution Plot of the Noise
 #' plot(ptab, type = "d")
 #' 
 #' # Perturbations Panel of the Noise
 #' plot(ptab, type = "p")
+#' plot(ptab_mod, type = "p")
 #' 
 #' # Transition Matrix
 #' plot(ptab, type = "t")
@@ -28,8 +32,14 @@
 #' }
 #' 
 #' @md
-#' @rdname pt_plot
+#' @rdname plot
 #' 
+setGeneric("plot", function(obj, type="d", file=NULL, ...) {
+fifi_plot(obj, type=type, file=file,...)
+})
+#' @title Plot the results of the perturbation table generator
+#' @description Internal function
+#' @noRd
 fifi_plot <- function(obj, type="d", file=NULL){
   
   if (!is.null(file)) {
@@ -37,15 +47,15 @@ fifi_plot <- function(obj, type="d", file=NULL){
   }
   
   if (type == "d") {
-    cat("Distribution of Perturbation Values\n")
+    #cat("Distribution of Perturbation Values\n")
     out <- pt_plot_pD(pert_table=obj, file=file)
   }
   if (type == "p") {
-    cat("Perturbation Panel\n")
+    #cat("Perturbation Panel\n")
     out <- pt_plot_pPanel(pert_table=obj, file=file)
   }
   if (type == "t") {
-    cat("Transition Matrix\n")
+    #cat("Transition Matrix\n")
     out <- pt_plot_tMatrix(pert_table=obj, file=file)
   }
   
@@ -53,13 +63,14 @@ fifi_plot <- function(obj, type="d", file=NULL){
 
 }
 
-#' @title pt_plot_pD
-#' @description Function to plot the distribution of the perturbation values using the R-package \code{\link{ggplot2}}.
+#' @title Distribution Plot
+#' @description [pt_plot_pD()] plots the distribution of the perturbation values using the R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param ylimit (numeric) vector with limits of y-axis (probabilities)
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
 #' @import ggplot2
 #' @importFrom utils packageVersion
+#' @noRd
 pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   v <- check <- i_info <- NULL
   i <- iter <- mw <- p <- ps <- pstay <- psum <- var <- xl <- xr <- y <- NULL
@@ -138,12 +149,13 @@ pt_plot_pD <- function(pert_table, ylimit=c(-0.05,0.95), file=NULL){
   return(output)
 }
 
-#' @title pt_plot_pPanel
-#' @description Function to plot the perturbation panel using the R-package \code{\link{ggplot2}}.
+#' @title Perturbation Panel Plot
+#' @description [pt_plot_pPanel()] to plot the perturbation panel using the R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
 #' @import ggplot2
 #'
+#' @noRd
 pt_plot_pPanel <- function(pert_table, file=NULL){
   
   i <- i_char <- j <- p <- u <- v <- p_int_lb <- NULL
@@ -213,13 +225,13 @@ pt_plot_pPanel <- function(pert_table, file=NULL){
   
 }
 
-#' @title pt_plot_tMatrix
-#' @description Function to plot the transition matrix using the R-package \code{\link{ggplot2}}.
+#' @title Transition Matrix Plot
+#' @description [pt_plot_tMatrix()] plots the transition matrix using the R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
 #' @import ggplot2
 #' @import RColorBrewer
-#'
+#' @noRd
 pt_plot_tMatrix <- function(pert_table, file=NULL){
   
   i <- j <- p <- NULL
