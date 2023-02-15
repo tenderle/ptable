@@ -27,6 +27,10 @@ test_that("Error capturing", {
   #expect_output(fifi_plot(obj1, type="p"), "Perturbation Panel")
   #expect_output(fifi_plot(obj1, type="t"), "Transition Matrix")
   
+  expect_no_error(fifi_plot(obj1, type="d"))
+  expect_no_error(fifi_plot(obj1, type="p"))
+  expect_no_error(fifi_plot(obj1, type="t"))
+  
   expect_error(pt_export(obj1, SDCtool = "TauArgus")) # lines 22-24
   expect_error(pt_export(obj1, SDCtool = "CK")) # line 27
   expect_error(pt_export(obj1, obj1, obj1, file = "outputfile", SDCtool = "TauArgus")) # 36-37
