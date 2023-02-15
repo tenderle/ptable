@@ -110,8 +110,8 @@ The changelog is given [here](NEWS.md).
 
 ### To-Dos
 
--   Allow for special cases: extended parameter setting, i.e. improved
-    row-wise parameter settings
--   Add more sophisticated error codes
--   Update test environment
--   Improve accuracy of ptable by means of digits-functionality
+- Allow for special cases: extended parameter setting, i.e. improved
+  row-wise parameter settings
+- Add more sophisticated error codes
+- Update test environment
+- Improve accuracy of ptable by means of digits-functionality
