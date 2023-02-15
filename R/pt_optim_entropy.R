@@ -174,20 +174,20 @@ eval_g_ineq_v3 <- function( x, v=v, variance=variance, mono=mono ) {
   return( list( "constraints"=constr, "jacobian"=grad ) )
 }
 
-eval_g_ineq_v3_old <- function( x, v=v, variance=variance, mono=mono ) {
-  
-  constr <- c(sum(v^2*x)-variance  )
-  grad   <- rbind(v^2)
-  
-  # monotony condition
-  if (mono) {
-    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
-    constr <- mono_fct$constr
-    grad <- mono_fct$grad
-  }
-  
-  return( list( "constraints"=constr, "jacobian"=grad ) )
-}
+# eval_g_ineq_v3_old <- function( x, v=v, variance=variance, mono=mono ) {
+#   
+#   constr <- c(sum(v^2*x)-variance  )
+#   grad   <- rbind(v^2)
+#   
+#   # monotony condition
+#   if (mono) {
+#     mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+#     constr <- mono_fct$constr
+#     grad <- mono_fct$grad
+#   }
+#   
+#   return( list( "constraints"=constr, "jacobian"=grad ) )
+# }
 
 
 
