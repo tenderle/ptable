@@ -110,29 +110,24 @@ The changelog is given [here](NEWS.md).
 
 #### Major Change
 
-> Starting from versions `> 0.3.2`, functions `create_cnt_ptable()` and
-> `create_num_ptable()` allow to create perturbation objects for count-
-> and/or numeric variables in one step. The required inputs to both
-> these functions are the noise variance `V=...`, a maximum perturbation
-> value `D=...` (i.e. the maximum noise) and a threshold value `js=...`.
-> In addition they can fix important transition probabilities in
-> advance, i.e. the probability of an original frequency to remain
-> unperturbed `pstay=...`. Further arguments to these functions are
-> presented in the following sections.
+> Starting from versions `> 0.3.2` and `> 0.4.1`, functions
+> `create_ptable()`, `create_cnt_ptable()` and `create_num_ptable()`
+> allow to create perturbation objects for count- and/or numeric
+> variables in one step. The required inputs to these functions are the
+> noise variance `V=...`, a maximum perturbation value `D=...` (i.e. the
+> maximum noise).
 >
 > In versions `<= 0.3.2`, this process was separated into two parts:
 >
 > 1.  defining parameters using `pt_create_pParams()`
 > 2.  creating the final perturbation outputs using `pt_create_pTable()`
 >
-> While these steps still work in newer versions of the package, it is
-> however suggested to use functions `create_cnt_ptable()` and
-> `create_num_ptable()` directly as they compute the required
-> perturbation tables that can be used as inputs by both SDC tools,
-> [**Tau-Argus**](https://github.com/sdcTools/tauargus) and
-> [**cellKey**](https://github.com/sdcTools/cellKey). The outputs of
-> these functions can directly be used as input argument by the
-> [**cellKey**](https://github.com/sdcTools/cellKey) Package.
+> These steps still work in newer versions of the package differently if
+> necessary: 1. If the argument `create` in `create_ptable()`,
+> `create_cnt_ptable()` or `create_num_ptable()` is set to `FALSE`, then
+> these functions return an object of class \[ptable_params-class\]. 2.
+> This object can be used as input in `create_ptable()` only to create
+> the final perturbation output.
 
 ### To-Dos
 
