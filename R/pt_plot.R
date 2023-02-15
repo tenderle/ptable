@@ -247,8 +247,9 @@ pt_plot_tMatrix <- function(pert_table, file=NULL){
     #scale_y_discrete(limits=rev(levels(i))) +
     #geom_rect(data=..., size=1, fill=NA, colour="black",
     #          aes(xmin=j - 0.5, xmax=j + 0.5, ymin=i - 0.5, ymax=i + 0.5)) +
-    theme(axis.text =element_text(size = 16),
-          axis.title = element_text(size = 18),
+    theme(plot.title = element_text(size = 18),
+          axis.text =element_text(size = 16),
+          axis.title = element_text(size = 16),
           legend.title = element_text(size = 16),
           legend.text = element_text(size = 16),
           legend.position = "right",
