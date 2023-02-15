@@ -2,7 +2,7 @@
 % Please edit documentation in R/pt_optim_entropy.R
 \name{pt_optim_entropy}
 \alias{pt_optim_entropy}
-\title{pt_optim_entropy}
+\title{Maximum Entropy Approach}
 \usage{
 pt_optim_entropy(
   optim = optim,
@@ -15,7 +15,7 @@ pt_optim_entropy(
 )
 }
 \arguments{
-\item{optim}{optimization parameter (1=standard, 2-4=further test implementations)}
+\item{optim}{optimization parameter (1=default, 2-4=further test implementations)}
 
 \item{mono}{(logical) monotony parameter}
 
@@ -38,6 +38,11 @@ The return value contains a list with two elements:
 }
 \description{
 Function to solve the non-linear optimization problem used within \code{\link{ptable}()}.
+}
+\details{
+The main parameter is `optim`: In `optim=1 to 3` the variance is stated as
+inequality constraint and in `optim=4` the variance condition is stated as equality 
+constraint.
 }
 \seealso{
 Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.

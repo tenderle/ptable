@@ -1,14 +1,18 @@
-#' pt_optim_entropy
+#' @title Maximum Entropy Approach
+#' 
+#' @description Function to solve the non-linear optimization problem used within \code{\link{ptable}()}.
 #'
-#' Function to solve the non-linear optimization problem used within \code{\link{ptable}()}.
-#'
-#' @param optim optimization parameter (1=standard, 2-4=further test implementations)
+#' @param optim optimization parameter (1=default, 2-4=further test implementations)
 #' @param mono (logical) monotony parameter
 #' @param v (integer) vector with perturbation values (i.e. deviations to the original frequency)
 #' @param variance (numeric) variance parameter
 #' @param lb (integer) vector with lower bounds of the controls
 #' @param ub (integer) vector with upper bounds of the controls
 #' @param ndigits (integer) number of digits
+#'
+#' @details The main parameter is `optim`: In `optim=1 to 3` the variance is stated as
+#' inequality constraint and in `optim=4` the variance condition is stated as equality 
+#' constraint. 
 #'
 #' @seealso Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
 #' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to protect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communities, Luxembourg, 2006, pp. 299-302
@@ -115,11 +119,11 @@ eval_g_mono <- function(x=x, v=v, constr=constr, grad=grad){
 
 
 ## Inequality functions
-# constr inequality constraints (each element is applied as '<= 0')
+# inequality constraints (each element is applied as '<= 0')
 
-# x-1                   (3 or 4?) all probabilities are >0 and <1
+# x-1                   (3 or 4?) all probabilities  <1
 # sum(v^2*x)-variance   (2) constant variance
-# -x                    (?)
+# -x                    (?) all probabilities are >0
 
 eval_g_ineq_v1 <- function( x, v=v, variance=variance, mono=mono ) {
 
@@ -156,20 +160,34 @@ eval_g_ineq_v2 <- function( x, v=v, variance=variance, mono=mono ) {
 
 
 eval_g_ineq_v3 <- function( x, v=v, variance=variance, mono=mono ) {
-
-  constr <- c(sum(v^2*x)-variance  )
-  grad   <- rbind(v^2)
-
+  
+  constr <- c(x-1, sum(v^2*x)-variance, -x)
+  grad   <- rbind(diag(1,length(v),length(v)),v^2, diag(-1,length(v),length(v)))
+  
   # monotony condition
   if (mono) {
     mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
     constr <- mono_fct$constr
     grad <- mono_fct$grad
   }
-
+  
   return( list( "constraints"=constr, "jacobian"=grad ) )
 }
 
+eval_g_ineq_v3_old <- function( x, v=v, variance=variance, mono=mono ) {
+  
+  constr <- c(sum(v^2*x)-variance  )
+  grad   <- rbind(v^2)
+  
+  # monotony condition
+  if (mono) {
+    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+    constr <- mono_fct$constr
+    grad <- mono_fct$grad
+  }
+  
+  return( list( "constraints"=constr, "jacobian"=grad ) )
+}
 
 
 
