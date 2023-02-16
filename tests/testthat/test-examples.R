@@ -2,7 +2,7 @@
 #context("Example Testing")
 
 
-test_that("Error capturing", {
+test_that("Examples functions are ok", {
   expect_error(pt_ex_cnts(5))
   expect_error(pt_ex_nums(5))
 })

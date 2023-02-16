@@ -22,7 +22,7 @@ obj_nums2 <- pt_ex_nums(FALSE, TRUE)
 obj_nums3 <- pt_ex_nums(FALSE, FALSE)
 obj_nums4 <- pt_ex_nums(TRUE, TRUE)
 
-test_that("Error capturing", {
+test_that("Plot functions are ok", {
   expect_error(fifi_plot(obj1, type="d", file=123))
   
   expect_error(fifi_plot(obj1, type="d", file=c("abc","def")))
@@ -48,7 +48,10 @@ test_that("Error capturing", {
   expect_no_error(plot(obj1, type = "d", file = "test.pdf"))
   
   expect_no_error(plot(obj2, type = "p"))
+})
   
+
+test_that("Export functions are ok", {
   
   expect_no_error(pt_export(obj1, file = "outputfile", SDCtool = "TauArgus"))
   expect_no_error(pt_export(obj1, file = "outputfile", SDCtool = "SAS"))
@@ -71,12 +74,19 @@ test_that("Error capturing", {
   
   
   expect_message(pt_export(obj1, file = "outputfile", SDCtool = "TauArgus")) 
-  
+})
+
+test_that("Check functions are ok", {
+    
   expect_no_error(pt_check(obj1))
   expect_no_error(pt_check(obj1@pTable))
-  
-  #expect_no_error(ptable())
-  #expect_error(pt_vignette())
-  
-  
+
+})
+
+#expect_no_error(ptable())
+#expect_error(pt_vignette())
+
+test_that("Removed test files", {
+  expect_no_error(file.remove("outputfile.csv"))
+  expect_no_error(file.remove("test.pdf"))
 })
