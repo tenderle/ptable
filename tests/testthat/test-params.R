@@ -5,6 +5,8 @@
 
 para1 <- pt_create_pParams(D = 3, V = 1)
 para2 <- create_cnt_ptable(D = 3, V = 1, optim = 3, create = FALSE)
+load(testthat::test_path("testdata", "ck_testdata.rda"))
+
 
 test_that("Error capturing", {
   expect_error(pt_create_pParams(D = 2))
