@@ -46,7 +46,7 @@ As suggested in *@marley2011* and illustrated in *@giessing2016* the package imp
 - In the perturbed table will be **no positive frequency counts less than a specified threshold** value js.
 
 ### Graphical User interface (GUI)
-In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. 
+In the ptable package there is also a shiny app for first time users and visual-style learners. The shiny app provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. 
 <!--There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).-->
 
 _Note_: The current GUI provides perturbation tables for frequency tables (`table = 'cnts'`) only.
@@ -165,7 +165,7 @@ The matrix has the following columns:
 - `p_var`: shows the noise variance of an original frequency (**Note:** If p_var differs from the chosen input parameter `V` - as it does in the example above - we have a violation of the fixed variance condition. In that case, we have to set a different variance parameter or to change other parameters!)
 - `p_sum`: the sum of the transition probabilities for an original frequency count must equal to 1
 - `p_stay`: corresponds to the diagonal of the transition matrix
-- `iter`: any value other than 1 points out discrepancies (e.g. violation of the fixed variance parameter)^[In case of extended parameter settings, i.e. setting the argument `pstay=...` the algorithm tries to reduce the pre-set pstay-value iteratively in order to fulfill the fixed variance condition.] 
+- `iter`: any value other than 1 points out discrepancies (e.g. violation of the fixed variance parameter)^[In case of extended parameter settings, i.e. setting the argument `pstay=...` the algorithm tries to reduce the preset pstay-value iteratively in order to fulfill the fixed variance condition.] 
 
 As can be seen in the example, the preset variance of `V=1` does not hold for the original frequency `i=1`. To fulfill the condition of a fixed variance, we re-run the computation with a different variance parameter. Let's try a variance parameter `V=0.9`:
 

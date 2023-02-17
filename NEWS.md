@@ -2,6 +2,7 @@
 # ptable 0.4.1
 - prepare package for CRAN publication
 - update: vignette
+- update: shiny app
 - update: perturbation panel plot
 - code cleanup and improved documentation
 - changed `pt_create_pParams()` and `pt_create_pTable()` to internal functions
@@ -20,7 +21,7 @@
 - feature:  new functions `create_cnt_table()` (for count/frequency tables) and `create_num_table()` (for numerical/magnitude tables) that both wrap `pt_create_pParams()` and `pt_create_pTable()`
 - code cleanup and improved documentation
 - updated vignette
-- Thx to @bernhard-da for the commits.
+- Thanks to [Bernhard Meindl](https://github.com/bernhard-da) for the commits.
 
 # ptable 0.3.2.
 - feature: generic function `plot` instead of `fifi_function`
