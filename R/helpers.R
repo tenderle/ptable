@@ -2,7 +2,8 @@
 #'
 #' @description [pt_check()] checks the constraints of the ptable
 #' @md
-#' @param ptab a `data.table` or an an object of [ptable-class] generated with [create_cnt_ptable()].
+#' @param ptab a `data.table` or an an object of [ptable-class] generated 
+#' with [create_cnt_ptable()].
 #' @return a data.table object
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
@@ -42,10 +43,15 @@ fifi_check_p <- function(p, v){
   constr2 <- p %*%  (v)^2
   constr5 <- sum(p)
 
-  p_stay=p[which(v==0)]
-
-  list(p_mean=round(constr1,3), p_var=round(constr2,3), p_sum=round(constr5,10), p_stay=p_stay)
-
+  p_stay <- p[which(v == 0)]
+  
+  list(
+    p_mean = round(constr1, 3),
+    p_var = round(constr2, 3),
+    p_sum = round(constr5, 10),
+    p_stay = p_stay
+  )
+  
 }
 
 

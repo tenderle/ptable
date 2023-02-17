@@ -10,5 +10,5 @@
 #' #pt_vignette()
 #' }
 pt_vignette <- function() {
-  RShowDoc("introduction", package="ptable")
+  RShowDoc("introduction", package = "ptable")
 }

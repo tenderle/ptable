@@ -20,15 +20,18 @@ An S4 class to represent perturbation parameters
 
 \item{\code{pstay}}{numeric vector specifying parameter for non-perturbation}
 
-\item{\code{optim}}{(integer) specifying optimization parameter for optimization function}
+\item{\code{optim}}{(integer) specifying optimization parameter for optimization 
+function}
 
-\item{\code{mono}}{(logical) vector specifying optimization parameter for monotony condition}
+\item{\code{mono}}{(logical) vector specifying optimization parameter for monotony 
+condition}
 
 \item{\code{label}}{(character) label for output}
 
 \item{\code{icat}}{(integer) categorized original frequencies i}
 
-\item{\code{table}}{(character) type of table: frequency counts (cnts) or magnitude (nums)}
+\item{\code{table}}{(character) type of table: frequency counts (cnts) or 
+magnitude (nums)}
 
 \item{\code{step}}{(integer) step width}
 

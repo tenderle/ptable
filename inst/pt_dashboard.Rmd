@@ -19,38 +19,91 @@ Sidebar {.sidebar}
 ```{r}
 
 
-textInput("label", "Parturbation Label", paste("CKM_D",3,"_V",1.05*100,sep=""))
 
-sliderInput("D", label = "Maximum Perturbation (=D)",
-            min = 1, max = 10, value = 3, step = 1)
-numericInput(inputId="V", label="Variance (=V)", 
-             value=1.05, min = 0.1, max = 5, step = 0.1, width="100px")
-sliderInput("js", label = "Treshold (=js)",
-            min = 0, max = 5, value = 1, step = 1)
+textInput("label",
+          "Parturbation Label",
+          paste("CKM_D", 3, "_V", 1.05 * 100, sep = ""))
 
-numericInput(inputId="pstay", label="Preset probability of frequencies not to be perturbed (=pstay)",              value=NA, min = 0.05, max = 0.99, step = 0.05, width="200px")
-#checkboxInput("pstayset", "Preset probability of frequencies not to be perturbed (=pstay)", value=FALSE, width = NULL)
-#test <-  reactive(input$pstayset)
-#if (reactive(test()) == TRUE) pstay <- NA
-#sliderInput("pstay", label = "Set probability (=pstay)",
-#            min = 0.05, max = 0.95, value = 0.5, step = 0.05)
+sliderInput(
+  "D",
+  label = "Maximum Perturbation (=D)",
+  min = 1,
+  max = 10,
+  value = 3,
+  step = 1
+)
+numericInput(
+  inputId = "V",
+  label = "Variance (=V)",
+  value = 1.05,
+  min = 0.1,
+  max = 5,
+  step = 0.1,
+  width = "100px"
+)
+sliderInput(
+  "js",
+  label = "Treshold (=js)",
+  min = 0,
+  max = 5,
+  value = 1,
+  step = 1
+)
+
+numericInput(
+  inputId = "pstay",
+  label = "Preset probability of frequencies not to be perturbed (=pstay)",
+  value = NA,
+  min = 0.05,
+  max = 0.99,
+  step = 0.05,
+  width = "200px"
+)
 
 checkboxInput("mono", "Set Monotony", value = TRUE, width = NULL)
-radioButtons("optim", "Set of objective functions (=optim)",
-               c("Standard" = 1,
-                 "Alternative" = 4))
+radioButtons("optim",
+             "Set of objective functions (=optim)",
+             c("Standard" = 1,
+               "Alternative" = 4))
 
 # TODO: input for pTableSize with respect to ncat.
 
 params <- reactive({
-  pt_create_pParams(D=input$D, V=input$V, js=input$js, pstay=input$pstay, label=input$label, mono=input$mono, optim=as.integer(input$optim))
+  pt_create_pParams(
+    D = input$D,
+    V = input$V,
+    js = input$js,
+    pstay = input$pstay,
+    label = input$label,
+    mono = input$mono,
+    optim = as.integer(input$optim)
+  )
 })
-res <- reactive( {
+res <- reactive({
   pt_create_pTable(params = params())
 })
 
 inputcode <- reactive({
-  noquote(paste0("create_cnt_ptable(D=",input$D,", V=",input$V,", js=",input$js,", pstay=",input$pstay, ", label=",input$label, ", mono=",input$mono, ", optim=",as.integer(input$optim),")", sep=""))
+  noquote(
+    paste0(
+      "create_cnt_ptable(D=",
+      input$D,
+      ", V=",
+      input$V,
+      ", js=",
+      input$js,
+      ", pstay=",
+      input$pstay,
+      ", label=",
+      input$label,
+      ", mono=",
+      input$mono,
+      ", optim=",
+      as.integer(input$optim),
+      ")",
+      sep = ""
+    )
+  )
 })
 
 ```
@@ -61,31 +114,39 @@ inputcode <- reactive({
 
 ```{r download, echo=FALSE, eval=FALSE}
 downloadHandler(
-    filename = function() {
-      paste("graph-", Sys.Date(), ".pdf", sep="")
-    },
-    contentType = "image/pdf",
-    outputArgs = "Graph",
-    content = function(file) {
-      fifi_plot(res(), file=file)
-      # TODO: replace by new argument 'file'
-    }
-  )
+  filename = function() {
+    paste("graph-", Sys.Date(), ".pdf", sep = "")
+  },
+  contentType = "image/pdf",
+  outputArgs = "Graph",
+  content = function(file) {
+    fifi_plot(res(), file = file)
+    # TODO: replace by new argument 'file'
+  }
+)
 cat("\n")
 downloadHandler(
-    filename = function() {
-      paste("ptable-", Sys.Date(),".csv", sep="")
-    },
-    contentType = "text/csv",
-    outputArgs = "pTable",
-    content = function(file) {
-      out <- res()
-      #write.csv(out@pTable[i>=0,c('i','j','p','v','p_int_ub'),] ,file, row.names = FALSE, quote=FALSE)
-      write.table(format(out@pTable[i>=0,c('i','j','p','v','p_int_ub'),], digits=8), file, sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
-      # TODO: replace by pt_export
-      #pt_export(input = out, file = file)
-    }
-  )
+  filename = function() {
+    paste("ptable-", Sys.Date(), ".csv", sep = "")
+  },
+  contentType = "text/csv",
+  outputArgs = "pTable",
+  content = function(file) {
+    out <- res()
+    write.table(
+      format(out@pTable[i >= 0, c('i', 'j', 'p', 'v', 'p_int_ub'), ], digits =
+               8),
+      file,
+      sep = ";",
+      dec = ".",
+      row.names = FALSE,
+      col.names = TRUE,
+      quote = FALSE
+    )
+    # TODO: replace by pt_export
+    #pt_export(input = out, file = file)
+  }
+)
 ```
 
 
@@ -102,7 +163,8 @@ Columns {.tabset}
 ```{r}
 library(DT)
 renderTable(
-  res()@pTable[i>=0,c("i","j","p","v","p_int_lb","p_int_ub"),] , digits = 8)#,
+  res()@pTable[i >= 0, c("i", "j", "p", "v", "p_int_lb", "p_int_ub"),], 
+  digits = 8)
 #options = list(scrollX = TRUE, sScrollY = '75vh', scrollCollapse = TRUE))
 ```
 
@@ -110,8 +172,8 @@ renderTable(
 
 ```{r}
 renderTable({
-  res()@empResults[i>0,,]
-}, digits=3)
+  res()@empResults[i > 0, , ]
+}, digits = 3)
 ```
 
 ### Input Code {data-width=175}
@@ -157,7 +219,7 @@ Columns {.tabset}
 
 ```{r}
 renderPlot({
-  fifi_plot(res(), type="t")
+  fifi_plot(res(), type = "t")
 })
 ```
 
@@ -173,6 +235,6 @@ renderPlot({
 
 ```{r}
 renderPlot({
-  fifi_plot(res(), type="p")
+  fifi_plot(res(), type = "p")
 })
 ```

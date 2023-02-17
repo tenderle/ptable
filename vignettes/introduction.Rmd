@@ -75,7 +75,7 @@ packageVersion("ptable")
 ### Minimal Parameter Setting and Computation of the Transition Probabilities
 #### Computation of the Transition Probabilities
 ```{r}
-# note: all parameters except for maximum noise D and variance V have default values 
+# note: all parameters except for maximum noise D and variance V have default values
 ptab <- create_cnt_ptable(D = 2, V = 1)
 ```
 
@@ -132,20 +132,20 @@ ptab@pClasses
 # symmetry is achieved for the original frequency count i=...
 max(ptab@pClasses)
 # or
-ptab@pClasses[params@ncat+1]
+ptab@pClasses[params@ncat + 1]
 ```
 
 In the given example, each frequency count larger than `r max(ptab@pClasses)` will be perturbed according to the distribution
 for i=`r max(ptab@pClasses)`. For example, in case of i=3 the distribution reads as follows
 ```{r, echo=FALSE} 
-a <- ptab@tMatrix[max(ptab@pClasses)+1,]
+a <- ptab@tMatrix[max(ptab@pClasses) + 1, ]
 names(a) <- as.character(c(1:5))
 a
 ```
 or in case of i=12326
 ```{r, echo=FALSE} 
-b <- ptab@tMatrix[max(ptab@pClasses)+1,]
-names(b) <- as.character(12326+c(-2:2))
+b <- ptab@tMatrix[max(ptab@pClasses) + 1, ]
+names(b) <- as.character(12326 + c(-2:2))
 b
 ```
 
@@ -199,7 +199,8 @@ The noise intervals in the standard ptable are ordered from -D to D. A modified 
 
 Modify the ptable to have a higher level of protection
 ```{r}
-mod_ptab_new <- modify_cnt_ptable(ptab_new, threshold = 0.2, seed = 123)
+mod_ptab_new <-
+  modify_cnt_ptable(ptab_new, threshold = 0.2, seed = 123)
 ```
 
 The noise probabilities larger than the threshold value will be split. Then, the split noise probabilities are randomly rearranged using a seed. Finally, the intervals of the ptable will be adjusted.
@@ -264,13 +265,16 @@ First, we recommend to check how many different entries do we need. Therefore, l
 result <- create_cnt_ptable(D = 4, V = 1)
 params <- slot(result, "pParams")
 # and let's check the number of different positive original frequencies
-params@ncat 
+params@ncat
 ```
 
 Let's assume we want to assign different probabilities for `pstay`, one for each positive original count, we have to specify a vector of length `r params@ncat`:
 ```{r}
 # note: so far we have used a scalar for "pstay"", but now we use a vector
-result <- create_cnt_ptable(D = 4, V = 1, pstay = c(0.5, 0.5, 0.7, 0.8))
+result <-
+  create_cnt_ptable(D = 4,
+                    V = 1,
+                    pstay = c(0.5, 0.5, 0.7, 0.8))
 params <- slot(result, "pParams")
 
 # let's check the results
@@ -288,7 +292,13 @@ The same holds for the argument `mono`.
 
 ```{r}
 # note:  in the example we are working with the result of the following parameter setting
-result <- create_cnt_ptable(D = 2, V = 1.08, js = 1, mono = c(TRUE, TRUE, FALSE, TRUE))
+result <-
+  create_cnt_ptable(
+    D = 2,
+    V = 1.08,
+    js = 1,
+    mono = c(TRUE, TRUE, FALSE, TRUE)
+  )
 ```
 
 The resulting object `result` can now be plotted using the function `plot()`. According to the specification of the argument `type`, we will receive different plots as shown in the following subsections.
@@ -345,7 +355,10 @@ _Note_: For the purpose of production please modify the ptable and don't use the
 
 Let's assume we want to assign different probabilities for `pstay` as done in an example above, but with very large values:
 ```{r}
-result <- create_cnt_ptable(D = 4, V = 1.5, pstay = c(0.8, 0.9, 0.9, 0.9))
+result <-
+  create_cnt_ptable(D = 4,
+                    V = 1.5,
+                    pstay = c(0.8, 0.9, 0.9, 0.9))
 # let's check the results
 result@empResults
 ```
@@ -358,14 +371,21 @@ plot(result, type = "d")
 
 Consequently, we would now have to adjust the variance to `V=1.225` and re-run the computation:
 ```{r, fig.height=5, fig.width = 7}
-result <- create_cnt_ptable(D = 4, V = 1.225, pstay = c(0.8, 0.9, 0.9, 0.9))
+result <-
+  create_cnt_ptable(D = 4,
+                    V = 1.225,
+                    pstay = c(0.8, 0.9, 0.9, 0.9))
 plot(result, type = "d")
 ```
 
 Alternatively, we can change the monotony condition for i=1:
 ```{r, fig.height=5, fig.width = 7}
 result <- create_cnt_ptable(
-  D = 4, V = 1.5, pstay = c(0.8, 0.9, 0.9, 0.9), mono=c(FALSE, TRUE, TRUE, TRUE))
+  D = 4,
+  V = 1.5,
+  pstay = c(0.8, 0.9, 0.9, 0.9),
+  mono = c(FALSE, TRUE, TRUE, TRUE)
+)
 plot(result, type = "d")
 ```
 

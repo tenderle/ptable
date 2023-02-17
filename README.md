@@ -44,10 +44,15 @@ if (!require("devtools")) install.packages("devtools")
 library(devtools)
 
 # update all packages
-update.packages(ask=FALSE)
+update.packages(ask = FALSE)
 
 # finally install the ptable package directly from github
-devtools::install_github("sdcTools/ptable", dependencies=c("Depends","Imports"), force=TRUE, build_opts="--build-vignettes")
+devtools::install_github(
+  "sdcTools/ptable",
+  dependencies = c("Depends", "Imports"),
+  force = TRUE,
+  build_opts = "--build-vignettes"
+)
 ```
 
 If you experience a timeout due to a proxy server while downloading, one
@@ -55,7 +60,7 @@ can work around this issue by specifying the proxy-server using the
 `hhtr` package:
 
 ``` r
-httr::set_config(use_proxy(url="xxx.xxx.xxx.xxx, port=yy))
+httr::set_config(use_proxy(url = "xxx.xxx.xxx.xxx", port = yy))
 ```
 
 #### Offline
@@ -65,7 +70,7 @@ Alternatively you can download an archive (tar.gz) of the newest release
 manually using
 
 ``` r
-install.packages('C:/Users/.../Downloads/v0.4.0.tar.gz', repos=NULL, type='source')
+install.packages('C:/Users/.../Downloads/v0.4.0.tar.gz', repos = NULL, type = 'source')
 ```
 
 ### Usage

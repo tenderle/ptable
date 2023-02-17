@@ -28,29 +28,32 @@
 #' @rdname pt_optim_entropy
 #' @importFrom nloptr nloptr
 #'
-pt_optim_entropy <- function(optim=optim, mono=mono,
-                     v=v,
-                     variance=variance,
-                     #epsilon=epsilon,
-                     lb=p_lb,
-                     ub=p_ub,
-                     ndigits){
-
-                     #x0=rep(1, length(v))){
-
+pt_optim_entropy <- function(optim = optim,
+                             mono = mono,
+                             v = v,
+                             variance = variance,
+                             #epsilon=epsilon,
+                             lb = p_lb,
+                             ub = p_ub,
+                             ndigits) {
+  #x0=rep(1, length(v))){
+  
   p <- p_lb <- p_ub <- NULL
-  options(digits=ndigits,scipen=ndigits)
-
-  x0=rep(1, length(v))
+  options(digits = ndigits, scipen = ndigits)
+  
+  x0 <- rep(1, length(v))
 
   # Fixed parameters
-  local_opts <- list( "algorithm" = "NLOPT_LD_MMA",
-                      "xtol_rel"  = 1/(10^ndigits) )
-  opts <- list( "algorithm" = "NLOPT_LD_SLSQP",
-                "xtol_rel"  = 1/(10^ndigits), #1.0e-7,
-                "maxeval"   = 100000,
-                "local_opts" = local_opts )
-
+  local_opts <- list("algorithm" = "NLOPT_LD_MMA",
+                     "xtol_rel"  = 1 / (10 ^ ndigits))
+  opts <- list(
+    "algorithm" = "NLOPT_LD_SLSQP",
+    "xtol_rel"  = 1 / (10 ^ ndigits),
+    # 1.0e-7
+    "maxeval"   = 100000,
+    "local_opts" = local_opts
+  )
+  
   # Optimization functions (according to parameter 'optim')
   if (optim == 1) {
     fct_eval_g_ineq <- eval_g_ineq_v1
@@ -71,52 +74,60 @@ pt_optim_entropy <- function(optim=optim, mono=mono,
 
 
   # Optimization
-  res <- nloptr( x0=x0,
-                 eval_f=eval_f,
-                 lb=lb,
-                 ub=ub,
-                 eval_g_ineq=fct_eval_g_ineq,
-                 eval_g_eq=fct_eval_g_eq,
-                 opts=opts,
-                 v=v,
-                 variance=variance,
-                 mono=mono)
-
-  result<-res$solution
+  res <- nloptr(
+    x0 = x0,
+    eval_f = eval_f,
+    lb = lb,
+    ub = ub,
+    eval_g_ineq = fct_eval_g_ineq,
+    eval_g_eq = fct_eval_g_eq,
+    opts = opts,
+    v = v,
+    variance = variance,
+    mono = mono
+  )
+  
+  result <- res$solution
   iter <- res$iterations
-  return(list(result=result, iter=iter))
-
+  return(list(result = result, iter = iter))
+  
 }
 
 
 
 
 ## Objective function (=entropy) with gradient
-eval_f <- function( x, v=v, variance=variance, mono=mono ) {
-  return( list( "objective" = sum(x*log2(x)),
-                "gradient" = log2(x)+1 )           )
+eval_f <- function(x,
+                   v = v,
+                   variance = variance,
+                   mono = mono) {
+  return(list(
+    "objective" = sum(x * log2(x)),
+    "gradient" = log2(x) + 1
+  ))
 }
 
 
-eval_g_mono <- function(x=x, v=v, constr=constr, grad=grad){
 
+eval_g_mono <- function(x = x,
+                        v = v,
+                        constr = constr,
+                        grad = grad) {
   # Returns position z where v[z]=0
-  z <- ifelse( 0 %in% v , which(v==0), 0)
-
-  if (z>1)                          {
-    for (j in (1:(z-1)))
+  z <- ifelse(0 %in% v , which(v == 0), 0)
+  
+  if (z > 1) {
+    for (j in (1:(z - 1)))
     {
-      constr<-c(constr, x[j]-x[j+1])
-      temp12<-rep(0,length(v))
-      temp12[j]<-1
-      temp12[j+1]<- -1
-      grad<-rbind(grad,temp12)
+      constr <- c(constr, x[j] - x[j + 1])
+      temp12 <- rep(0, length(v))
+      temp12[j] <- 1
+      temp12[j + 1] <- -1
+      grad <- rbind(grad, temp12)
     }
   }
-  return(list(constr=constr, grad=grad))
+  return(list(constr = constr, grad = grad))
 }
-
-
 
 ## Inequality functions
 # inequality constraints (each element is applied as '<= 0')
@@ -125,53 +136,76 @@ eval_g_mono <- function(x=x, v=v, constr=constr, grad=grad){
 # sum(v^2*x)-variance   (2) constant variance
 # -x                    (?) all probabilities are >0
 
-eval_g_ineq_v1 <- function( x, v=v, variance=variance, mono=mono ) {
 
-  constr <- c(x-1, sum(v^2*x)-variance  )
-  grad   <- rbind(diag(1,length(v),length(v)),v^2)
-
+eval_g_ineq_v1 <- function(x,
+                           v = v,
+                           variance = variance,
+                           mono = mono) {
+  constr <- c(x - 1, sum(v^2 * x) - variance)
+  grad   <- rbind(diag(1, length(v), length(v)), v^2)
+  
   # monotony condition
   if (mono) {
-    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+    mono_fct <- eval_g_mono(
+      x = x,
+      v = v,
+      constr = constr,
+      grad = grad
+    )
     constr <- mono_fct$constr
     grad <- mono_fct$grad
   }
-
-  return( list( "constraints"=constr, "jacobian"=grad ) )
+  
+  return(list("constraints" = constr, "jacobian" = grad))
 }
 
 
 
-eval_g_ineq_v2 <- function( x, v=v, variance=variance, mono=mono ) {
-
-  constr <- c(-x,sum(v^2*x)-variance  )
-  grad   <- rbind(diag(-1,length(v),length(v)),v^2)
-
+eval_g_ineq_v2 <- function(x,
+                           v = v,
+                           variance = variance,
+                           mono = mono) {
+  constr <- c(-x, sum(v^2 * x) - variance)
+  grad   <- rbind(diag(-1, length(v), length(v)), v^2)
+  
   # monotony condition
   if (mono) {
-    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+    mono_fct <- eval_g_mono(
+      x = x,
+      v = v,
+      constr = constr,
+      grad = grad
+    )
     constr <- mono_fct$constr
     grad <- mono_fct$grad
   }
-
-  return( list( "constraints"=constr, "jacobian"=grad ) )
+  
+  return(list("constraints" = constr, "jacobian" = grad))
 }
 
 
 
-eval_g_ineq_v3 <- function( x, v=v, variance=variance, mono=mono ) {
-  
-  constr <- c(x-1, sum(v^2*x)-variance, -x)
-  grad   <- rbind(diag(1,length(v),length(v)),v^2, diag(-1,length(v),length(v)))
+eval_g_ineq_v3 <- function(x,
+                           v = v,
+                           variance = variance,
+                           mono = mono) {
+  constr <- c(x - 1, sum(v^2 * x) - variance,-x)
+  grad   <-
+    rbind(diag(1, length(v), length(v)), v^2, diag(-1, length(v), length(v)))
   
   # monotony condition
   if (mono) {
-    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+    mono_fct <- eval_g_mono(
+      x = x,
+      v = v,
+      constr = constr,
+      grad = grad
+    )
     constr <- mono_fct$constr
     grad <- mono_fct$grad
   }
   
-  return( list( "constraints"=constr, "jacobian"=grad ) )
+  return(list("constraints" = constr, "jacobian" = grad))
 }
 
 # eval_g_ineq_v3_old <- function( x, v=v, variance=variance, mono=mono ) {
@@ -191,21 +225,29 @@ eval_g_ineq_v3 <- function( x, v=v, variance=variance, mono=mono ) {
 
 
 
-eval_g_ineq_v4 <- function( x, v=v, variance=variance, mono=mono ) {
 
-  constr <- c(x-1)
-  grad   <- rbind(diag(1,length(v),length(v)))
-
+eval_g_ineq_v4 <- function(x,
+                           v = v,
+                           variance = variance,
+                           mono = mono) {
+  constr <- c(x - 1)
+  grad   <- rbind(diag(1, length(v), length(v)))
+  
   # monotony condition
   if (mono) {
-    mono_fct <- eval_g_mono(x=x, v=v, constr=constr, grad=grad)
+    mono_fct <- eval_g_mono(
+      x = x,
+      v = v,
+      constr = constr,
+      grad = grad
+    )
     constr <- mono_fct$constr
     grad <- mono_fct$grad
   }
-
-  out <- list( "constraints"=constr, "jacobian"=grad )
-
-  return( out )
+  
+  out <- list("constraints" = constr, "jacobian" = grad)
+  
+  return(out)
 }
 
 
@@ -216,21 +258,25 @@ eval_g_ineq_v4 <- function( x, v=v, variance=variance, mono=mono ) {
 # sum(v*x)              (1) expectation of 0
 # sum(v^2*x)-variance   (2) constant variance
 
-eval_g_eq_v1_v2_v3 <- function( x, v=v, variance=variance, mono=mono ){
 
-  constr <- c( sum(x)- 1, sum(v*x) )
-  grad   <- rbind(rep(1,length(v)), v)
+eval_g_eq_v1_v2_v3 <-
+  function(x,
+           v = v,
+           variance = variance,
+           mono = mono) {
+    constr <- c(sum(x) - 1, sum(v * x))
+    grad   <- rbind(rep(1, length(v)), v)
+    
+    return(list("constraints" = constr, "jacobian" = grad))
+  }
 
-  return( list( "constraints"=constr, "jacobian"=grad ) )
+
+eval_g_eq_v4 <- function(x,
+                         v = v,
+                         variance = variance,
+                         mono = mono) {
+  constr <- c(sum(x) - 1, sum(v * x), sum(v^2 * x) - variance)
+  grad   <- rbind(rep(1, length(v)), v, v^2)
+  
+  return(list("constraints" = constr, "jacobian" = grad))
 }
-
-
-eval_g_eq_v4 <- function( x, v=v, variance=variance, mono=mono ){
-
-  constr <- c( sum(x)- 1, sum(v*x), sum(v^2*x)-variance )
-  grad   <- rbind(rep(1,length(v)), v, v^2)
-
-  return( list( "constraints"=constr, "jacobian"=grad ) )
-}
-
-

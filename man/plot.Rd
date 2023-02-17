@@ -9,16 +9,18 @@ plot(obj, type = "d", file = NULL, ...)
 \arguments{
 \item{obj}{an object of class \code{\linkS4class{ptable}}}
 
-\item{type}{(character) type of graph: distribution "d" (standard), perturbation panel ("p"), transition matrix "t"}
+\item{type}{(character) type of graph: distribution "d" (standard),
+perturbation panel ("p"), transition matrix "t"}
 
-\item{file}{if not \code{NULL}, a path to a file where the graph is saved to as pdf}
+\item{file}{if not \code{NULL}, a path to a file where the graph is saved to
+as pdf}
 
 \item{...}{additional parameters passed to methods}
 }
 \description{
 \code{\link[=plot]{plot()}} makes it easy to visualize the results of the created
-ptable-object that has been created by \code{\link[=create_cnt_ptable]{create_cnt_ptable()}}, \code{\link[=create_cnt_ptable]{create_cnt_ptable()}}
-or \code{\link[=modify_cnt_ptable]{modify_cnt_ptable()}}.
+ptable-object that has been created by \code{\link[=create_cnt_ptable]{create_cnt_ptable()}},
+\code{\link[=create_cnt_ptable]{create_cnt_ptable()}} or \code{\link[=modify_cnt_ptable]{modify_cnt_ptable()}}.
 }
 \examples{
 

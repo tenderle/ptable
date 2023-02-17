@@ -131,10 +131,10 @@ equal to or less than a specific threshold value
 }
 \examples{
 
-# create ptable for frequency count tables 
+# create ptable for frequency count tables
 create_cnt_ptable(D = 3, V = 1.08, js = 1, label = "ptable_frequency_tab")
 
-# create ptable for magnitude tables 
+# create ptable for magnitude tables
 create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 
 # create ptable for frequency or magnitude tables

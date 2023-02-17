@@ -7,7 +7,8 @@
 pt_check(ptab)
 }
 \arguments{
-\item{ptab}{a \code{data.table} or an an object of \linkS4class{ptable} generated with \code{\link[=create_cnt_ptable]{create_cnt_ptable()}}.}
+\item{ptab}{a \code{data.table} or an an object of \linkS4class{ptable} generated
+with \code{\link[=create_cnt_ptable]{create_cnt_ptable()}}.}
 }
 \value{
 a data.table object

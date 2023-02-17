@@ -4,11 +4,14 @@
 #' @slot js (integer) parameter for original counts not to be perturbed
 #' @slot ncat (integer) number of perturbation classes
 #' @slot pstay numeric vector specifying parameter for non-perturbation
-#' @slot optim (integer) specifying optimization parameter for optimization function
-#' @slot mono (logical) vector specifying optimization parameter for monotony condition
+#' @slot optim (integer) specifying optimization parameter for optimization 
+#' function
+#' @slot mono (logical) vector specifying optimization parameter for monotony 
+#' condition
 #' @slot label (character) label for output
 #' @slot icat (integer) categorized original frequencies i
-#' @slot table (character) type of table: frequency counts (cnts) or magnitude (nums)
+#' @slot table (character) type of table: frequency counts (cnts) or 
+#' magnitude (nums)
 #' @slot step (integer) step width
 #' @slot type (character) type of 
 #' @name ptable_params-class
@@ -72,7 +75,8 @@ setClass("ptable_params",
              stop("Type must be either 'all', 'even' or 'odd'.", call. = FALSE)
            
            #if( (object@step <= 0 | object@step > 1) )
-          #   stop("Parameter 'step': must be a postivie value and less then 1.", call. = FALSE)
+          # stop("Parameter 'step': must be a positive value and less then 1.", 
+          #      call. = FALSE)
            
            if ((object@table=="nums") & is_empty(object@icat))
              stop("You specified a freuency table (table='nums'). So, please define the argument 'icat' !")
@@ -89,7 +93,8 @@ NULL
 #' @slot pParams a \code{\linkS4class{ptable_params}} object
 #' @slot tStamp (character) ...
 #' @slot type (character) 
-#' @slot table (character) type of table: frequency counts (cnts) or magnitude (nums)
+#' @slot table (character) type of table: frequency counts (cnts) 
+#' or magnitude (nums)
 #' @name ptable-class
 #' @rdname ptable-class
 #' @export
