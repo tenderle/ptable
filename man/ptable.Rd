@@ -2,18 +2,42 @@
 % Please edit documentation in R/ptable.R
 \name{ptable}
 \alias{ptable}
-\title{ptable}
+\title{Perturbation Table Dashboard for Frequency Count Tables}
 \usage{
 ptable()
 }
 \description{
-Perturbation Table Visualizer
+In the \code{ptable}-package there is a shiny app for first
+time users and visual-style learners. \code{\link[=ptable]{ptable()}} makes it easy to experiment
+with different parameter
+settings while getting direct feedback by means of graphical plots and
+summaries. The different result output tabs are:
+\itemize{
+\item \verb{Perturbation Table} shows the output used for applying CKM methods.
+\item \verb{Constraints Check} can be used to check the main constraints (e.g., zero mean,
+fixed variance)
+\item \verb{Input Code} could be used for replication of the results (i.e. copy&paste the
+code for your R script).
+\item \verb{Input Object} shows the input object derived from the parameters a user set.
+\item \code{Legend} gives an overview of used parameters.
+}
+
+Users can also visually learn how input parameters effect
+the perturbation table:
+\itemize{
+\item \verb{Transition Matrix}
+\item \code{Distribution} Plot
+\item \verb{Perturbation Panel} Plot
+}
 }
 \examples{
 \dontrun{
 ptable()
 }
 
+}
+\seealso{
+\code{\link[=ptable_pkg]{ptable_pkg()}} to get more help or \code{\link[=pt_vignette]{pt_vignette()}} for an introduction
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}

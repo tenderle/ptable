@@ -46,9 +46,10 @@ As suggested in *@marley2011* and illustrated in *@giessing2016* the package imp
 - In the perturbed table will be **no positive frequency counts less than a specified threshold** value js.
 
 ### Graphical User interface (GUI)
-In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).
+In the ptable package there is also a shiny app for first time users and visual-style learners. The shinyApp provides a visualization mode using the function `ptable()` and allows users to experiment with different parameter settings while getting direct feedback by means of graphical plots and summaries. In this way, users can visually learn how parameters effect the probability distribution. 
+<!--There are also buttons to download the plot and the perturbation table for [**Tau-Argus**](https://github.com/sdcTools/tauargus).-->
 
-_Note_: The current GUI provides perturbation tables for frequency tables (`type = 'cnts'`) only.
+_Note_: The current GUI provides perturbation tables for frequency tables (`table = 'cnts'`) only.
 
 ### Auxiliary features
 The package provides auxiliary functions that allow to process and review the results. Besides the visualization mode of the shiny app, users have also a code-based possibility to create visualization plots directly using the function `plot()`. The function allows to display a variety of plots (among others the noise probability distribution plot, a perturbation panel, etc.). 

@@ -48,13 +48,18 @@ params <- reactive({
 res <- reactive( {
   pt_create_pTable(params = params())
 })
+
+inputcode <- reactive({
+  noquote(paste0("create_cnt_ptable(D=",input$D,", V=",input$V,", js=",input$js,", pstay=",input$pstay, ", label=",input$label, ", mono=",input$mono, ", optim=",as.integer(input$optim),")", sep=""))
+})
+
 ```
 
 
 
-**Save the Output**
+<!-- **Save the Output** -->
 
-```{r download}
+```{r download, echo=FALSE, eval=FALSE}
 downloadHandler(
     filename = function() {
       paste("graph-", Sys.Date(), ".pdf", sep="")
@@ -107,6 +112,14 @@ renderTable(
 renderTable({
   res()@empResults[i>0,,]
 }, digits=3)
+```
+
+### Input Code {data-width=175}
+
+```{r}
+renderPrint({
+  inputcode()
+})
 ```
 
 ### Input Object {data-width=175}
