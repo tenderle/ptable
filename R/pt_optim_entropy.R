@@ -51,7 +51,7 @@ pt_optim_entropy <- function(optim=optim, mono=mono,
                 "maxeval"   = 100000,
                 "local_opts" = local_opts )
 
-  # Optimization functions (according to parameter optim)
+  # Optimization functions (according to parameter 'optim')
   if (optim == 1) {
     fct_eval_g_ineq <- eval_g_ineq_v1
     fct_eval_g_eq <- eval_g_eq_v1_v2_v3

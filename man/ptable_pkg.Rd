@@ -145,7 +145,7 @@ create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
 \seealso{
 \itemize{
 \item \code{\link[=plot]{plot()}} to analyze the created perturbation table visually
-\item \code{\link[=pt_export]{pt_export()}} to export the perturbation table for external SDCtools
+\item \code{\link[=pt_export]{pt_export()}} to export the perturbation table for external sdcTools
 like \href{https://github.com/sdcTools/tauargus}{TauArgus} or SAS.
 }
 }

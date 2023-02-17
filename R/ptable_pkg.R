@@ -63,7 +63,7 @@
 #' @seealso 
 #' * [plot()] to analyze the created perturbation table visually
 #' 
-#' * [pt_export()] to export the perturbation table for external SDCtools
+#' * [pt_export()] to export the perturbation table for external sdcTools
 #' like [TauArgus](https://github.com/sdcTools/tauargus) or SAS.
 #'
 #' @return Depending on the argument `create` results an object-class of either 
