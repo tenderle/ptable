@@ -37,7 +37,7 @@ ptable()
 
 }
 \seealso{
-\code{\link[=ptable_pkg]{ptable_pkg()}} to get more help or \code{\link[=pt_vignette]{pt_vignette()}} for an introduction
+See \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} to get more help or \code{\link[=pt_vignette]{pt_vignette()}} for an introduction
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}

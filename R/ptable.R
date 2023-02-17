@@ -22,7 +22,7 @@
 #' @md
 #'
 #' @seealso 
-#' [ptable_pkg()] to get more help or [pt_vignette()] for an introduction
+#' See [create_cnt_ptable()] to get more help or [pt_vignette()] for an introduction
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @keywords perturbation table visualisation dashboard flexdashboard shiny
