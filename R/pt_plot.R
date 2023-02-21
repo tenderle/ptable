@@ -50,6 +50,9 @@ fifi_plot <- function(obj, type = "d", file = NULL) {
     stopifnot(is_scalar_character(file))
   }
   
+  if (!(type %in% c("d", "p", "t")))
+      stop("Only three options 'd', 'p' or 't' are allowed for input type.")
+  
   if (type == "d") {
     #cat("Distribution of Perturbation Values\n")
     out <- pt_plot_pD(pert_table = obj, file = file)
@@ -68,10 +71,12 @@ fifi_plot <- function(obj, type = "d", file = NULL) {
 }
 
 #' @title Distribution Plot
-#' @description [pt_plot_pD()] plots the distribution of the perturbation values using the R-package \code{\link{ggplot2}}.
+#' @description [pt_plot_pD()] plots the distribution of the perturbation 
+#' values using the R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
 #' @param ylimit (numeric) vector with limits of y-axis (probabilities)
-#' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
+#' @param file if not \code{NULL}, a path to a file where the graph is saved 
+#' to as pdf
 #' @import ggplot2
 #' @importFrom utils packageVersion
 #' @noRd
@@ -106,7 +111,8 @@ pt_plot_pD <- function(pert_table,
     col = ifelse(VARIANZ != as.numeric(empResults$p_var), 7, 6)
   )
   
-  dt_meta[, ps := ifelse(psum < 0.999999, "< 1", ifelse(psum > 1.000001, "> 1", "= 1"))][]
+  dt_meta[, ps := ifelse(psum < 0.999999, 
+                         "< 1", ifelse(psum > 1.000001, "> 1", "= 1"))][]
   dt_meta <- dt_meta[i > 0]
   
   cbPalette <-
@@ -216,9 +222,11 @@ pt_plot_pD <- function(pert_table,
 }
 
 #' @title Perturbation Panel Plot
-#' @description [pt_plot_pPanel()] to plot the perturbation panel using the R-package \code{\link{ggplot2}}.
+#' @description [pt_plot_pPanel()] to plot the perturbation panel using the 
+#' R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
-#' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
+#' @param file if not \code{NULL}, a path to a file where the graph is saved 
+#' to as pdf
 #' @import ggplot2
 #'
 #' @noRd
@@ -239,7 +247,9 @@ pt_plot_pPanel <- function(pert_table, file = NULL) {
   lev_char[lev_sign > 0] <- paste0("+", lev_char[lev_sign > 0])
   lev_char[lev_num == 0] <- "0 (no perturbation)"
 
-  pTable[, u := factor(v, levels = (unique(as.character(v))), labels = lev_char)]
+  pTable[, u := factor(v, 
+                       levels = (unique(as.character(v))), 
+                       labels = lev_char)]
   pTable <- pTable[order(i, p_int_lb, decreasing = FALSE)]
 
   D <- slot(params, "D")
@@ -308,9 +318,11 @@ pt_plot_pPanel <- function(pert_table, file = NULL) {
 }
 
 #' @title Transition Matrix Plot
-#' @description [pt_plot_tMatrix()] plots the transition matrix using the R-package \code{\link{ggplot2}}.
+#' @description [pt_plot_tMatrix()] plots the transition matrix using the 
+#' R-package \code{\link{ggplot2}}.
 #' @param pert_table an object of class \code{\linkS4class{ptable}}
-#' @param file if not \code{NULL}, a path to a file where the graph is saved to as pdf
+#' @param file if not \code{NULL}, a path to a file where the graph is saved 
+#' to as pdf
 #' @import ggplot2
 #' @import RColorBrewer
 #' @noRd
