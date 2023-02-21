@@ -1,13 +1,13 @@
 #' @title Create a perturbation table
 #'
-#' @description [pt_create_pTable()] produces a perturbation table that is needed to 
-#' add noise to statistical frequency tables. The perturbation probabilities 
-#' are constructed given the following constraints:
+#' @description [pt_create_pTable()] produces a perturbation table that is 
+#' needed to add noise to statistical frequency tables. The perturbation 
+#' probabilities are constructed given the following constraints:
 #' - Unbiasedness of the noise
 #' - Fixed noise variance
 #' - Transition probabilities are between zero and one and the sum up to 1
-#' - Perturbations will not produce negative cell values or positive cell values 
-#' equal to or less than a specific threshold value 
+#' - Perturbations will not produce negative cell values or positive cell 
+#' values equal to or less than a specific threshold value 
 #' - The absolute value of any perturbation is less than a specific integer 
 #' value (i.e. the maximum noise)
 #' 
@@ -40,7 +40,8 @@
 #' # ptable for magnitude tables
 #' # old way
 #' \dontrun{ 
-#' params_nums <- pt_create_pParams(D=5, V=2, table="nums", step=4, icat=c(1, 3, 5))
+#' params_nums <- pt_create_pParams(D=5, V=2, table="nums", 
+#'                                  step=4, icat=c(1, 3, 5))
 #' pt_create_pTable(params = params_nums)
 #' }
 #' # new way
@@ -108,7 +109,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   epsilon <- 1 / 10 ^ ndigits
   options(digits = ndigits, scipen = ndigits)
   
-  for (r in 2:nrows) {    # looping through all frequencies categories (i.e. icat's)
+  for (r in 2:nrows) {    # looping through all freq categories (i.e. icat's)
     i <- icat_[r]
     
     if (monitoring) {
@@ -173,7 +174,7 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
           # otherwise reduce p_lb by 0.05 to allow smaller p_stay in order to 
           # fulfill the variance constraint
           p_lb[which(v_current == 0)] <- p_lb[which(v_current == 0)] - 0.05
-          p_lb <- ifelse(p_lb < epsilon , epsilon, p_lb) # prevents negative values
+          p_lb <- ifelse(p_lb < epsilon , epsilon, p_lb) # prevents neg. values
         }
         
         iter <- iter + 1
@@ -215,7 +216,14 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
           message("Sum of p: ", chp %% 1)
         }
         if (chp != 1) {
-          stop(paste0("The ptable can't be calculated without a violation of the constraints. The combination of the input parameters you set (e.g. D=",D,", V=",V,", js=",js," or pstay) doesn't work. Please try another specification: either change the arguments 'mono=' or 'optim=' or try to use a different combination of input parameters (hint: changing the variance is sufficient in most cases)."), call. = FALSE)
+          stop(paste0("The ptable can't be calculated without a violation of ",
+                      "the constraints. The combination of the input ",
+                      "parameters you set (e.g. D=",D,", V=",V,", js=",js,
+                      " or pstay) doesn't work. Please try another ",
+                      "specification: either change the arguments 'mono=' or ",
+                      "'optim=' or try to use a different combination of ",
+                      "input parameters (hint: changing the variance is ",
+                      "sufficient in most cases)."), call. = FALSE)
         }
       }
     }
@@ -259,10 +267,12 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   pSymmetry <- (2 * (D * step)) + 1
   
   # Perturbation Matrix
-  erg_dt <- do.call(rbind, sapply(RESULT, '[', 'dt'))
+  #erg_dt <- do.call(rbind, sapply(RESULT, '[', 'dt'))
+  erg_dt <- rbindlist(lapply(RESULT, function(x) x$dt))
   erg_dt[, i_info := paste("i=", i, sep = ""), ]
   if (table == "cnts") {
-    erg_dt[i == max(as.integer(as.character(i))),  i_info := paste0("i>=", i, " (symmtery)")]
+    erg_dt[i == max(as.integer(as.character(i))),  
+           i_info := paste0("i>=", i, " (symmtery)")]
   }
   
   erg_dt[, symmetry := .N, by = .(i)]
@@ -281,11 +291,14 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
     print(Matrix)
   }
   
-  # Output Check: Constraints (1) Mean, (2) Variance and (5) sum of probabilities
+  # Output Check: Constraints (1) Mean, (2) Variance and (5) sum of probs
+  #erg_iter <- rbindlist(lapply(RESULT, function(x) x$iter))
+  erg_iter <- do.call(rbind, sapply(RESULT, '[', 'iter'))
   check <- cbind(
     fifi_check_pTable(DT = erg_dt),
-    iter = as.integer(do.call(rbind, sapply(RESULT, '[', 'iter'))))
-  
+    iter = as.integer(erg_iter)
+    )
+
   if (monitoring) {
     message("")
     message("Perturbation probabilities (in %):")
@@ -299,31 +312,32 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
     print(check)
     message("")
   }
-  
+
   # Perturbation Table/Matrix
   pTable <- copy(erg_dt)
   pTable[, type := ttype]
   pTable[, p_int_lb := round(p_int_lb, ndigits)]
   pTable[, p_int_ub := round(p_int_ub, ndigits)]
-  # IMPORTANT step: Due to rounding errors, 'p' is replaced by the differences of the rounded intervals
+  # IMPORTANT step: Due to rounding errors, 'p' is replaced by the 
+  # differences of the rounded intervals
   pTable[, p := p_int_ub - p_int_lb]
   pTable <- pTable[, .(i, j, p, v, p_int_lb, p_int_ub, type)]
-  
+
   # Ouput
   out <- new("ptable")
   attr(pTable, "intervals") <- "default"
-  
+
   slot(out, "pTable") <- pTable
   slot(out, "tMatrix") <- as.matrix(Matrix)
-  
+
   slot(out, "pClasses") <- icat_
   slot(out, "pParams") <- pert_params
   slot(out, "empResults") <- check
-  
+
   slot(out, "tStamp") <- format(Sys.time(), "%Y%m%d%H%M%S")
   slot(out, "type") <- ttype
   slot(out, "table") <- table
-  
+
   validObject(out)
   out
 }
