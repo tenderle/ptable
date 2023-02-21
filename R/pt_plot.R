@@ -230,29 +230,30 @@ pt_plot_pPanel <- function(pert_table, file = NULL) {
   
   pTable <- pTable[order(v, p, decreasing = TRUE)]
   pTable <- pTable[, i_char := as.character(i)]
+  pTable[, i_char := factor(i_char, levels = sort(unique(i)))]
   pTable[i == max(i), i_char := paste0("", i_char, "+")]
-  
+
   lev_num <- (unique((pTable$v)))
   lev_sign <- sign(lev_num)
   lev_char <- (unique(as.character(pTable$v)))
   lev_char[lev_sign > 0] <- paste0("+", lev_char[lev_sign > 0])
   lev_char[lev_num == 0] <- "0 (no perturbation)"
-  
+
   pTable[, u := factor(v, levels = (unique(as.character(v))), labels = lev_char)]
   pTable <- pTable[order(i, p_int_lb, decreasing = FALSE)]
-  
+
   D <- slot(params, "D")
   intervals <- attr(pTable, "intervals")
-  
+
   if (D > 6) {
     myBreaks <- c(-D, 0, D)
   } else {
     myBreaks <- c(-D:D)
   }
-  
+
   # ggplot figure
   s <- ggplot(pTable, x = i, aes(i_char, p, fill = v))
-  
+
   output <- s + geom_bar(stat = "identity", position = "fill") +
     coord_flip() +
     {
