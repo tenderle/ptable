@@ -86,22 +86,22 @@ res <- reactive({
 inputcode <- reactive({
   noquote(
     paste0(
-      "create_cnt_ptable(D=",
+      "create_cnt_ptable(D = ",
       input$D,
-      ", V=",
+      ", V = ",
       input$V,
-      ", js=",
+      ", js = ",
       input$js,
-      ", pstay=",
+      ", pstay = ",
       input$pstay,
-      ", label=",
+      ", label = '",
       input$label,
-      ", mono=",
+      "', mono = ",
       input$mono,
-      ", optim=",
+      ", optim = ",
       as.integer(input$optim),
       ")",
-      sep = ""
+      sep = " "
     )
   )
 })
@@ -178,8 +178,13 @@ renderTable({
 
 ### Input Code {data-width=175}
 
+\
+*Copy the following code and paste it into your r-script or console to replicate 
+the perturbation table you have created:*
+
 ```{r}
-renderPrint({
+
+renderText({
   inputcode()
 })
 ```
