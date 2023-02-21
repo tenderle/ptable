@@ -60,16 +60,19 @@ setClass("ptable_params",
              stop("Please label your pTable (without blanks)!")
            
            if( !(all(object@D>0)) )
-             stop("Parameter D: must be a positive scalar or vector of positive integer(s)\n")
+             stop(paste0("Parameter D: must be a positive scalar or vector ",
+                         "of positive integer(s)\n"))
 
            if( !(object@js >= 0) )
-             stop("Parameter js: must be NULL (in case of no blocking) or a postivie integer value", call. = FALSE)
+             stop(paste0("Parameter js: must be NULL (in case of no blocking)",
+                  "or a postivie integer value", call. = FALSE))
 
            if (is_empty(object@table))
              stop("Please define your type of table: either 'cnts' or 'nums'.")
            
            if( !(object@table %in% c("cnts","nums")) )
-             stop("Type of table must be either 'cnts' or 'nums'.", call. = FALSE)
+             stop("Type of table must be either 'cnts' or 'nums'.", 
+                  call. = FALSE)
            
            if( !(object@type %in% c("all","even","odd")) )
              stop("Type must be either 'all', 'even' or 'odd'.", call. = FALSE)
@@ -79,7 +82,8 @@ setClass("ptable_params",
           #      call. = FALSE)
            
            if ((object@table=="nums") & is_empty(object@icat))
-             stop("You specified a freuency table (table='nums'). So, please define the argument 'icat' !")
+             stop(paste0("You specified a freuency table (table='nums'). ",
+                         "So, please define the argument 'icat' !"))
            
            return(TRUE)
          })

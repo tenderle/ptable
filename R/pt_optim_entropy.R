@@ -1,21 +1,31 @@
 #' @title Maximum Entropy Approach
 #' 
-#' @description Function to solve the non-linear optimization problem used within \code{\link{ptable}()}.
+#' @description Function to solve the non-linear optimization problem used 
+#' within \code{\link{ptable}()}.
 #'
-#' @param optim optimization parameter (1=default, 2-4=further test implementations)
+#' @param optim optimization parameter (1=default, 2-4=further test 
+#' implementations)
 #' @param mono (logical) monotony parameter
-#' @param v (integer) vector with perturbation values (i.e. deviations to the original frequency)
+#' @param v (integer) vector with perturbation values (i.e. deviations to the 
+#' original frequency)
 #' @param variance (numeric) variance parameter
 #' @param lb (integer) vector with lower bounds of the controls
 #' @param ub (integer) vector with upper bounds of the controls
 #' @param ndigits (integer) number of digits
 #'
-#' @details The main parameter is `optim`: In `optim=1 to 3` the variance is stated as
-#' inequality constraint and in `optim=4` the variance condition is stated as equality 
-#' constraint. 
+#' @details The main parameter is `optim`: In `optim=1 to 3` the variance is 
+#' stated as inequality constraint and in `optim=4` the variance condition is 
+#' stated as equality constraint. 
 #'
-#' @seealso Giessing, S. (2016), 'Computational Issues in the Design of Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
-#' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising tabular output to protect against differencing. In: Monographs of Official Statistics. Work session on Statistical Data Confidentiality, Eurostat-Office for Official Publications of the European Communities, Luxembourg, 2006, pp. 299-302
+#' @seealso Giessing, S. (2016), 'Computational Issues in the Design of 
+#' Transition Probabilities and Disclosure Risk Estimation for Additive Noise'. 
+#' In: Domingo-Ferrer, J. and Pejic-Bach, M. (Eds.), Privacy in Statistical 
+#' Databases, pp. 237-251, Springer International Publishing, LNCS, vol. 9867.
+#' @seealso Fraser, B. and Wooton, J.: A proposed method for confidentialising 
+#' tabular output to protect against differencing. In: Monographs of Official 
+#' Statistics. Work session on Statistical Data Confidentiality, 
+#' Eurostat-Office for Official Publications of the European Communities, 
+#' Luxembourg, 2006, pp. 299-302
 #' @return The return value contains a list with two elements:
 #' \describe{
 #'  \item{"\code{result}"}{   optimal value of the controls}

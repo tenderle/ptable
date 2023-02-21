@@ -10,7 +10,8 @@ pt_vignette()
 a browser windows/tab with showing the vignette
 }
 \description{
-Starts the package vignette that gets you started with the package
+Starts the package vignette that gets you started with the 
+package
 }
 \examples{
 \dontrun{

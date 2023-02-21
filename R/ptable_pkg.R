@@ -4,17 +4,17 @@
 #' @title Noise Probability Generator for the Cell-Key Method (CKM)
 #'
 #' @description
-#' [ptable](https://github.com/sdcTools/ptable) makes it easy to create perturbation tables
-#' that can be used for applying noise to statistical tables with any
-#' cell-key method approach - among others either the [cellKey()](https://github.com/sdcTools/cellKey)-package
-#' or the standalone tool
-#' [TauArgus](https://github.com/sdcTools/tauargus).
+#' [ptable](https://github.com/sdcTools/ptable) makes it easy to create 
+#' perturbation tables that can be used for applying noise to statistical 
+#' tables with any cell-key method approach - among others either the 
+#' [cellKey()](https://github.com/sdcTools/cellKey)-package
+#' or the standalone tool [TauArgus](https://github.com/sdcTools/tauargus).
 #'
 #' The package
 #' provides four main functions to create the perturbation tables:
 #'
-#' * `create_ptable()`: generic function that creates a ptable, either for frequency
-#' count or magnitude tables with a various set of options.
+#' * `create_ptable()`: generic function that creates a ptable, either for 
+#' frequency count or magnitude tables with a various set of options.
 #'
 #' * `create_cnt_ptable()`: creates a ptable suitable for frequency count
 #' tables.
@@ -33,17 +33,17 @@
 #' - Perturbations will not produce negative cell values or positive cell values
 #' equal to or less than a specific threshold value
 #'
-#' @param D perturbation parameter for maximum noise/perturbation (scalar or vector)
+#' @param D perturbation parameter for maximum noise (scalar)
 #' @param V perturbation parameter for variance (scalar)
-#' @param js threshold value for blocking of small frequencies (i.e. the perturbation
-#' will not produce positive cell values that are equal to or smaller than
-#' the threshold value).
+#' @param js threshold value for blocking of small frequencies 
+#' (i.e. the perturbation will not produce positive cell values that are equal 
+#' to or smaller than the threshold value).
 #' @param pstay optional parameter to set the probability (0 < p < 1) of
 #' an original frequency to remain unperturbed: NA (default) no preset
 #' probability (i.e. produces the maximum entropy solution)
 #' @param optim optimization parameter: `1` standard approach (default) with
-#' regular constraints, `4` alternative approach with simplified constraints (may work
-#' if constraints using the standard approach are violated)
+#' regular constraints, `4` alternative approach with simplified constraints 
+#' (may work if constraints using the standard approach are violated)
 #' @param mono (logical) vector specifying optimization parameter for
 #' monotony condition
 #' @param label (character) label of the Output
@@ -57,8 +57,8 @@
 #' @param create (logical) scalar specifying to create just the
 #' input parameters of class [ptable_params-class] (FALSE) or also to create the
 #' perturbation table object of class [ptable-class] (default: TRUE)
-#' @param params object of class [ptable_params-class] can be used as input instead
-#' of the remaining parameters
+#' @param params object of class [ptable_params-class] can be used as input 
+#' instead of the remaining parameters
 #'
 #' @seealso
 #' * [plot()] to analyze the created perturbation table visually

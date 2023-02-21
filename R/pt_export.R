@@ -1,6 +1,7 @@
 #' @title Export ptables as a csv-file
 #'
-#' @description Function to export perturbation table to Tau-Argus or SAS (as csv-file).
+#' @description Function to export perturbation table to Tau-Argus, SAS or
+#' any other CKM tool (as csv-file).
 #'
 #' @param ... 1 or 2 input object of class \code{\linkS4class{ptable}}
 #' @param file (character) filename
@@ -48,7 +49,8 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   type1 <- slot(params1, "type")
 
   if (table1=="cnts" & nr==2)
-    stop(paste0("You have specified a frequency table (table='cnts'). So you need only 1 input object. That must be of type='all'."))
+    stop(paste0("You have specified a frequency table (table='cnts'). ", 
+                "So you need only 1 input object. That must be of type='all'."))
   
   # if only 1 object is set
   if (table1=="nums" & nr==1){
@@ -56,7 +58,11 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     query <- type1 == "all"
 
     if ( !(query) ) 
-      stop(paste0("You have specified a magnitude table (table='nums') and set the argument type='",type1,"'. However, you need either 1 input object of type='all' OR you need 2 input objects: the first with type='even' and the second with type='odd'."))
+      stop(paste0("You have specified a magnitude table (table='nums') and ",
+                  "set the argument type='",type1,"'. However, you need ",
+                  "either 1 input object of type='all' OR you need 2 input ", 
+                  "objects: the first with type='even' and the second with ",
+                  "type='odd'."))
 
   }
 
@@ -64,12 +70,15 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
 
     if (SDCtool=="TauArgus"){
       pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_ub'),]
-      message("\n NOTE: If you have modified the ptable using 'modify_cnt_ptable()': Please use a new Tau-Argus Release (>= 4.2.3).")
+      message("\n NOTE: If you have modified the ptable using ",
+              "'modify_cnt_ptable()': ", 
+              "Please use a new Tau-Argus Release (>= 4.2.3).")
     }
 
     if (SDCtool=="SAS")
-      pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_lb','p_int_ub'),]
-
+      pTable <-
+        slot(inp[[1]], "pTable")[, c('i', 'j', 'p', 'v', 
+                                     'p_int_lb', 'p_int_ub'), ]
   }
 
   if (table1=="nums" & nr==2){
@@ -80,7 +89,8 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
     query <- c("odd","even") %in% c(type1, type2)
 
     if ( !(all(query)) ) 
-      stop(paste0("You have specified the types '",type1,"' and '",type2,"'. However, you need 'type=even' and also 'type=odd'."))
+      stop(paste0("You have specified the types '",type1,"' and '",type2,
+                  "'. However, you need 'type=even' and also 'type=odd'."))
 
     pTable <- rbind(slot(inp[[1]], "pTable"),
                     slot(inp[[2]], "pTable"))
@@ -93,9 +103,11 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
       pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_ub','type'),]
 
     if (SDCtool=="SAS")
-      pTable <- slot(inp[[1]], "pTable")[,c('i','j','p','v','p_int_lb','p_int_ub','type'),]
+      pTable <- slot(inp[[1]], "pTable")[, c('i', 'j', 'p', 'v', 
+                                             'p_int_lb', 'p_int_ub', 'type'), ]
   } 
-  write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";", dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
+  write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";",
+              dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
 
   #return(pTable)
 

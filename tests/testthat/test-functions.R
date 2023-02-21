@@ -31,10 +31,6 @@ test_that("Plot functions are ok", {
   
   expect_error(plot(obj1, type = "u", file = "test"))
   
-  #expect_output(fifi_plot(obj1, type = "d"), "Distribution of Perturbation Values")
-  #expect_output(fifi_plot(obj1, type = "p"), "Perturbation Panel")
-  #expect_output(fifi_plot(obj1, type = "t"), "Transition Matrix")
-  
   expect_no_error(fifi_plot(obj1, type = "d"))
   expect_no_error(fifi_plot(obj1, type = "p"))
   expect_no_error(fifi_plot(obj1, type = "t"))
@@ -52,9 +48,15 @@ test_that("Plot functions are ok", {
 
 
 test_that("Export functions are ok", {
-  expect_no_error(pt_export(obj1, file = "outputfile", SDCtool = "TauArgus"))
-  expect_no_error(pt_export(obj1, file = "outputfile", SDCtool = "SAS"))
-  expect_no_error(pt_export(obj_nums, file = "outputfile", SDCtool = "TauArgus"))
+  expect_no_error(pt_export(obj1, 
+                            file = "outputfile", 
+                            SDCtool = "TauArgus"))
+  expect_no_error(pt_export(obj1, 
+                            file = "outputfile", 
+                            SDCtool = "SAS"))
+  expect_no_error(pt_export(obj_nums, 
+                            file = "outputfile", 
+                            SDCtool = "TauArgus"))
   expect_no_error(pt_export(obj_nums, file = "outputfile", SDCtool = "SAS"))
   expect_no_error(pt_export(
     obj_nums_odd,
@@ -71,12 +73,15 @@ test_that("Export functions are ok", {
   
   expect_error(pt_export(obj1, SDCtool = "TauArgus")) # lines 22-24
   expect_error(pt_export(obj1, SDCtool = "CK")) # line 27
-  expect_error(pt_export(obj1, obj1, obj1, file = "outputfile", SDCtool = "TauArgus")) # 36-37
+  expect_error(pt_export(obj1, obj1, obj1, 
+                         file = "outputfile", SDCtool = "TauArgus")) # 36-37
   
   expect_error(pt_export(100, SDCtool = "TauArgus")) # line 40
   
-  expect_error(pt_export(obj1, obj1, file = "outputfile", SDCtool = "TauArgus")) # 51
-  expect_error(pt_export(obj_nums_odd, file = "outputfile", SDCtool = "TauArgus")) # 54-59
+  expect_error(pt_export(obj1, obj1, 
+                         file = "outputfile", SDCtool = "TauArgus")) # 51
+  expect_error(pt_export(obj_nums_odd, 
+                         file = "outputfile", SDCtool = "TauArgus")) # 54-59
   
   expect_error(pt_export(
     obj_nums_odd,
@@ -84,8 +89,6 @@ test_that("Export functions are ok", {
     file = "outputfile",
     SDCtool = "TauArgus"
   )) #77-84
-  #expect_no_error(pt_export(obj_nums3, file = "outputfile", SDCtool = "TauArgus"))
-  
   
   expect_message(pt_export(obj1, file = "outputfile", SDCtool = "TauArgus"))
 })
@@ -96,8 +99,6 @@ test_that("Check functions are ok", {
   
 })
 
-#expect_no_error(ptable())
-#expect_error(pt_vignette())
 
 test_that("Removed test files", {
   expect_no_error(file.remove("outputfile.csv"))

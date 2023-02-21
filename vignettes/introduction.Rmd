@@ -75,7 +75,8 @@ packageVersion("ptable")
 ### Minimal Parameter Setting and Computation of the Transition Probabilities
 #### Computation of the Transition Probabilities
 ```{r}
-# note: all parameters except for maximum noise D and variance V have default values
+# note: 
+# all parameters except for maximum noise D and variance V have default values
 ptab <- create_cnt_ptable(D = 2, V = 1)
 ```
 
@@ -101,7 +102,8 @@ The most relevant and important slots of the object are:
 Let's have a look at the transition matrix (i.e. at the slot `@tMatrix`) of the object `ptab`:
 
 ```{r}
-# note: to look at a specific slot, just name the object and add the corresponding slot with a leading "@"
+# note: to look at a specific slot, just name the object and add the 
+# corresponding slot with a leading "@"
 ptab@tMatrix
 ```
 Each row of the transition matrix represents the noise distribution for an original frequency count. The probability that an original frequency count of 1 becomes a 3 (i.e. the 1 is perturbed with a noise value of +2) is `r ptab@tMatrix[2,4]`.
@@ -116,7 +118,8 @@ The main diagonal shows the preservation probabilities. These are the probabilit
 As you may have recognized, the transition matrix has a finite number of rows (that represent original frequency counts) and columns (that represent the target frequency counts). 
 
 ```{r}
-# let's have a look at the number of different original positive frequency counts that will be treated
+# let's have a look at the number of different original positive frequency 
+# counts that will be treated
 params <- slot(ptab, "pParams")
 params@ncat
 # if this number is added by +1 (for the zero count) we get
@@ -126,7 +129,8 @@ The number depends on both, the maximum perturbation `D` and the threshold value
 
 
 ```{r} 
-# the object @pClasses shows all original frequencies that have their own distribution
+# the object @pClasses shows all original frequencies 
+# that have their own distribution
 ptab@pClasses
 
 # symmetry is achieved for the original frequency count i=...
@@ -243,7 +247,6 @@ The probability of an original frequency to remain unperturbed (i.e. that the ta
 #### Do not allow for positive cell values equal to or below a specified threshold value
 
 ```{r}
-# note:  ptable::pt_create_pTable(...) could also be used as input for argument "pTable"
 ptable_e22 <- create_cnt_ptable(D = 5, V = 3, js = 2)
 ptable_e22@tMatrix
 ```
@@ -291,7 +294,7 @@ The same holds for the argument `mono`.
 
 
 ```{r}
-# note:  in the example we are working with the result of the following parameter setting
+# note: in the example we are working with the following result
 result <-
   create_cnt_ptable(
     D = 2,

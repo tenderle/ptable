@@ -5,17 +5,17 @@
 #'
 #' @details this function may be dropped in future versions; please use 
 #' [create_cnt_ptable()] and [create_num_ptable()] directly.
-#' @param D perturbation parameter for maximum noise/perturbation (scalar or vector)
+#' @param D perturbation parameter for maximum noise (scalar)
 #' @param V perturbation parameter for variance (scalar)
-#' @param js threshold value for blocking of small frequencies (i.e. the perturbation
-#' will not produce positive cell values that are equal to or smaller than 
-#' the threshold value).
+#' @param js threshold value for blocking of small frequencies 
+#' (i.e. the perturbation will not produce positive cell values that are equal 
+#' to or smaller than the threshold value).
 #' @param pstay optional parameter to set the probability (0 < p < 1) of 
 #' an original frequency to remain unperturbed: NA (default) no preset 
 #' probability (i.e. produces the maximum entropy solution)
 #' @param optim optimization parameter: `1` standard approach (default) with
-#' regular constraints, `4` alternative approach with simplified constraints (may work
-#' if constraints using the standard approach are violated)
+#' regular constraints, `4` alternative approach with simplified constraints 
+#' (may work if constraints using the standard approach are violated)
 #' @param mono (logical) vector specifying optimization parameter for 
 #' monotony condition
 #' @param label (character) label of the Output
@@ -114,7 +114,8 @@ pt_create_pParams <- function(D,
     pstay <- NA
     
     if (!all(c(1, D) %in% icat)) {
-      stop("There must be 1 and 'D' in 'icat', e.g. 'icat = c(1, D)'.", call. = FALSE)
+      stop("There must be 1 and 'D' in 'icat', e.g. 'icat = c(1, D)'.", 
+           call. = FALSE)
     }
     
     if (max(icat) > D) {

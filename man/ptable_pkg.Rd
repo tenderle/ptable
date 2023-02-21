@@ -53,21 +53,21 @@ create_num_ptable(
 )
 }
 \arguments{
-\item{D}{perturbation parameter for maximum noise/perturbation (scalar or vector)}
+\item{D}{perturbation parameter for maximum noise (scalar)}
 
 \item{V}{perturbation parameter for variance (scalar)}
 
-\item{js}{threshold value for blocking of small frequencies (i.e. the perturbation
-will not produce positive cell values that are equal to or smaller than
-the threshold value).}
+\item{js}{threshold value for blocking of small frequencies
+(i.e. the perturbation will not produce positive cell values that are equal
+to or smaller than the threshold value).}
 
 \item{pstay}{optional parameter to set the probability (0 < p < 1) of
 an original frequency to remain unperturbed: NA (default) no preset
 probability (i.e. produces the maximum entropy solution)}
 
 \item{optim}{optimization parameter: \code{1} standard approach (default) with
-regular constraints, \code{4} alternative approach with simplified constraints (may work
-if constraints using the standard approach are violated)}
+regular constraints, \code{4} alternative approach with simplified constraints
+(may work if constraints using the standard approach are violated)}
 
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}
@@ -91,25 +91,25 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 input parameters of class \linkS4class{ptable_params} (FALSE) or also to create the
 perturbation table object of class \linkS4class{ptable} (default: TRUE)}
 
-\item{params}{object of class \linkS4class{ptable_params} can be used as input instead
-of the remaining parameters}
+\item{params}{object of class \linkS4class{ptable_params} can be used as input
+instead of the remaining parameters}
 }
 \value{
 Depending on the argument \code{create} results an object-class of either
 \linkS4class{ptable} (\code{create = TRUE}) or \linkS4class{ptable_params} (\code{create = FALSE}).
 }
 \description{
-\href{https://github.com/sdcTools/ptable}{ptable} makes it easy to create perturbation tables
-that can be used for applying noise to statistical tables with any
-cell-key method approach - among others either the \href{https://github.com/sdcTools/cellKey}{cellKey()}-package
-or the standalone tool
-\href{https://github.com/sdcTools/tauargus}{TauArgus}.
+\href{https://github.com/sdcTools/ptable}{ptable} makes it easy to create
+perturbation tables that can be used for applying noise to statistical
+tables with any cell-key method approach - among others either the
+\href{https://github.com/sdcTools/cellKey}{cellKey()}-package
+or the standalone tool \href{https://github.com/sdcTools/tauargus}{TauArgus}.
 
 The package
 provides four main functions to create the perturbation tables:
 \itemize{
-\item \code{create_ptable()}: generic function that creates a ptable, either for frequency
-count or magnitude tables with a various set of options.
+\item \code{create_ptable()}: generic function that creates a ptable, either for
+frequency count or magnitude tables with a various set of options.
 \item \code{create_cnt_ptable()}: creates a ptable suitable for frequency count
 tables.
 \item \code{create_num_ptable()}: creates a ptable suitable for magnitude tables

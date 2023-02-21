@@ -27,8 +27,8 @@ pt_ex_cnts <- function() {
 #' @param separation a scalar logical; if `TRUE`, an additional ptable with
 #' variance `1` will be returned that is designed to perturb small cell values
 #'
-#' @return a [ptable-class] object if both `parity` and `separation` are `FALSE`,
-#' else a named list
+#' @return a [ptable-class] object if both `parity` and `separation` are 
+#' `FALSE`, else a named list
 #' @export
 #' @md
 #' @examples

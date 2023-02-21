@@ -143,7 +143,8 @@ test_that("modify_cnt_ptable() is ok", {
     threshold = 0.1,
     seed = 123
   ))
-  expect_error(modify_cnt_ptable(data.table(i = 1, j = 2), threshold = 0.1, seed = 123))
+  expect_error(modify_cnt_ptable(data.table(i = 1, j = 2), 
+                                 threshold = 0.1, seed = 123))
   expect_no_error(modify_cnt_ptable(
     create_cnt_ptable(D = 3, V = 1),
     threshold = 0.1,
@@ -189,7 +190,7 @@ test_that("Testing if only ptable_params-class is generated and imported again",
 
             # no create with external parameters
             expect_no_error(create_ptable(params = para2))
-            # no create with external parameters, params loopd through create_ptable ;-)
+            # ... external parameters, params loopd through create_ptable ;-)
             expect_no_error(create_ptable(create = FALSE, params = para2))
 
           })

@@ -14,7 +14,8 @@ pt_export(..., file, SDCtool = "TauArgus")
 \item{SDCtool}{(character) either "TauArgus" or "SAS"}
 }
 \description{
-Function to export perturbation table to Tau-Argus or SAS (as csv-file).
+Function to export perturbation table to Tau-Argus, SAS or
+any other CKM tool (as csv-file).
 }
 \examples{
 ptab <- create_cnt_ptable(D = 5, V = 3, js = 2, label = "test")

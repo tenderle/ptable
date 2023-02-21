@@ -14,11 +14,12 @@ settings while getting direct feedback by means of graphical plots and
 summaries. The different result output tabs are:
 \itemize{
 \item \verb{Perturbation Table} shows the output used for applying CKM methods.
-\item \verb{Constraints Check} can be used to check the main constraints (e.g., zero mean,
-fixed variance)
-\item \verb{Input Code} could be used for replication of the results (i.e. copy&paste the
-code for your R script).
-\item \verb{Input Object} shows the input object derived from the parameters a user set.
+\item \verb{Constraints Check} can be used to check the main constraints (e.g., zero
+mean, fixed variance)
+\item \verb{Input Code} could be used for replication of the results (i.e. copy&paste
+the code for your R script).
+\item \verb{Input Object} shows the input object derived from the parameters a user
+set.
 \item \code{Legend} gives an overview of used parameters.
 }
 
@@ -37,7 +38,8 @@ ptable()
 
 }
 \seealso{
-See \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} to get more help or \code{\link[=pt_vignette]{pt_vignette()}} for an introduction
+See \code{\link[=create_cnt_ptable]{create_cnt_ptable()}} to get more help or \code{\link[=pt_vignette]{pt_vignette()}} for an
+introduction
 }
 \author{
 Tobias Enderle, \email{tobias.enderle@destatis.de}
