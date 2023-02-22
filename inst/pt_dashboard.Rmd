@@ -76,7 +76,8 @@ params <- reactive({
     pstay = input$pstay,
     label = input$label,
     mono = input$mono,
-    optim = as.integer(input$optim)
+    optim = as.integer(input$optim),
+    step = 1
   )
 })
 res <- reactive({

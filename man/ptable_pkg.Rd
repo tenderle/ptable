@@ -53,13 +53,13 @@ create_num_ptable(
 )
 }
 \arguments{
-\item{D}{perturbation parameter for maximum noise (scalar)}
+\item{D}{perturbation parameter for maximum noise (scalar integer)}
 
-\item{V}{perturbation parameter for variance (scalar)}
+\item{V}{perturbation parameter for variance (scalar double)}
 
 \item{js}{threshold value for blocking of small frequencies
 (i.e. the perturbation will not produce positive cell values that are equal
-to or smaller than the threshold value).}
+to or smaller than the threshold value). (scalar integer)}
 
 \item{pstay}{optional parameter to set the probability (0 < p < 1) of
 an original frequency to remain unperturbed: NA (default) no preset
@@ -72,14 +72,24 @@ regular constraints, \code{4} alternative approach with simplified constraints
 \item{mono}{(logical) vector specifying optimization parameter for
 monotony condition}
 
-\item{step}{(integer) step width}
+\item{step}{(integer) number of steps for the noise (between two integer
+values). Whereas the cell-key approach
+for frequency count tables only allows to have noise values that are
+integers (\code{step = 1})
+\deqn{-D, 1-D, 2-D, ..., -1, 0, 1, ..., D-2, D-1, D}
+the noise distribution for magnitude values does not have
+to be integer valued:
+\deqn{-D, (1/step)-D, (2/step)-D, ..., 0, ..., D-(2/step), D-(1/step), D}
+The reciprocal of step (='step width') is computed and used internally
+for the perturbation table.}
 
 \item{icat}{(integer) categorized original frequencies i}
 
-\item{table}{(character) type of the table: frequency or magnitude table}
+\item{table}{(character) type of the table: frequency count (\code{cnts})
+or magnitude table (\code{nums})}
 
-\item{type}{(character) indicator for the extra column 'type' used for
-magnitude tables: 'even', 'odd' or 'all' (default)}
+\item{type}{(character) type indicator for the extra column 'type' used for
+magnitude tables: \code{'even'}, \code{'odd'} or \code{'all'} (default)}
 
 \item{label}{(character) label of the Output}
 
@@ -88,8 +98,9 @@ magnitude tables: 'even', 'odd' or 'all' (default)}
 \item{debugging}{(logical) debug monitoring on/off}
 
 \item{create}{(logical) scalar specifying to create just the
-input parameters of class \linkS4class{ptable_params} (FALSE) or also to create the
-perturbation table object of class \linkS4class{ptable} (default: TRUE)}
+input parameters of class \linkS4class{ptable_params} (\code{FALSE}) or also to
+create the perturbation table object of class \linkS4class{ptable}
+(default: \code{TRUE})}
 
 \item{params}{object of class \linkS4class{ptable_params} can be used as input
 instead of the remaining parameters}

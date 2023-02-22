@@ -33,11 +33,11 @@
 #' - Perturbations will not produce negative cell values or positive cell values
 #' equal to or less than a specific threshold value
 #'
-#' @param D perturbation parameter for maximum noise (scalar)
-#' @param V perturbation parameter for variance (scalar)
+#' @param D perturbation parameter for maximum noise (scalar integer)
+#' @param V perturbation parameter for variance (scalar double)
 #' @param js threshold value for blocking of small frequencies 
 #' (i.e. the perturbation will not produce positive cell values that are equal 
-#' to or smaller than the threshold value).
+#' to or smaller than the threshold value). (scalar integer)
 #' @param pstay optional parameter to set the probability (0 < p < 1) of
 #' an original frequency to remain unperturbed: NA (default) no preset
 #' probability (i.e. produces the maximum entropy solution)
@@ -47,16 +47,27 @@
 #' @param mono (logical) vector specifying optimization parameter for
 #' monotony condition
 #' @param label (character) label of the Output
-#' @param step (integer) step width
+#' @param step (integer) number of steps for the noise (between two integer
+#' values). Whereas the cell-key approach
+#' for frequency count tables only allows to have noise values that are 
+#' integers (\code{step = 1})
+#' \deqn{-D, 1-D, 2-D, ..., -1, 0, 1, ..., D-2, D-1, D} 
+#' the noise distribution for magnitude values does not have 
+#' to be integer valued: 
+#' \deqn{-D, (1/step)-D, (2/step)-D, ..., 0, ..., D-(2/step), D-(1/step), D} 
+#' The reciprocal of step (='step width') is computed and used internally 
+#'  for the perturbation table.
 #' @param icat (integer) categorized original frequencies i
-#' @param table (character) type of the table: frequency or magnitude table
-#' @param type (character) indicator for the extra column 'type' used for
-#' magnitude tables: 'even', 'odd' or 'all' (default)
+#' @param table (character) type of the table: frequency count (\code{cnts}) 
+#' or magnitude table (\code{nums})
+#' @param type (character) type indicator for the extra column 'type' used for
+#' magnitude tables: \code{'even'}, \code{'odd'} or \code{'all'} (default)
 #' @param monitoring (logical) output monitoring on/off
 #' @param debugging (logical) debug monitoring on/off
 #' @param create (logical) scalar specifying to create just the
-#' input parameters of class [ptable_params-class] (FALSE) or also to create the
-#' perturbation table object of class [ptable-class] (default: TRUE)
+#' input parameters of class [ptable_params-class] (\code{FALSE}) or also to 
+#' create the perturbation table object of class [ptable-class] 
+#' (default: \code{TRUE})
 #' @param params object of class [ptable_params-class] can be used as input 
 #' instead of the remaining parameters
 #'

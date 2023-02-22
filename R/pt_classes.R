@@ -1,5 +1,5 @@
 #' An S4 class to represent perturbation parameters
-#' @slot D (integer) parameter for maximum perturbation
+#' @slot D (integer) parameter for maximum perturbation / noise
 #' @slot V (numeric) parameter for perturbation variance
 #' @slot js (integer) parameter for original counts not to be perturbed
 #' @slot ncat (integer) number of perturbation classes
@@ -10,10 +10,11 @@
 #' condition
 #' @slot label (character) label for output
 #' @slot icat (integer) categorized original frequencies i
-#' @slot table (character) type of table: frequency counts (cnts) or 
-#' magnitude (nums)
-#' @slot step (integer) step width
-#' @slot type (character) type of 
+#' @slot table (character) type of table: frequency counts (\code{cnts}) or 
+#' magnitude (\code{nums})
+#' @slot step (integer) step
+#' @slot type (character) indicator for the extra column 'type' used for
+#' magnitude tables: \code{'even'}, \code{'odd'} or \code{'all'}  
 #' @name ptable_params-class
 #' @rdname ptable_params-class
 #' @export
@@ -96,7 +97,7 @@ NULL
 #' @slot empResults (data.table) ...
 #' @slot pParams a \code{\linkS4class{ptable_params}} object
 #' @slot tStamp (character) ...
-#' @slot type (character) 
+#' @slot type (character) type indicator for magnitude tables
 #' @slot table (character) type of table: frequency counts (cnts) 
 #' or magnitude (nums)
 #' @name ptable-class

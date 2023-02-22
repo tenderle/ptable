@@ -10,7 +10,7 @@ An S4 class to represent perturbation parameters
 \section{Slots}{
 
 \describe{
-\item{\code{D}}{(integer) parameter for maximum perturbation}
+\item{\code{D}}{(integer) parameter for maximum perturbation / noise}
 
 \item{\code{V}}{(numeric) parameter for perturbation variance}
 
@@ -30,11 +30,12 @@ condition}
 
 \item{\code{icat}}{(integer) categorized original frequencies i}
 
-\item{\code{table}}{(character) type of table: frequency counts (cnts) or 
-magnitude (nums)}
+\item{\code{table}}{(character) type of table: frequency counts (\code{cnts}) or 
+magnitude (\code{nums})}
 
-\item{\code{step}}{(integer) step width}
+\item{\code{step}}{(integer) step}
 
-\item{\code{type}}{(character) type of}
+\item{\code{type}}{(character) indicator for the extra column 'type' used for
+magnitude tables: \code{'even'}, \code{'odd'} or \code{'all'}}
 }}
 
