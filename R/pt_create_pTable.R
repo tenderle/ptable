@@ -292,8 +292,8 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   }
   
   # Output Check: Constraints (1) Mean, (2) Variance and (5) sum of probs
-  #erg_iter <- rbindlist(lapply(RESULT, function(x) x$iter))
-  erg_iter <- do.call(rbind, sapply(RESULT, '[', 'iter'))
+  erg_iter <- unlist(lapply(RESULT, function(x) x$iter))
+  #erg_iter <- do.call(rbind, sapply(RESULT, '[', 'iter'))
   check <- cbind(
     fifi_check_pTable(DT = erg_dt),
     iter = as.integer(erg_iter)
