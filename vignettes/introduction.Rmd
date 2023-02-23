@@ -321,9 +321,11 @@ The perturbation table can be graphically represented as a perturbation panel:
 ```{r, fig.height=5, fig.width = 7}
 plot(result, type = "p")
 ```
+Remember: For the demonstration we use a perturbation panel with default intervals. 
+
 Each bar corresponds to an original frequency count, different colors correspond to different noise values, and the width of the colored sub-bars corresponds to the respective transition probability.
 
-An original frequency count i=1 changes with probability 0.5133 to j = 0. The adjustment equals -1. Accordingly a light blue bar of length 0.5133 is drawn in the panel. With a probability of 0.46 the original i = 1 becomes j = 2, so the modification equals +1. A light green bar of length 0.46 is attached. Finally, with a probability of 0.0267 the original i = 1 becomes j = 3, so the modification equals +2. Accordingly a dark green bar of length 0.0267 is attached. This way, all probabilities for the row i = 1 of the perturbation table are shown in the panel. The probabilities for i = 2, 3 and 4 are shown in the panel in a similar way.
+An original frequency count i=1 changes with probability 0.5133 to j = 0. The adjustment equals -1. Accordingly a light blue bar of length 0.5133 is drawn in the panel. With a probability of 0.46 the original i = 1 becomes j = 2, so the perturbation equals +1. A light green bar of length 0.46 is attached. Finally, with a probability of 0.0267 the original i = 1 becomes j = 3, so the perturbation equals +2. Accordingly a dark green bar of length 0.0267 is attached. This way, all probabilities for the row i = 1 of the perturbation table are shown in the panel. The probabilities for i = 2, 3 and 4 are shown in the panel in a similar way.
 
 It can be seen from the perturbation panel where the x-axis shown at the bottom with probability between 0 and 1 corresponds to a cumulative probability distribution.
 
@@ -352,7 +354,7 @@ pt_export(result, file = "ptable.csv", SDCtool = "TauArgus")
 pt_export(result, file = "ptable.csv", SDCtool = "SAS")
 ```
 
-_Note_: For the purpose of production please modify the ptable and don't use the default ptable. But be aware of the interpretation using the perturbation panel (up to the current version, the ptable will always plot the default ptable).
+_Note_: For the purpose of production please modify the ptable and don't use the ptable with default intervals. But be aware of the interpretation using the perturbation panel.
 
 ## Troubleshooting Example: Violation of the fixed variance condition
 
