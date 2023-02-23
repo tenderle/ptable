@@ -149,8 +149,10 @@ create_cnt_ptable(D = 3, V = 1.08, js = 1, label = "ptable_frequency_tab")
 create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 
 # create ptable for frequency or magnitude tables
+\dontrun{
 create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
 create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
+}
 
 }
 \seealso{

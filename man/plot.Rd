@@ -24,22 +24,19 @@ ptable-object that has been created by \code{\link[=create_cnt_ptable]{create_cn
 }
 \examples{
 
-ptab <- create_cnt_ptable(D = 5, V = 2, label = "Example")
+# Create a ptable for frequency count tables and modify the intervals
+ptab <- create_cnt_ptable(D = 3, V = 1.05, js = 1, label = "Example")
 ptab_mod <- modify_cnt_ptable(ptab, threshold = 0.3, seed = 5432)
 
 # Distribution Plot of the Noise
-plot(ptab, type = "d")
+plot(ptab_mod, type = "d")
 
 # Perturbations Panel of the Noise
-plot(ptab, type = "p")
 plot(ptab_mod, type = "p")
 
-# Transition Matrix
-plot(ptab, type = "t")
-
 \dontrun{
-## Export result
-plot(ptab, type ="t", file = "example_tMatrix.pdf")
+## Plot and Save the Transition Matrix
+plot(ptab_mod, type ="t", file = "example_tMatrix.pdf")
 }
 
 }
