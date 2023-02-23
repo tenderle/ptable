@@ -6,38 +6,59 @@
 
 [![R-CMD-check](https://github.com/tenderle/ptable/workflows/R-CMD-check/badge.svg)](https://github.com/tenderle/ptable/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/tenderle/ptable/branch/master/graph/badge.svg)](https://codecov.io/gh/tenderle/ptable?branch=master)
+coverage](https://codecov.io/gh/tenderle/ptable/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tenderle/ptable?branch=master)
 [![GitHub last
 commit](https://img.shields.io/github/last-commit/tenderle/ptable.svg?logo=github)](https://github.com/tenderle/ptable/commits/master)
 [![GitHub code size in
 bytes](https://img.shields.io/github/languages/code-size/tenderle/ptable.svg?logo=github)](https://github.com/tenderle/ptable)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ptable)](https://CRAN.R-project.org/package=ptable)
 <!-- badges: end -->
 
 ## Overview
 
 The goal of the **ptable** package is to produce perturbation tables
-that can be used for applying noise to statistical tables.
+that can be used for applying noise to statistical tables with the
+cell-key method (CKM).
 
 ### Information
 
 This package is developed within the SGA
 `Open source tools for perturbative confidentiality methods`. The
-package is not yet tested or optimized but already contains the
-core-functionality to produce ptables for count data.
+package contains the core-features to produce and check perturbation
+tables (i.e. *ptables*) for frequency count and magnitude tables. The
+ptables can be used for applying noise to statistical tables with any
+cell-key method approach - among others either the
+[cellKey()-package](https://github.com/sdcTools/cellKey) or
+[TauArgus](https://github.com/sdcTools/tauargus).
 
-We have a first rough version with which interested users may play
-around. Feedback (via issues) with regards to bugs or features requests
-are very welcome as well as pull-requests.
+Feedback (via issues) with regards to bugs or features requests are very
+welcome as well as pull-requests.
 
-With Release 0.4.0 we offer an additional modification of ptables for
-frequency count data in order to receive an higher level of protection
+### Important Note
+
+- With Release 1.0.0 we offer a first stable version which also will be
+  available on CRAN.
+
+- With Release 0.4.0 we offer an additional modification of ptables for
+  frequency count data in order to receive an higher level of protection
 
 ### Installation
 
-#### Online
+#### Stable version from CRAN
 
-The package can directly be installed from `github` using the `devtools`
-package which must be installed on your system
+A stable version of the package can directly be installed from `CRAN`
+
+``` r
+install.packages("ptable")
+```
+
+#### Versions under development from github
+
+##### Directly (online)
+
+Newer versions of the package can be directly installed from github
+using the `devtools` package which must be installed on your system
 
 ``` r
 if (!require("devtools")) install.packages("devtools")
@@ -63,14 +84,14 @@ can work around this issue by specifying the proxy-server using the
 httr::set_config(use_proxy(url = "xxx.xxx.xxx.xxx", port = yy))
 ```
 
-#### Offline
+##### Source file (offline)
 
 Alternatively you can download an archive (tar.gz) of the newest release
 [here](https://github.com/sdcTools/ptable/releases) and install it
 manually using
 
 ``` r
-install.packages('C:/Users/.../Downloads/v0.4.0.tar.gz', repos = NULL, type = 'source')
+install.packages('C:/Users/.../Downloads/v1.x.x.tar.gz', repos = NULL, type = 'source')
 ```
 
 ### Usage

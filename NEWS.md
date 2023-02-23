@@ -1,11 +1,16 @@
 
+# ptable 1.0.0
+- CRAN publication
+
 # ptable 0.4.1
 - prepare package for CRAN publication
 - update: vignette
-- update: shiny app
+- update: shiny app / dashboard
 - update: perturbation panel plot
 - code cleanup and improved documentation
 - changed `pt_create_pParams()` and `pt_create_pTable()` to internal functions
+- feature: new function `create_ptable()` with arguments `create` and `params`
+- update: `create_cnt_table()` and `create_num_table()` with alias functions and new argument `create`
 
 # ptable 0.4.0
 - feature: new function `modify_cnt_ptable()` to generate modified ptables (for count/frequency tables)

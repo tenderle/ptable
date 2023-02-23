@@ -1,5 +1,13 @@
+
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+Checked this package `ptable 1.0.0` with win-builder (R-release and R-devel) with no errors and 
+no warnings.
 
-* This is a new release.
+There is only one note regarding my first submission of the package:
+
+> New submission
+
+
+Thanks for putting this new package to CRAN,
+Tobias
