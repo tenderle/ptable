@@ -242,7 +242,7 @@ diag(ptable_e21@tMatrix)
 
 The probability of an original frequency to remain unperturbed (i.e. that the target frequency equals the original frequency) is set to `r diag(ptable_e21@tMatrix)[2]*100`%. In the advanced parameter settings we will learn how we can assign a specific parameter to each original frequency count.
 
-**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/protoTestCensus/] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonized protection of census data in the ESS".]
+**Important note regarding "*false positives*":** Zeroes will not be perturbed to positive frequency counts since unbiasedness is a main characteristic of the cell-key based method.^[If *false positives* are an important part of a protection concept, we recommend to use (targeted record swapping)[https://github.com/sdcTools/CensusProtection/] as protection method (alone, or in combination with CKM, as proposed by the SGA "Harmonized protection of census data in the ESS".]
 
 #### Do not allow for positive cell values equal to or below a specified threshold value
 
