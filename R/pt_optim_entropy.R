@@ -49,6 +49,9 @@ pt_optim_entropy <- function(optim = optim,
   #x0=rep(1, length(v))){
   
   p <- p_lb <- p_ub <- NULL
+  
+  oldoptions <- options()
+  on.exit(options(oldoptions))
   options(digits = ndigits, scipen = ndigits)
   
   x0 <- rep(1, length(v))
