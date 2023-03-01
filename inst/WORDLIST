@@ -15,6 +15,7 @@ CKM
 SGA
 LNCS
 CMD
+NSI
 Codecov
 codecov
 cellKey
@@ -42,4 +43,8 @@ csv
 png
 gz
 https
+doi
 CensusProtection
+Esc
+Ctrl
+RStudio

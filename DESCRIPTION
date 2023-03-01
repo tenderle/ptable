@@ -3,10 +3,20 @@ Package: ptable
 Title: Generation of Perturbation Tables for the Cell-Key Method
 Version: 1.0.0
 Authors@R: 
-    person("Tobias", "Enderle", , "tobias.enderle@destatis.de", role = c("aut", "cre"))
+    person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", 
+      role = c("aut", "cre"))
 Maintainer: Tobias Enderle <tobias.enderle@destatis.de>
-Description: A tool for producing perturbation tables that are needed to
-    apply the cell-key method.
+Description: Tabular data from statistical institutes and agencies are mostly 
+    confidential and must be protected prior to publications. The cell-key 
+    method is a post-tabular Statistical Disclosure Control perturbation 
+    technique that adds random noise to tabular data. The statistical 
+    properties of the perturbations are defined by some noise probability 
+    distributions - also referred to as perturbation tables. 
+    This tool can be used to create the perturbation tables based on a maximum 
+    entropy approach as described for example in Giessing (2016) 
+    <doi:10.1007/978-3-319-45381-1_18>. The perturbation tables created can 
+    finally be used to apply a cell-key method to frequency count or magnitude 
+    tables.
 License: EUPL
 URL: https://github.com/sdcTools/ptable
 BugReports: https://github.com/sdcTools/ptable/issues

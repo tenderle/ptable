@@ -1,6 +1,9 @@
-
 # ptable 1.0.0
-- CRAN publication
+- CRAN submission
+- fix CRAN submission issues: replace `\dontrun` with `\donttest`, 
+remove examples, use `on.exit()`, use return `values`, use `interactive()`,
+replace `cat()` with `message()`, adjust DESCRIPTION file
+- update: file extension in `pt_export()` and `plot()`
 
 # ptable 0.4.1
 - prepare package for CRAN publication
