@@ -77,8 +77,9 @@
 #' * [pt_export()] to export the perturbation table for external sdcTools
 #' like [TauArgus](https://github.com/sdcTools/tauargus) or SAS.
 #'
-#' @return Depending on the argument `create` results an object-class of either
-#' [ptable-class] (`create = TRUE`) or [ptable_params-class] (`create = FALSE`).
+#' @return Returns [ptable-class] object including the 
+#' created perturbation table by default. If the argument `create = FALSE`,
+#' a [ptable_params-class] object is returned.
 #'
 #' @examples
 #'
@@ -87,9 +88,8 @@
 #'
 #' # create ptable for magnitude tables
 #' create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
-#'
+#' \donttest{
 #' # create ptable for frequency or magnitude tables
-#' \dontrun{
 #' create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
 #' create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
 #' }

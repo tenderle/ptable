@@ -106,8 +106,9 @@ create the perturbation table object of class \linkS4class{ptable}
 instead of the remaining parameters}
 }
 \value{
-Depending on the argument \code{create} results an object-class of either
-\linkS4class{ptable} (\code{create = TRUE}) or \linkS4class{ptable_params} (\code{create = FALSE}).
+Returns \linkS4class{ptable} object including the
+created perturbation table by default. If the argument \code{create = FALSE},
+a \linkS4class{ptable_params} object is returned.
 }
 \description{
 \href{https://github.com/sdcTools/ptable}{ptable} makes it easy to create
@@ -147,9 +148,8 @@ create_cnt_ptable(D = 3, V = 1.08, js = 1, label = "ptable_frequency_tab")
 
 # create ptable for magnitude tables
 create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
-
+\donttest{
 # create ptable for frequency or magnitude tables
-\dontrun{
 create_ptable(D = 3, V = 1.08, js = 1, table="cnts")
 create_ptable(D = 5, V = 2, step = 4, icat = c(1, 4, 5), table="nums")
 }
