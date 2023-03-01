@@ -29,7 +29,9 @@ test_that("Plot functions are ok", {
   
   expect_error(fifi_plot(obj1, type = "u", file = "test"))
   
-  expect_error(plot(obj1, type = "u", file = "test"))
+  expect_error(plot(obj1, type = "u", file = "test.pdf"))
+  
+  expect_error(plot(obj1, type = "d", file = "test.ps"))
   
   expect_no_error(fifi_plot(obj1, type = "d"))
   expect_no_error(fifi_plot(obj1, type = "p"))
@@ -57,7 +59,12 @@ test_that("Export functions are ok", {
   expect_no_error(pt_export(obj_nums, 
                             file = "outputfile", 
                             SDCtool = "TauArgus"))
-  expect_no_error(pt_export(obj_nums, file = "outputfile", SDCtool = "SAS"))
+  expect_no_error(pt_export(obj_nums, 
+                            file = "outputfile", 
+                            SDCtool = "SAS"))
+  expect_no_error(pt_export(obj1, 
+                            file = "outputfile.txt", 
+                            SDCtool = "TauArgus"))
   expect_no_error(pt_export(
     obj_nums_odd,
     obj_nums_even,
@@ -70,6 +77,10 @@ test_that("Export functions are ok", {
     file = "outputfile",
     SDCtool = "SAS"
   ))
+
+  expect_error(pt_export(obj1,
+                         file = "outputfile.",
+                         SDCtool = "TauArgus"))
   
   expect_error(pt_export(obj1, SDCtool = "TauArgus")) # lines 22-24
   expect_error(pt_export(obj1, SDCtool = "CK")) # line 27
@@ -101,6 +112,6 @@ test_that("Check functions are ok", {
 
 
 test_that("Removed test files", {
-  expect_no_error(file.remove("outputfile.csv"))
+  expect_no_error(file.remove("outputfile.txt"))
   expect_no_error(file.remove("test.pdf"))
 })

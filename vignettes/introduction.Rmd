@@ -349,9 +349,9 @@ plot(result, type = "d", file = "graph.pdf")
 To use the perturbation table in SDC tools like **Tau-Argus** or **SAS**, users can export the result:
 ```{r, eval=FALSE}
 # for Tau-Argus
-pt_export(result, file = "ptable.csv", SDCtool = "TauArgus")
+pt_export(result, file = "ptable.txt", SDCtool = "TauArgus")
 # or for SAS
-pt_export(result, file = "ptable.csv", SDCtool = "SAS")
+pt_export(result, file = "ptable.txt", SDCtool = "SAS")
 ```
 
 _Note_: For the purpose of production please modify the ptable and don't use the ptable with default intervals. But be aware of the interpretation using the perturbation panel.
