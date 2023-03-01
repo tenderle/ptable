@@ -7,11 +7,15 @@
 #' @param obj an object of class \code{\linkS4class{ptable}}
 #' @param type (character) type of graph: distribution "d" (standard), 
 #' perturbation panel ("p"), transition matrix "t"
-#' @param file if not \code{NULL}, a path to a file where the graph is saved to 
-#' as pdf
+#' @param file if not \code{NULL}, a path to a file (with file extension, e.g.
+#' '.pdf' or '.png') where the graph is saved to
 #' @param ... additional parameters passed to methods
 #' @author Tobias Enderle
 #' @keywords plot
+#'
+#' @return The selected graph is displayed, but there is no direct return 
+#' value. The output could also be assigned to an object to receive an object 
+#' of class `ggplot`.
 #'
 #' @examples
 #'
@@ -25,9 +29,10 @@
 #' # Perturbations Panel of the Noise
 #' plot(ptab_mod, type = "p")
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Plot and Save the Transition Matrix
-#' plot(ptab_mod, type ="t", file = "example_tMatrix.pdf")
+#' plot(ptab_mod, type ="t", 
+#'      file = tempfile("example_tMatrix", fileext = ".pdf"))
 #' }
 #'
 #' @md
@@ -45,21 +50,31 @@ setGeneric("plot", function(obj,
 fifi_plot <- function(obj, type = "d", file = NULL) {
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
+    
+    if (tolower(file_ext(file)) == ""){
+      stop("Please specify a file extension:", "
+           '.pdf', '.png', '.jpeg' or '.tiff'.")
+    }
+    
+    if (!(tolower(file_ext(file)) %in% c("pdf", "png", "jpeg", "tiff"))) {
+      stop("Only 'pdf', 'png', 'jpeg' and 'tiff' are allowed", 
+           "as file extension.")
+    }
   }
   
   if (!(type %in% c("d", "p", "t")))
       stop("Only three options 'd', 'p' or 't' are allowed for input type.")
   
   if (type == "d") {
-    #cat("Distribution of Perturbation Values\n")
+    # Distribution of Perturbation Values
     out <- pt_plot_pD(pert_table = obj, file = file)
   }
   if (type == "p") {
-    #cat("Perturbation Panel\n")
+    # Perturbation Panel
     out <- pt_plot_pPanel(pert_table = obj, file = file)
   }
   if (type == "t") {
-    #cat("Transition Matrix\n")
+    # Transition Matrix
     out <- pt_plot_tMatrix(pert_table = obj, file = file)
   }
   
@@ -213,7 +228,7 @@ pt_plot_pD <- function(pert_table,
     ggsave(filename = file,
            width = 8,
            height = 5)
-    cat("graph saved to", shQuote(file), "\n")
+    message("graph saved to", shQuote(file), "\n")
   }
   return(output)
 }
@@ -308,7 +323,7 @@ pt_plot_pPanel <- function(pert_table, file = NULL) {
     ggsave(filename = file,
            width = 6,
            height = 5)
-    cat("graph of perturbation panel saved to", shQuote(file), "\n")
+    message("graph of perturbation panel saved to", shQuote(file), "\n")
   }
   return(output)
   
@@ -375,7 +390,7 @@ pt_plot_tMatrix <- function(pert_table, file = NULL) {
     ggsave(filename = file,
            width = 8,
            height = 5)
-    cat("graph of transition matrix saved to", shQuote(file), "\n")
+    message("graph of transition matrix saved to", shQuote(file), "\n")
   }
   return(output)
 }

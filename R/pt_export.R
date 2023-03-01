@@ -1,19 +1,21 @@
-#' @title Export ptables as a csv-file
+#' @title Export ptables as a txt-file
 #'
 #' @description Function to export perturbation table to Tau-Argus, SAS or
-#' any other CKM tool (as csv-file).
+#' any other CKM tool (as txt-file).
 #'
 #' @param ... 1 or 2 input object of class \code{\linkS4class{ptable}}
-#' @param file (character) filename
+#' @param file (character) filename (only 'txt' is possible as file extension)
 #' @param SDCtool (character) either "TauArgus" or "SAS"
 #'
 #' @author Tobias Enderle
 #' @keywords export
+#' 
+#' @return Returns `NULL` and the ptable is saved in the specified format.
 #'
 #' @examples 
+#' \donttest{
 #' ptab <- create_cnt_ptable(D = 5, V = 3, js = 2, label = "test")
-#' \dontrun{
-#' pt_export(ptab, file = "Test", SDCtool = "TauArgus")
+#' pt_export(ptab, file = tempfile("ptable_example"), SDCtool = "TauArgus")
 #' }
 #' @rdname pt_export
 #' @export
@@ -22,6 +24,14 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
   
   if (!is.null(file)) {
     stopifnot(is_scalar_character(file))
+  }
+  
+  if (grepl("\\.", file)) {
+    if (file_ext(tolower(file)) != "txt")
+      stop("Only the file extension '.txt' can be specified.")
+    filename <- file
+  } else {
+    filename <- paste0(file, ".txt")
   }
 
 
@@ -106,7 +116,7 @@ pt_export <- function(..., file, SDCtool="TauArgus"){
       pTable <- slot(inp[[1]], "pTable")[, c('i', 'j', 'p', 'v', 
                                              'p_int_lb', 'p_int_ub', 'type'), ]
   } 
-  write.table(format(pTable, digits=8), file=paste(file,".csv",sep=""), sep=";",
+  write.table(format(pTable, digits=8), file=filename, sep=";",
               dec=".", row.names = FALSE, col.names = TRUE, quote=FALSE)
 
   #return(pTable)

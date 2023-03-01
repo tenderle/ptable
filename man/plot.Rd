@@ -12,10 +12,15 @@ plot(obj, type = "d", file = NULL, ...)
 \item{type}{(character) type of graph: distribution "d" (standard),
 perturbation panel ("p"), transition matrix "t"}
 
-\item{file}{if not \code{NULL}, a path to a file where the graph is saved to
-as pdf}
+\item{file}{if not \code{NULL}, a path to a file (with file extension, e.g.
+'.pdf' or '.png') where the graph is saved to}
 
 \item{...}{additional parameters passed to methods}
+}
+\value{
+The selected graph is displayed, but there is no direct return
+value. The output could also be assigned to an object to receive an object
+of class \code{ggplot}.
 }
 \description{
 \code{\link[=plot]{plot()}} makes it easy to visualize the results of the created
@@ -34,9 +39,10 @@ plot(ptab_mod, type = "d")
 # Perturbations Panel of the Noise
 plot(ptab_mod, type = "p")
 
-\dontrun{
+\donttest{
 ## Plot and Save the Transition Matrix
-plot(ptab_mod, type ="t", file = "example_tMatrix.pdf")
+plot(ptab_mod, type ="t", 
+     file = tempfile("example_tMatrix", fileext = ".pdf"))
 }
 
 }

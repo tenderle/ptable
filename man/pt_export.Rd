@@ -2,25 +2,28 @@
 % Please edit documentation in R/pt_export.R
 \name{pt_export}
 \alias{pt_export}
-\title{Export ptables as a csv-file}
+\title{Export ptables as a txt-file}
 \usage{
 pt_export(..., file, SDCtool = "TauArgus")
 }
 \arguments{
 \item{...}{1 or 2 input object of class \code{\linkS4class{ptable}}}
 
-\item{file}{(character) filename}
+\item{file}{(character) filename (only 'txt' is possible as file extension)}
 
 \item{SDCtool}{(character) either "TauArgus" or "SAS"}
 }
+\value{
+Returns `NULL` and the ptable is saved in the specified format.
+}
 \description{
 Function to export perturbation table to Tau-Argus, SAS or
-any other CKM tool (as csv-file).
+any other CKM tool (as txt-file).
 }
 \examples{
+\donttest{
 ptab <- create_cnt_ptable(D = 5, V = 3, js = 2, label = "test")
-\dontrun{
-pt_export(ptab, file = "Test", SDCtool = "TauArgus")
+pt_export(ptab, file = tempfile("ptable_example"), SDCtool = "TauArgus")
 }
 }
 \author{

@@ -8,4 +8,5 @@
 #' @importFrom utils write.table
 #' @importFrom rmarkdown run
 #' @importFrom grDevices dev.off pdf
+#' @importFrom tools file_ext
 NULL
