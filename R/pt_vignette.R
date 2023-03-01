@@ -7,9 +7,10 @@
 #' @export
 #' @importFrom utils RShowDoc
 #' @examples
-#' \dontrun{
-#' #pt_vignette()
+#' \donttest{
+#' pt_vignette()
 #' }
 pt_vignette <- function() {
-  RShowDoc("introduction", package = "ptable")
+  if (interactive())
+    RShowDoc("introduction", package = "ptable")
 }

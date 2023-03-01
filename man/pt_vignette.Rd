@@ -14,7 +14,7 @@ Starts the package vignette that gets you started with the
 package
 }
 \examples{
-\dontrun{
-#pt_vignette()
+\donttest{
+pt_vignette()
 }
 }
