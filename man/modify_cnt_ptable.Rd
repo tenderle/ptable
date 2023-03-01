@@ -15,7 +15,7 @@ modify_cnt_ptable(input, threshold = 0.2, seed = NULL)
 \item{seed}{A seed for the rearrangement of the split intervals}
 }
 \value{
-An object of \linkS4class{ptable} or a data.table
+Returns an object of class \linkS4class{ptable} or a data.table.
 }
 \description{
 \code{\link[=modify_cnt_ptable]{modify_cnt_ptable()}} is a function to modify the standard

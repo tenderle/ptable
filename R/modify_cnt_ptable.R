@@ -19,7 +19,7 @@
 #' @param input The ptable-object of class 'ptable', 'ck_params' or data.table 
 #' @param threshold The maximum width of the intervals after modification
 #' @param seed A seed for the rearrangement of the split intervals
-#' @return An object of [ptable-class] or a data.table
+#' @return Returns an object of class [ptable-class] or a data.table.
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @examples 
 #' # Original ptable
