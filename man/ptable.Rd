@@ -6,6 +6,9 @@
 \usage{
 ptable()
 }
+\value{
+No return value, the dashboard is opened in the default browser.
+}
 \description{
 In the \code{ptable}-package there is a shiny app for first
 time users and visual-style learners. \code{\link[=ptable]{ptable()}} makes it easy to experiment
@@ -31,8 +34,14 @@ the perturbation table:
 \item \verb{Perturbation Panel} Plot
 }
 }
+\note{
+After usage (e.g. closing the browser tab), interrupt R to stop the
+application (usually by pressing Ctrl+C or Esc in the console or by using
+the stop button in RStudio).
+}
 \examples{
-\dontrun{
+\donttest{
+# Run the dashboard in your default browser
 ptable()
 }
 

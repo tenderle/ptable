@@ -28,9 +28,16 @@
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @keywords perturbation table visualisation dashboard flexdashboard shiny
+#' 
+#' @note After usage (e.g. closing the browser tab), interrupt R to stop the 
+#' application (usually by pressing Ctrl+C or Esc in the console or by using
+#' the stop button in RStudio).
 #'
-#' @examples
-#' \dontrun{
+#' @return No return value, the dashboard is opened in the default browser.
+#'
+#' @examples 
+#' \donttest{
+#' # Run the dashboard in your default browser
 #' ptable()
 #' }
 #'
@@ -40,8 +47,13 @@
 #' @import flexdashboard
 #'
 ptable <- function() {
-  filepath_windows <-
-    system.file(package = "ptable", "pt_dashboard.Rmd")
-  run(file = filepath_windows,
-      shiny_args = list(launch.browser = TRUE))
+  if (interactive()) {
+    
+    filepath_windows <-
+      system.file(package = "ptable", "pt_dashboard.Rmd")
+    
+    run(file = filepath_windows,
+        shiny_args = list(launch.browser = TRUE,
+                          quiet = TRUE))
+  }
 }
