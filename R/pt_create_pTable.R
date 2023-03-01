@@ -22,29 +22,16 @@
 #' @param monitoring (logical) output monitoring on/off
 #' @param debugging (logical) debug monitoring on/off
 #'
-#' @return an object of [ptable-class]
+#' @return Returns an object of [ptable-class].
 #'
 #' @author Tobias Enderle, \email{tobias.enderle@@destatis.de}
 #' @keywords perturbation table sdc
 #'
 #' @examples
 #' # ptable for frequency tables 
-#' # old way
-#' \dontrun{
-#' params_cnts <- pt_create_pParams(D = 5, V = 3, js = 2, label = "test1")
-#' pt_create_pTable(params = params_cnts)
-#' }
-#' # new, direct way
 #' create_cnt_ptable(D = 5, V = 3, js = 2, label = "test2")
 #' 
 #' # ptable for magnitude tables
-#' # old way
-#' \dontrun{ 
-#' params_nums <- pt_create_pParams(D=5, V=2, table="nums", 
-#'                                  step=4, icat=c(1, 3, 5))
-#' pt_create_pTable(params = params_nums)
-#' }
-#' # new way
 #' create_num_ptable(D = 5, V = 2, step = 4, icat = c(1, 3, 5))
 #' @noRd
 pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
@@ -107,6 +94,8 @@ pt_create_pTable <- function(params, monitoring = FALSE, debugging = FALSE) {
   
   ndigits <- 8
   epsilon <- 1 / 10 ^ ndigits
+  oldoptions <- options()
+  on.exit(options(oldoptions))
   options(digits = ndigits, scipen = ndigits)
   
   for (r in 2:nrows) {    # looping through all freq categories (i.e. icat's)
