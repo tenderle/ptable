@@ -14,8 +14,8 @@ If \code{FALSE}, two ptables for even and odd numbers are created}
 variance \code{1} will be returned that is designed to perturb small cell values}
 }
 \value{
-a \linkS4class{ptable} object if both \code{parity} and \code{separation} are
-\code{FALSE}, else a named list
+Returns a \linkS4class{ptable} object if both \code{parity} and \code{separation}
+are \code{FALSE}, else a named list.
 }
 \description{
 \code{\link[=pt_ex_nums]{pt_ex_nums()}} returns a perturbation table objects from
@@ -23,11 +23,11 @@ a \linkS4class{ptable} object if both \code{parity} and \code{separation} are
 for quickly creating ptables to demonstrate usage in other tools.
 }
 \examples{
-# class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
-
+\donttest{
 # extra ptable for small cells
-# names(pt_ex_nums(parity = FALSE, separation = TRUE))
+names(pt_ex_nums(parity = FALSE, separation = TRUE))
 
 # different ptables for even/odd cells
-# names(pt_ex_nums(parity = TRUE, separation = TRUE))
+names(pt_ex_nums(parity = TRUE, separation = TRUE))
+}
 }

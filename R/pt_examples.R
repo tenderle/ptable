@@ -4,7 +4,7 @@
 #' [create_cnt_ptable()] with some default parameters. This is useful
 #' for quickly creating ptables to demonstrate usage in other tools.
 #'
-#' @return an object of [ptable-class]
+#' @return Returns a [ptable-class] object.
 #' @export
 #' @md
 #' @examples
@@ -27,18 +27,18 @@ pt_ex_cnts <- function() {
 #' @param separation a scalar logical; if `TRUE`, an additional ptable with
 #' variance `1` will be returned that is designed to perturb small cell values
 #'
-#' @return a [ptable-class] object if both `parity` and `separation` are 
-#' `FALSE`, else a named list
+#' @return Returns a [ptable-class] object if both `parity` and `separation` 
+#' are `FALSE`, else a named list.
 #' @export
 #' @md
 #' @examples
-#' # class(pt_ex_nums(parity = FALSE, separation = FALSE)) == "ptable"
-#'
+#' \donttest{
 #' # extra ptable for small cells
-#' # names(pt_ex_nums(parity = FALSE, separation = TRUE))
+#' names(pt_ex_nums(parity = FALSE, separation = TRUE))
 #'
 #' # different ptables for even/odd cells
-#' # names(pt_ex_nums(parity = TRUE, separation = TRUE))
+#' names(pt_ex_nums(parity = TRUE, separation = TRUE))
+#' }
 pt_ex_nums <- function(parity = TRUE, separation = FALSE) {
   stopifnot(rlang::is_scalar_logical(parity))
   stopifnot(rlang::is_scalar_logical(separation))

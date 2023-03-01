@@ -7,7 +7,7 @@
 pt_ex_cnts()
 }
 \value{
-an object of \linkS4class{ptable}
+Returns a \linkS4class{ptable} object.
 }
 \description{
 \code{\link[=pt_ex_cnts]{pt_ex_cnts()}} returns a perturbation table object from
