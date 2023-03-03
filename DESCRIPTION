@@ -1,7 +1,7 @@
 Type: Package
 Package: ptable
 Title: Generation of Perturbation Tables for the Cell-Key Method
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: 
     person("Tobias", "Enderle", email = "tobias.enderle@destatis.de", 
       role = c("aut", "cre"))
